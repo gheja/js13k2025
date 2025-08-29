@@ -1,3 +1,5 @@
+type SvgInHtml = HTMLElement & SVGElement
+
 class Graphics {
     root: HTMLDivElement
     sprites: Array<GfxSprite>
@@ -40,7 +42,7 @@ class Graphics {
 class GfxSprite {
     originalWidth: number
     originalHeight: number
-    svg: SVGElement
+    svg: SvgInHtml
 
     constructor(root: HTMLDivElement, data) {
         this.originalWidth = data[0]
@@ -60,7 +62,7 @@ class GfxSprite {
             '</svg>'
 
         var parser = new DOMParser()
-        this.svg = parser.parseFromString(str, "image/svg+xml").documentElement
+        this.svg = parser.parseFromString(str, "image/svg+xml").documentElement as SvgInHtml
         root.appendChild(this.svg)
     }
 
