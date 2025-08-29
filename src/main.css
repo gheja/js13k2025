@@ -2,12 +2,24 @@ html,
 body {
     margin: 0;
     padding: 0;
+    background: #222;
 }
 #c {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    width: 100vw; 
+    height: calc(100vw * 9 / 16);
+    margin: auto;
     background: #123;
+    margin: calc((100vh - 100vw * 9 / 16) / 2) 0 0 0;
+}
+
+@media (min-aspect-ratio: 16/9) {
+    #c {
+        width: calc(100vh * 16 / 9); 
+        height: 100vh;
+        margin: 0 0 0 calc((100vw - 100vh * 16 / 9) / 2);
+    }
+}
+
+#c * {
+    position: absolute;
 }
