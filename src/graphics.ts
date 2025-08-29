@@ -7,13 +7,15 @@ class Graphics {
     constructor() {
         this.root = document.getElementById("c") as HTMLDivElement
         this.sprites = []
-        this.sprites.push(new GfxSprite(this.root))
+        this.sprites.push(new GfxSprite(this.root, TEST_SVG_BACKGROUND))
+        this.sprites.push(new GfxSprite(this.root, TEST_SVG_SPRITE))
         this.n = 0
     }
 
     draw() {
         this.n += 1
-        this.sprites[0].moveTo(500, 500 + Math.sin(this.n / 100) * 300)
+        this.sprites[0].moveTo(0, 0)
+        this.sprites[1].moveTo(500, 500 + Math.sin(this.n / 100) * 300)
     }
 
     updateGfxScale() {
@@ -35,21 +37,21 @@ class Graphics {
 class GfxSprite {
     svg: SVGElement
 
-    constructor(root: HTMLDivElement) {
-        // var str = '<?xml version="1.0" standalone="no"?><svg width="1920" height="1080" viewBox="0 0 1920 1080" version="1.1" xmlns="http://www.w3.org/2000/svg">' + 
+    constructor(root: HTMLDivElement, data: string) {
         var str = '<svg width="1920" height="1080" viewBox="0 0 1920 1080" version="1.1" xmlns="http://www.w3.org/2000/svg">' + 
-            TEST_SVG_SPRITE + 
+            data + 
             '</svg>'
 
         var parser = new DOMParser()
         this.svg = parser.parseFromString(str, "image/svg+xml").documentElement
         root.appendChild(this.svg)
-        // root.innerHTML += "<g id=\"g1234\">" + TEST_SVG_SPRITE + "</g>"
     }
 
     moveTo(x: number, y: number){
         this.svg.style.left = (x * _gfx_scale + _gfx_pad_x) + "px"
         this.svg.style.top = (y * _gfx_scale + _gfx_pad_y) + "px"
+        // TODO: maybe we should only change the width and height when the window was rescaled
+        // TODO: now the sprite position and scale is only updated when moveTo() is called
         this.svg.style.width = (1920 * _gfx_scale) + "px"
         this.svg.style.height = (1080 * _gfx_scale) + "px"
     }

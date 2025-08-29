@@ -35,18 +35,15 @@ const TEST_SVG=`<?xml version="1.0" encoding="UTF-8" standalone="no"?>
   </g>
 </svg>`
 
-const TEST_SVG_SPRITE = `    <rect
-       style="fill:#008000;stroke:none;stroke-width:0.264583;stroke-linecap:round;stroke-linejoin:round"
-       id="rect5043"
-       width="200"
-       height="100"
-       x="8"
-       y="8" />
-    <rect
-       style="fill:#ff2a2a;stroke:#000000;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
-       id="rect5045"
-       width="100"
-       height="50"
-       x="89.519508"
-       y="50.773075" />
-`
+const TEST_SVG_SPRITE = `<path
+       style="fill:none;stroke:#000000;stroke-width:4.99999;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+       d="M 6,16 59,6 92,33 38,76 41,41 10,41 6,16  Z"
+       id="path14429" />`
+
+const TEST_SVG_BACKGROUND = `<rect
+       style="fill:#1a1a1a;stroke:#4d4d4d;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;fill-opacity:1"
+       id="rect9167"
+       width="1915"
+       height="1075"
+       x="2.4999952"
+       y="2.4999945" />`
