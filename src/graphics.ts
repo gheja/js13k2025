@@ -7,8 +7,8 @@ class Graphics {
     constructor() {
         this.root = document.getElementById("c") as HTMLDivElement
         this.sprites = []
-        this.sprites.push(new GfxSprite(this.root, TEST_SVG_BACKGROUND))
-        this.sprites.push(new GfxSprite(this.root, TEST_SVG_SPRITE))
+        this.sprites.push(new GfxSprite(this.root, TEST_GFX_DEFINITION_BACKGROUND))
+        this.sprites.push(new GfxSprite(this.root, TEST_GFX_DEFINITION_1))
         this.n = 0
     }
 
@@ -35,11 +35,25 @@ class Graphics {
 }
 
 class GfxSprite {
+    originalWidth: number
+    originalHeight: number
     svg: SVGElement
 
-    constructor(root: HTMLDivElement, data: string) {
-        var str = '<svg width="1920" height="1080" viewBox="0 0 1920 1080" version="1.1" xmlns="http://www.w3.org/2000/svg">' + 
-            data + 
+    constructor(root: HTMLDivElement, data) {
+        this.originalWidth = data[0]
+        this.originalHeight = data[1]
+        var arr: Array<number> = data[2][0]
+
+        var s = "M "
+        // the first element is the style index
+        for (var i=1; i<arr.length; i+=2){
+            s += (arr[i] / 100 * this.originalWidth) + "," + (arr[i+1] / 100 * this.originalHeight) + " "
+        }
+        // this closes the shape, we don't need the final move back to the first point
+        s += "Z"
+
+        var str = `<svg width="${this.originalWidth}" height="${this.originalHeight}" viewBox="0 0 ${this.originalWidth} ${this.originalHeight}" version="1.1" xmlns="http://www.w3.org/2000/svg">` +
+            '<path style="' + SVG_STYLES[arr[0]] + '" d="' + s + '"/>' +
             '</svg>'
 
         var parser = new DOMParser()
@@ -52,7 +66,7 @@ class GfxSprite {
         this.svg.style.top = (y * _gfx_scale + _gfx_pad_y) + "px"
         // TODO: maybe we should only change the width and height when the window was rescaled
         // TODO: now the sprite position and scale is only updated when moveTo() is called
-        this.svg.style.width = (1920 * _gfx_scale) + "px"
-        this.svg.style.height = (1080 * _gfx_scale) + "px"
+        this.svg.style.width = (this.originalWidth * _gfx_scale) + "px"
+        this.svg.style.height = (this.originalHeight * _gfx_scale) + "px"
     }
 }
