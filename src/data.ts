@@ -1,3 +1,7 @@
+const SVG_STYLES = [
+    "fill:#111;stroke:#333;stroke-width:5",
+    "fill:#666",
+]
 /*
     definition: original_width, original_height, [ shape, shape, ... ]
     shape: [ style index,  x, y,  x, y,  x, y, ...]
