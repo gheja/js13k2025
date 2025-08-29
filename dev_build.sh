@@ -5,7 +5,8 @@ tmp=`readlink -f "$0"`
 dir=`dirname $tmp`
 source_dir="${dir}/src"
 target_dir="/tmp/build"
-extra_dir="/home/gheja/works_local/extra"
+# extra_dir="/home/gheja/works_local/extra"
+extra_dir="/home/gheja/works_local/js13k2025_build_extra"
 final_dir="${dir}"
 min_dir="${dir}/tmp/min"
 csv="${final_dir}/build_stats.csv"
@@ -110,7 +111,10 @@ _title "Checking and installing node packages..."
 
 echo "travis_fold:start:npm"
 
-try npm install typescript-closure-compiler google-closure-compiler
+# if we already have it installed/copied from cache then let's just skip it to make build faster
+if [ ! -e 'node_modules/google-closure-compiler' ]; then
+	try npm install typescript-closure-compiler google-closure-compiler
+fi
 
 echo "travis_fold:end:npm"
 
@@ -149,5 +153,8 @@ done
 try tscc $files_typescript
 
 echo "travis_fold:end:tscc"
+
+## copy the *_original.zip to the project dir
+cp *.zip ${final_dir}/
 
 exit 0
