@@ -7,8 +7,6 @@ class Game {
 
     init() {
         this.gfx = new Graphics()
-        window.addEventListener("resize", this.gfx.updateGfxScale.bind(this.gfx))
-        this.gfx.updateGfxScale()
     }
 
     frame() {

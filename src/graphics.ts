@@ -10,6 +10,9 @@ class Graphics {
         this.sprites.push(new GfxSprite(this.root, TEST_GFX_DEFINITION_BACKGROUND))
         this.sprites.push(new GfxSprite(this.root, TEST_GFX_DEFINITION_1))
         this.n = 0
+
+        window.addEventListener("resize", this.updateGfxScale.bind(this))
+        this.updateGfxScale()
     }
 
     draw() {
