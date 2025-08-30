@@ -1,27 +1,13 @@
-type SvgInHtml = HTMLElement & SVGElement
-
 class Graphics {
-    sprites: Array<GfxSprite>
-
-    n: number
-
     constructor() {
-        this.sprites = []
-        this.sprites.push(new GfxSprite(TEST_GFX_DEFINITION_BACKGROUND))
-        this.sprites.push(new GfxSprite(TEST_GFX_DEFINITION_1))
-        this.n = 0
-
         window.addEventListener("resize", this.updateGfxScale.bind(this))
         this.updateGfxScale()
     }
 
     update() {
-        this.n += 1
     }
 
     draw() {
-        this.sprites[0].moveTo(0, 0)
-        this.sprites[1].moveTo(500, 500 + Math.sin(this.n / 100) * 300)
     }
 
     updateGfxScale() {

@@ -2,6 +2,7 @@ class Game {
     private gfx: Graphics
     private lastTickTime: number
     private lastPhysicsTickTime: number
+    public objects: Array<GameObject>
 
     constructor(){
         this.lastTickTime = performance.now()
@@ -11,11 +12,32 @@ class Game {
     init() {
         _gfx_root = document.getElementById("c") as HTMLDivElement
         this.gfx = new Graphics()
+
+        this.objects = []
+
+        var obj
+
+        obj = new GameObjectPlayer(100, 100)
+        this.objects.push(obj)
+
+        obj = new GameObject(0, 1070)
+        obj.sprites.push(new GfxSprite(GFX_FLOOR))
+        obj.interaction = GameObjectInteractionType.SitOnTop
+        obj.boxWidth = 1920
+        obj.boxHeight = 10
+        this.objects.push(obj)
+
+        obj = new GameObject(600, 600)
+        obj.sprites.push(new GfxSprite(GFX_TRASH_CAN))
+        obj.interaction = GameObjectInteractionType.SitOnTop
+        this.objects.push(obj)
     }
 
     physicsFrame(){
         _tick_count += 1
         this.gfx.update()
+
+        this.objects.forEach(a => a.physicsFrame())
     }
 
     renderFrame() {
@@ -34,7 +56,7 @@ class Game {
 
         window.requestAnimationFrame(this.renderFrame.bind(this))
 
-        this.gfx.draw()
+        this.objects.forEach(a => a.renderFrame())
     }
 
     start() {
