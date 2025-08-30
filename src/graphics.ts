@@ -1,24 +1,25 @@
 type SvgInHtml = HTMLElement & SVGElement
 
 class Graphics {
-    root: HTMLDivElement
     sprites: Array<GfxSprite>
 
     n: number
 
     constructor() {
-        this.root = document.getElementById("c") as HTMLDivElement
         this.sprites = []
-        this.sprites.push(new GfxSprite(this.root, TEST_GFX_DEFINITION_BACKGROUND))
-        this.sprites.push(new GfxSprite(this.root, TEST_GFX_DEFINITION_1))
+        this.sprites.push(new GfxSprite(TEST_GFX_DEFINITION_BACKGROUND))
+        this.sprites.push(new GfxSprite(TEST_GFX_DEFINITION_1))
         this.n = 0
 
         window.addEventListener("resize", this.updateGfxScale.bind(this))
         this.updateGfxScale()
     }
 
-    draw() {
+    update() {
         this.n += 1
+    }
+
+    draw() {
         this.sprites[0].moveTo(0, 0)
         this.sprites[1].moveTo(500, 500 + Math.sin(this.n / 100) * 300)
     }
@@ -44,7 +45,7 @@ class GfxSprite {
     originalHeight: number
     svg: SvgInHtml
 
-    constructor(root: HTMLDivElement, data) {
+    constructor(data) {
         this.originalWidth = data[0]
         this.originalHeight = data[1]
         var arr: Array<number> = data[2][0]
@@ -63,7 +64,7 @@ class GfxSprite {
 
         var parser = new DOMParser()
         this.svg = parser.parseFromString(str, "image/svg+xml").documentElement as SvgInHtml
-        root.appendChild(this.svg)
+        _gfx_root.appendChild(this.svg)
     }
 
     moveTo(x: number, y: number){
