@@ -18,6 +18,8 @@ class Game {
         var obj
 
         obj = new GameObjectPlayer(100, 100)
+        obj.boxWidth = 200
+        obj.boxHeight = 50
         this.objects.push(obj)
 
         obj = new GameObject(0, 1070)
@@ -27,9 +29,11 @@ class Game {
         obj.boxHeight = 10
         this.objects.push(obj)
 
-        obj = new GameObject(600, 600)
+        obj = new GameObject(180, 650)
         obj.sprites.push(new GfxSprite(GFX_TRASH_CAN))
         obj.interaction = GameObjectInteractionType.SitOnTop
+        obj.boxWidth = 200
+        obj.boxHeight = 400
         this.objects.push(obj)
     }
 

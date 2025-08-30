@@ -59,11 +59,21 @@ class GameObjectPlayer extends GameObject {
 
             for (var obj of game.objects)
             {
-                if (obj.x + obj.boxOffsetX <= nextX &&
-                    obj.x + obj.boxOffsetX + obj.boxWidth >= nextX &&
-                    obj.y + obj.boxOffsetY <= nextY &&
-                    obj.y + obj.boxOffsetY + obj.boxHeight >= nextY
-                )
+                if (obj == this)
+                {
+                    continue
+                }
+
+                if (boxesCollide(
+                    nextX + this.boxOffsetX,
+                    nextY + this.boxOffsetY,
+                    this.boxWidth,
+                    this.boxHeight,
+                    obj.x + obj.boxOffsetX,
+                    obj.y + obj.boxOffsetY,
+                    obj.boxWidth,
+                    obj.boxHeight
+                ))
                 {
                     collidedWithObject = obj
                     break
