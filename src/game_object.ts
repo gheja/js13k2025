@@ -52,7 +52,8 @@ class GameObjectPlayer extends GameObject {
             {
                 if (inputs[InputArrayKey.Up])
                 {
-                    this.velocityY -= 15
+                    // base jump speed + the running speed extra
+                    this.velocityY -= PLAYER_JUMP_SPEED + Math.abs(this.velocityX) * PLAYER_JUMP_SPEED_EXTRA_MULTIPLIER
                 }
             }
         }
@@ -71,7 +72,12 @@ class GameObjectPlayer extends GameObject {
         a = Math.min(Math.max(a, -15), 15)
         this.velocityX = a * 0.95
 
-        this.velocityY += GRAVITY * 1/TARGET_TICK_INTERVAL_MS
+        if (this.velocityY < 0) {
+            this.velocityY += GRAVITY * 1/TARGET_TICK_INTERVAL_MS
+        }
+        else {
+            this.velocityY += FALL_GRAVITY * 1/TARGET_TICK_INTERVAL_MS
+        }
 
         // collision checks
         // do it in small steps so we won't miss anything
@@ -92,16 +98,24 @@ class GameObjectPlayer extends GameObject {
                     continue
                 }
 
-                if (boxesCollide(
-                    nextX + this.boxOffsetX,
-                    nextY + this.boxOffsetY,
-                    this.boxWidth,
-                    this.boxHeight,
-                    obj.x + obj.boxOffsetX,
-                    obj.y + obj.boxOffsetY,
-                    obj.boxWidth,
-                    obj.boxHeight
-                ))
+                var collided = false
+
+                // falling
+                if (obj.interaction == GameObjectInteractionType.SitOnTop && this.velocityY > 0)
+                {
+                    collided = boxesCollide(
+                        nextX + this.boxOffsetX,
+                        nextY + this.boxOffsetY + this.boxHeight - 1,
+                        this.boxWidth,
+                        1,
+                        obj.x + obj.boxOffsetX,
+                        obj.y + obj.boxOffsetY,
+                        obj.boxWidth,
+                        1
+                    )
+                }
+
+                if (collided)
                 {
                     this.currentlyCollidingWith = obj
                     break
