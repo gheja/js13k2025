@@ -70,7 +70,13 @@ class GameObjectPlayer extends GameObject {
         }
 
         a = Math.min(Math.max(a, -15), 15)
-        this.velocityX = a * 0.95
+        a = a * PLAYER_DRAG_MULTIPLIER
+        if (Math.abs(a) <= PLAYER_DRAG_CLAMP_TO_ZERO)
+        {
+            a = 0
+        }
+
+        this.velocityX = a
 
         if (this.velocityY < 0) {
             this.velocityY += GRAVITY * 1/TARGET_TICK_INTERVAL_MS
