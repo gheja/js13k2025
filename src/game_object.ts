@@ -106,19 +106,37 @@ class GameObjectPlayer extends GameObject {
 
                 var collided = false
 
-                // falling
-                if (obj.interaction == GameObjectInteractionType.SitOnTop && this.velocityY > 0)
-                {
-                    collided = boxesCollide(
-                        nextX + this.boxOffsetX,
-                        nextY + this.boxOffsetY + this.boxHeight - 1,
-                        this.boxWidth,
-                        1,
-                        obj.x + obj.boxOffsetX,
-                        obj.y + obj.boxOffsetY,
-                        obj.boxWidth,
-                        1
-                    )
+                // NOTE: currently the collision check only works reliably when the player's box is smaller or equal to the other object's box,
+                // because otherwise the top points might fall through on both side of the other object's box
+
+                // only check when falling
+                if (this.velocityY > 0) {
+                    if (obj.interaction == GameObjectInteractionType.SitOnTop)
+                    {
+                        collided = boxesCollide(
+                            nextX + this.boxOffsetX,
+                            nextY + this.boxOffsetY + this.boxHeight - 1,
+                            this.boxWidth,
+                            1,
+                            obj.x + obj.boxOffsetX,
+                            obj.y + obj.boxOffsetY,
+                            obj.boxWidth,
+                            1
+                        )
+                    }
+                    else if (obj.interaction == GameObjectInteractionType.GrabOnTop)
+                    {
+                        collided = boxesCollide(
+                            nextX + this.boxOffsetX,
+                            nextY + this.boxOffsetY,
+                            this.boxWidth,
+                            1,
+                            obj.x + obj.boxOffsetX,
+                            obj.y + obj.boxOffsetY,
+                            obj.boxWidth,
+                            1
+                        )
+                    }
                 }
 
                 if (collided)

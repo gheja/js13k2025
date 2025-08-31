@@ -44,6 +44,13 @@ class Game {
         obj.boxHeight = 300
         this.objects.push(obj)
 
+        obj = new GameObject(580, 250)
+        obj.sprites.push(new GfxSprite(GFX_CLOTH_1))
+        obj.interaction = GameObjectInteractionType.GrabOnTop
+        obj.boxWidth = 100
+        obj.boxHeight = 100
+        this.objects.push(obj)
+
         window.addEventListener("keydown", this.inputEvent.bind(this))
         window.addEventListener("keyup", this.inputEvent.bind(this))
     }
