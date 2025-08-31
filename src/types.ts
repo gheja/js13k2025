@@ -5,3 +5,11 @@ enum GameObjectInteractionType {
     GrabOnTop,
     Player,
 }
+enum InputArrayKey {
+    Up = 0,
+    Right,
+    Down,
+    Left,
+    PrimaryAction,
+    SecondaryAction,
+}

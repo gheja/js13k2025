@@ -36,6 +36,7 @@ class GameObject {
 class GameObjectPlayer extends GameObject {
     velocityX: number = 0
     velocityY: number = 0
+    currentlyCollidingWith: GameObject
 
     constructor(x: number, y: number) {
         super(x, y)
@@ -43,6 +44,33 @@ class GameObjectPlayer extends GameObject {
     }
 
     physicsFrame() {
+        var inputs = game.getInputArray()
+
+        if (this.currentlyCollidingWith)
+        {
+            if (this.currentlyCollidingWith.interaction == GameObjectInteractionType.SitOnTop)
+            {
+                if (inputs[InputArrayKey.Up])
+                {
+                    this.velocityY -= 15
+                }
+            }
+        }
+
+        var a = this.velocityX
+
+        if (inputs[InputArrayKey.Left])
+        {
+            a += -1
+        }
+        else if (inputs[InputArrayKey.Right])
+        {
+            a += +1
+        }
+
+        a = Math.min(Math.max(a, -15), 15)
+        this.velocityX = a * 0.95
+
         this.velocityY += GRAVITY * 1/TARGET_TICK_INTERVAL_MS
 
         // collision checks
@@ -51,7 +79,7 @@ class GameObjectPlayer extends GameObject {
         var stepX = this.velocityX / steps
         var stepY = this.velocityY / steps
         var nextX, nextY
-        var collidedWithObject = null
+        this.currentlyCollidingWith = null
         for (var i=0; i<steps; i++)
         {
             nextX = this.x + stepX
@@ -75,25 +103,33 @@ class GameObjectPlayer extends GameObject {
                     obj.boxHeight
                 ))
                 {
-                    collidedWithObject = obj
+                    this.currentlyCollidingWith = obj
                     break
                 }
             }
 
-            if (collidedWithObject)
-            {
-                break
-            }
+            // if (this.currentlyCollidingWith)
+            // {
+            //     break
+            // }
 
+            if (this.currentlyCollidingWith)
+            {
+                if (this.currentlyCollidingWith.interaction == GameObjectInteractionType.GrabOnTop)
+                {
+                    this.velocityX = 0
+                    nextX = this.x
+                }
+                else if (this.currentlyCollidingWith.interaction == GameObjectInteractionType.SitOnTop)
+                {
+                    //
+                }
+                this.velocityY = 0
+                nextY = this.y
+            }
+            
             this.x = nextX
             this.y = nextY
-        }
-
-        if (collidedWithObject)
-        {
-            // console.log("collision", collidedWithObject)
-            this.velocityX = 0
-            this.velocityY = 0
         }
     }
 }

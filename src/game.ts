@@ -3,6 +3,7 @@ class Game {
     private lastTickTime: number
     private lastPhysicsTickTime: number
     public objects: Array<GameObject>
+    private keyPressed: Array<boolean> = []
 
     constructor(){
         this.lastTickTime = performance.now()
@@ -35,6 +36,25 @@ class Game {
         obj.boxWidth = 200
         obj.boxHeight = 400
         this.objects.push(obj)
+
+        window.addEventListener("keydown", this.inputEvent.bind(this))
+        window.addEventListener("keyup", this.inputEvent.bind(this))
+    }
+
+    getInputArray() {
+        return [
+            this.keyPressed["aarrowup"] || this.keyPressed['akeyw'],
+            this.keyPressed["aarrowright"] || this.keyPressed['akeyd'],
+            this.keyPressed["aarrowdown"] || this.keyPressed['akeys'],
+            this.keyPressed["aarrowleft"] || this.keyPressed['akeya'],
+            this.keyPressed["aspace"],
+            this.keyPressed["akeyq"],
+        ]
+    }
+
+    inputEvent(e: KeyboardEvent) {
+        // "keys" is a function on Array, so let's prefix it, so "KeyS".toLowerCase() won't be misinterpreted
+        this.keyPressed["a" + e.code.toLowerCase()] = (e.type == "keydown")
     }
 
     physicsFrame(){
