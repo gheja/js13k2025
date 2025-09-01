@@ -8,6 +8,10 @@ class GameObject {
     boxOffsetX: number = 0
     boxOffsetY: number = 0
     interaction: GameObjectInteractionType = GameObjectInteractionType.None
+    canFallThrough: boolean = true
+    // these will limit the vertical movement of the player. different levels might require different values
+    minX: number = 0
+    maxX: number = 1920 - 200
 
     constructor(x: number, y: number){
         // this.sprites = [ new GfxSprite(TEST_GFX_DEFINITION_1) ]
@@ -46,17 +50,28 @@ class GameObjectPlayer extends GameObject {
     physicsFrame() {
         var inputs = game.getInputArray()
 
+        // will disregard this one in this physicsFrame() run
+        var ignoreCollidingWith = null
+
+
         if (this.currentlyCollidingWith)
         {
-            if (this.currentlyCollidingWith.interaction == GameObjectInteractionType.SitOnTop)
+            if (this.currentlyCollidingWith.interaction == GameObjectInteractionType.SitOnTop ||
+                this.currentlyCollidingWith.interaction == GameObjectInteractionType.GrabOnTop)
             {
                 if (inputs[InputArrayKey.Up])
                 {
                     // base jump speed + the running speed extra
                     this.velocityY -= PLAYER_JUMP_SPEED + Math.abs(this.velocityX) * PLAYER_JUMP_SPEED_EXTRA_MULTIPLIER
+                    ignoreCollidingWith = this.currentlyCollidingWith
+                }
+                else if (this.currentlyCollidingWith.canFallThrough && inputs[InputArrayKey.Down])
+                {
+                    ignoreCollidingWith = this.currentlyCollidingWith
                 }
             }
         }
+
 
         var a = this.velocityX
 
@@ -78,12 +93,14 @@ class GameObjectPlayer extends GameObject {
 
         this.velocityX = a
 
+
         if (this.velocityY < 0) {
             this.velocityY += GRAVITY * 1/TARGET_TICK_INTERVAL_MS
         }
         else {
             this.velocityY += FALL_GRAVITY * 1/TARGET_TICK_INTERVAL_MS
         }
+
 
         // collision checks
         // do it in small steps so we won't miss anything
@@ -100,6 +117,11 @@ class GameObjectPlayer extends GameObject {
             for (var obj of game.objects)
             {
                 if (obj == this)
+                {
+                    continue
+                }
+
+                if (obj == ignoreCollidingWith)
                 {
                     continue
                 }
@@ -165,6 +187,14 @@ class GameObjectPlayer extends GameObject {
                 this.velocityY = 0
                 nextY = this.y
             }
+
+            // don't leave the screen
+            if (nextX < this.minX || nextX > this.maxX)
+            {
+                this.velocityX = 0
+                nextX = this.x
+            }
+
             
             this.x = nextX
             this.y = nextY

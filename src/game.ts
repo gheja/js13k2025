@@ -28,6 +28,7 @@ class Game {
         obj.interaction = GameObjectInteractionType.SitOnTop
         obj.boxWidth = 1920
         obj.boxHeight = 10
+        obj.canFallThrough = false
         this.objects.push(obj)
 
         obj = new GameObject(180, 750)
