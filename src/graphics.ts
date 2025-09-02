@@ -34,19 +34,27 @@ class GfxSprite {
     constructor(data) {
         this.originalWidth = data[0]
         this.originalHeight = data[1]
-        var arr: Array<number> = data[2][0]
+        var arr: Array<number>
 
-        var s = "M "
-        // the first element is the style index
-        for (var i=1; i<arr.length; i+=2){
-            s += (arr[i] / 100 * this.originalWidth) + "," + (arr[i+1] / 100 * this.originalHeight) + " "
+        var str = ""
+        str += `<svg width="${this.originalWidth}" height="${this.originalHeight}" viewBox="0 0 ${this.originalWidth} ${this.originalHeight}" version="1.1" xmlns="http://www.w3.org/2000/svg">`
+
+        for (var j=0; j<data[2].length; j++)
+        {
+            arr = data[2][j]
+
+            var s = "M "
+            // the first element is the style index
+            for (var i=1; i<arr.length; i+=2){
+                s += (arr[i] / 100 * this.originalWidth) + "," + (arr[i+1] / 100 * this.originalHeight) + " "
+            }
+            // this closes the shape, we don't need the final move back to the first point
+            s += "Z"
+
+            str += '<path style="' + SVG_STYLES[arr[0]] + '" d="' + s + '"/>'
         }
-        // this closes the shape, we don't need the final move back to the first point
-        s += "Z"
 
-        var str = `<svg width="${this.originalWidth}" height="${this.originalHeight}" viewBox="0 0 ${this.originalWidth} ${this.originalHeight}" version="1.1" xmlns="http://www.w3.org/2000/svg">` +
-            '<path style="' + SVG_STYLES[arr[0]] + '" d="' + s + '"/>' +
-            '</svg>'
+        str += '</svg>'
 
         var parser = new DOMParser()
         this.svg = parser.parseFromString(str, "image/svg+xml").documentElement as SvgInHtml
