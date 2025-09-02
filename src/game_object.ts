@@ -41,6 +41,7 @@ class GameObjectPlayer extends GameObject {
     velocityX: number = 0
     velocityY: number = 0
     currentlyCollidingWith: GameObject
+    state: PlayerState = PlayerState.InAir
 
     constructor(x: number, y: number) {
         super(x, y)
@@ -109,6 +110,8 @@ class GameObjectPlayer extends GameObject {
         var stepY = this.velocityY / steps
         var nextX, nextY
         this.currentlyCollidingWith = null
+        this.state = PlayerState.InAir
+
         for (var i=0; i<steps; i++)
         {
             nextX = this.x + stepX
@@ -177,12 +180,13 @@ class GameObjectPlayer extends GameObject {
             {
                 if (this.currentlyCollidingWith.interaction == GameObjectInteractionType.GrabOnTop)
                 {
+                    this.state = PlayerState.Grabbing
                     this.velocityX = 0
                     nextX = this.x
                 }
                 else if (this.currentlyCollidingWith.interaction == GameObjectInteractionType.SitOnTop)
                 {
-                    //
+                    this.state = PlayerState.OnTheFloor
                 }
                 this.velocityY = 0
                 nextY = this.y

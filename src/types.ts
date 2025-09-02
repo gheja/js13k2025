@@ -13,3 +13,8 @@ enum InputArrayKey {
     PrimaryAction,
     SecondaryAction,
 }
+enum PlayerState {
+    OnTheFloor = 0,
+    Grabbing,
+    InAir,
+}
