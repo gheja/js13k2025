@@ -18,9 +18,6 @@ class Game {
 
         var obj
 
-        obj = new GameObjectPlayer(100, 100)
-        this.objects.push(obj)
-
         obj = new GameObject(0, 1070)
         obj.sprites.push(new GfxSprite(GFX_FLOOR))
         obj.interaction = GameObjectInteractionType.SitOnTop
@@ -29,26 +26,50 @@ class Game {
         obj.canFallThrough = false
         this.objects.push(obj)
 
-        obj = new GameObject(180, 750)
-        obj.sprites.push(new GfxSprite(GFX_TRASH_CAN))
-        obj.interaction = GameObjectInteractionType.SitOnTop
-        obj.boxWidth = 200
-        obj.boxHeight = 300
+        obj = new GameObject(280, 800)
+        obj.sprites.push(new GfxSprite(GFX_TRASH_CAN_SHORT_V2_2))
         this.objects.push(obj)
 
-        obj = new GameObject(580, 550)
-        obj.sprites.push(new GfxSprite(GFX_TRASH_CAN))
+        obj = new GameObject(280, 800)
+        obj.sprites.push(new GfxSprite(GFX_TRASH_CAN_SHORT_V2_1))
         obj.interaction = GameObjectInteractionType.SitOnTop
+        obj.boxOffsetY = 100
         obj.boxWidth = 200
-        obj.boxHeight = 300
+        obj.boxHeight = 160
         this.objects.push(obj)
 
-        obj = new GameObject(580, 250)
-        obj.sprites.push(new GfxSprite(GFX_CLOTH_1))
+
+        obj = new GameObject(580, 750)
+        obj.sprites.push(new GfxSprite(GFX_TRASH_CAN_SHORT_V2_2))
+        this.objects.push(obj)
+
+        obj = new GameObject(580, 800)
+        obj.sprites.push(new GfxSprite(GFX_TRASH_CAN_TALL_V2_1))
+        obj.interaction = GameObjectInteractionType.SitOnTop
+        obj.boxOffsetY = 50
+        obj.boxWidth = 200
+        obj.boxHeight = 210
+        this.objects.push(obj)
+
+        obj = new GameObject(580, 450)
+        obj.sprites.push(new GfxSprite(GFX_CLOTH_SMALL1_V1_1))
         obj.interaction = GameObjectInteractionType.GrabOnTop
-        obj.boxWidth = 100
-        obj.boxHeight = 100
+        obj.boxWidth = 70
+        obj.boxHeight = 70
         this.objects.push(obj)
+
+        // top of the fence
+        obj = new GameObject(0, 680)
+        obj.sprites.push(new GfxSprite(GFX_FLOOR))
+        obj.interaction = GameObjectInteractionType.SitOnTop
+        obj.boxWidth = 1920
+        obj.boxHeight = 10
+        this.objects.push(obj)
+
+
+        obj = new GameObjectPlayer(50, 800)
+        this.objects.push(obj)
+
 
         window.addEventListener("keydown", this.inputEvent.bind(this))
         window.addEventListener("keyup", this.inputEvent.bind(this))

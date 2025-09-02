@@ -5,7 +5,25 @@ const SVG_STYLES = [
     "fill:#fc5",
 	"fill:#112",
 	"fill:#fd0",
+    "fill:#392c4e",
+    "fill:#773972",
+    "fill:#1e1e27",
+    "fill:#ffb7a9",
 ]
+
+/*
+0
+1
+2
+3
+fill:#111122;fill-opacity:1;stroke:none;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none
+fill:#f9de00;fill-opacity:1;stroke:#ffffff;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none
+fill:#392c4e;fill-opacity:1;stroke:none;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none
+fill:#773972;fill-opacity:1;stroke:none;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none
+fill:#1e1e27;fill-opacity:1;stroke:none;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none
+fill:#ffb7a9;fill-opacity:1;stroke-width:0;stroke-linecap:round;stroke-linejoin:round
+*/
+
 /*
     definition: original_width, original_height, [ shape, shape, ... ]
     shape: [ style index,  x, y,  x, y,  x, y, ...]
@@ -162,6 +180,83 @@ const GFX_CAT_IDLE_V2_1 = [
 		[
 			5,
 			79,42, 73,40, 67,43, 70,45, 
+		],
+	]
+]
+
+
+const GFX_TRASH_CAN_SHORT_V2_1 = [
+	200, 260, [
+		[
+			6,
+			2,32, 27,39, 50,41, 73,39, 98,32, 98,91, 73,98, 50,100, 27,98, 2,91, 
+		],
+		[
+			7,
+			9,42, 22,45, 21,91, 9,88, 
+		],
+		[
+			7,
+			31,46, 44,47, 44,94, 32,92, 
+		],
+		[
+			7,
+			91,42, 78,45, 78,91, 90,88, 
+		],
+		[
+			7,
+			68,46, 55,47, 56,94, 68,92, 
+		],
+	]
+]
+
+const GFX_TRASH_CAN_SHORT_V2_2 = [
+	200, 260, [
+		[
+			8,
+			5,48, 95,48, 98,27, 73,21, 50,18, 27,21, 2,27, 
+		],
+		[
+			7,
+			10,27, 35,35, 58,36, 81,35, 106,27, 106,23, 81,17, 58,14, 35,17, 10,23, 
+		],
+		[
+			6,
+			43,25, 60,22, 76,25, 76,20, 59,18, 43,20, 
+		],
+	]
+]
+
+const GFX_TRASH_CAN_TALL_V2_1 = [
+	200, 260, [
+		[
+			6,
+			2,11, 27,19, 50,20, 73,19, 98,11, 98,91, 73,98, 50,100, 27,98, 2,91, 
+		],
+		[
+			7,
+			9,22, 22,25, 21,91, 9,88, 
+		],
+		[
+			7,
+			31,26, 44,27, 44,94, 32,92, 
+		],
+		[
+			7,
+			91,22, 78,25, 78,91, 90,88, 
+		],
+		[
+			7,
+			68,26, 55,27, 56,94, 68,92, 
+		],
+	]
+]
+
+const GFX_CLOTH_SMALL1_V1_1 = [
+	70, 70, [
+		[
+			9,
+			2,3, 4,31, 22,29, 20,99, 94,94, 84,26, 98,29, 97,2, 68,3, 48,11, 29,2, 
 		],
 	]
 ]
