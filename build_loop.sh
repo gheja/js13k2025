@@ -1,6 +1,7 @@
 #!/bin/bash
 
 last_checksum="none"
+echo -n "" > build_loop.1.tmp
 
 if [ $TERM == "xterm" ] || [ $TERM == "screen" ]; then
 	color_title='\033[1;37;44m'
@@ -20,9 +21,9 @@ n=0
 while true; do
 	n=$((n + 1))
 	
-	find -printf '%C@ %T@ %i %U %G %m %s %p\n' > ../list_${n}.txt
-	# checksum=`find -printf '%A@ %C@ %T@ %i %U %G %m %s %p\n' | md5sum - | awk '{ print $1; }'`
-	checksum=`cd src; find -printf '%C@ %T@ %i %U %G %m %s %p\n' | md5sum - | awk '{ print $1; }'`
+	checksum=`cd src; find -type f -printf '%C@ %T@ %i %U %G %m %s %p\n' > ../build_loop.2.tmp; cat ../build_loop.2.tmp | md5sum - | awk '{ print $1; }'`
+	
+	diff build_loop.1.tmp build_loop.2.tmp
 	
 	if [ "$checksum" == "$last_checksum" ]; then
 		sleep 1
@@ -30,6 +31,7 @@ while true; do
 	fi
 	
 	last_checksum="$checksum"
+	cp build_loop.2.tmp build_loop.1.tmp
 	
 	echo -e "${prefix}Files changed, starting build process..."
 	
