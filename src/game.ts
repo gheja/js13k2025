@@ -19,8 +19,6 @@ class Game {
         var obj
 
         obj = new GameObjectPlayer(100, 100)
-        obj.boxWidth = 200
-        obj.boxHeight = 50
         this.objects.push(obj)
 
         obj = new GameObject(0, 1070)

@@ -3,6 +3,8 @@ class GameObject {
     activeSpriteIndex: number = 0
     x: number
     y: number
+    velocityX: number = 0
+    velocityY: number = 0
     boxWidth: number
     boxHeight: number
     boxOffsetX: number = 0
@@ -34,6 +36,9 @@ class GameObject {
 
     renderFrame() {
         this.sprites[this.activeSpriteIndex].moveTo(this.x, this.y)
+
+        // flip
+        this.sprites[this.activeSpriteIndex].svg.style.transform = (this.velocityX < 0 ? "scaleX(-1)" : "")
     }
 }
 
