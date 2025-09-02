@@ -1,7 +1,6 @@
 "use strict";
 
-// var _lastFilename = ""
-var _imageDefinitions = []
+var _imageDefinitions = {}
 var _styleDefinitionsArray = []
 
 function convert()
@@ -26,7 +25,6 @@ function startUpload()
     {
         var reader = new FileReader()
         reader.onload = processUpload.bind(null, file.name)
-        // _lastFilename = file.name
         reader.readAsText(file)
     }
 }
@@ -58,7 +56,7 @@ function processUpload(filename, event)
     s += "\t]\n"
     s += "]\n"
 
-    _imageDefinitions.push(s)
+    _imageDefinitions[filename] = s
 
     finishProcessing()
 }
@@ -73,10 +71,10 @@ function finishProcessing()
     }
     t += "]\n"
 
-    for (var definition of _imageDefinitions)
+    for (var key in _imageDefinitions)
     {
         t += "\n"
-        t += definition
+        t += _imageDefinitions[key]
     }
 
     document.getElementById("output").value = t

@@ -15,7 +15,7 @@
         </style>
     </head>
     <body>
-        SVG input: <input type="file" id="input" multiple/><br/>
+        SVG input: <input type="file" id="input" multiple onchange="convert(); return false;"/><br/>
         Supported modes: <code>m,M,l,L,h,H,v,V,Z</code><br/>
 <!--
         <input type="checkbox" id="final_map_parameters" /><label for="final_map_parameters">Use the final map parameters</label><br/>
