@@ -14,6 +14,8 @@ class GameObject {
     // these will limit the vertical movement of the player. different levels might require different values
     minX: number = 0
     maxX: number = 1920 - 200
+    animations: Array<any>
+    activeAnimationIndex: number = -1
 
     constructor(x: number, y: number){
         // this.sprites = [ new GfxSprite(TEST_GFX_DEFINITION_1) ]
@@ -30,6 +32,17 @@ class GameObject {
         // NOTE: the active sprite will be moved to the correct place by the next renderFrame() call
     }
 
+    setActiveAnimationIndex(n: number)
+    {
+        if (this.activeAnimationIndex != n)
+        {
+            this.setActiveSpriteIndex(-1)
+            this.sprites = this.animations[n]
+            this.setActiveSpriteIndex(0)
+            this.activeAnimationIndex = n
+        }
+    }
+
     physicsFrame() {
         //
     }
@@ -43,17 +56,36 @@ class GameObject {
 }
 
 class GameObjectPlayer extends GameObject {
-    velocityX: number = 0
-    velocityY: number = 0
     currentlyCollidingWith: GameObject
     state: PlayerState = PlayerState.InAir
 
     constructor(x: number, y: number) {
         super(x, y)
-        this.sprites = [ new GfxSprite(GFX_PLAYER) ]
+        this.boxWidth = 160
+        this.boxHeight = 120
+
+        this.animations = [
+            [ new GfxSprite(GFX_CAT_IDLE_V2_1) ],
+            [ new GfxSprite(GFX_CAT_WALK_V2_1), new GfxSprite(GFX_CAT_WALK_V2_2), new GfxSprite(GFX_CAT_WALK_V2_3), new GfxSprite(GFX_CAT_WALK_V2_4) ]
+        ]
+        this.sprites = this.animations[0]
     }
 
     physicsFrame() {
+        if (Math.abs(this.velocityX) > 0.9)
+        {
+            this.setActiveAnimationIndex(1)
+        }
+        else
+        {
+            this.setActiveAnimationIndex(0)
+        }
+
+        if (_tick_count % 6 == 0)
+        {
+            this.setActiveSpriteIndex((this.activeSpriteIndex + 1) % this.sprites.length)
+        }
+
         var inputs = game.getInputArray()
 
         // will disregard this one in this physicsFrame() run
