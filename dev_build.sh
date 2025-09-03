@@ -143,12 +143,9 @@ _title "Compiling TypeScript to JavaScript..."
 
 echo "travis_fold:start:tscc"
 
-for i in $files_typescript; do
-	# echo "*** $i ***"
-	sed -r -i 's/^(const IS_PROD_BUILD).*/\1 = true;/g' $i
-	# try tscc $i
-	# echo ""
-done
+# for i in $files_typescript; do
+# 	sed -r -i 's/^(const IS_PROD_BUILD).*/\1 = true;/g' $i
+# done
 
 try tscc $files_typescript
 
