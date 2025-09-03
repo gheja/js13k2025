@@ -98,6 +98,12 @@ class Game {
         obj = new GameObjectPlayer(50, 800)
         this.objects.push(obj)
 
+        if (!IS_PROD_BUILD)
+        {
+            for (var obj2 of this.objects) {
+                obj2.injectCollisionBox()
+            }
+        }
 
         window.addEventListener("keydown", this.inputEvent.bind(this))
         window.addEventListener("keyup", this.inputEvent.bind(this))

@@ -24,6 +24,52 @@ class GameObject {
         this.y = y
     }
 
+    injectCollisionBoxSvg(sprite: GfxSprite)
+    {
+        if (IS_PROD_BUILD)
+        {
+            return
+        }
+
+        var s = '<path style="fill:#0ff2;stroke:#0ffa;stroke-width:4" d="M ' +
+            (this.boxOffsetX)                 + ',' + (this.boxOffsetY)                  + ' ' +
+            (this.boxOffsetX + this.boxWidth) + ',' + (this.boxOffsetY)                  + ' ' +
+            (this.boxOffsetX + this.boxWidth) + ',' + (this.boxOffsetY + this.boxHeight) + ' ' +
+            (this.boxOffsetX)                 + ',' + (this.boxOffsetY + this.boxHeight) + ' ' +
+            ' Z"/>'
+
+        sprite.svg.innerHTML += s
+    }
+
+    injectCollisionBox()
+    {
+        // NOTE: this is only accurate in non-flipped sprites
+        // NOTE: this might be cut of if the sprite is smaller than the box
+        
+        if (IS_PROD_BUILD)
+        {
+            return
+        }
+
+        if (this.animations && this.animations.length > 0)
+        {
+            for (var animation of this.animations)
+            {
+                for (var b of animation)
+                {
+                    this.injectCollisionBoxSvg(b)
+                }
+            }
+        }
+        else
+        {
+            for (var a of this.sprites)
+            {
+                this.injectCollisionBoxSvg(a)
+            }
+        }
+    }
+
     setActiveSpriteIndex(n: number) {
         this.activeSpriteIndex = n
         for (var sprite of this.sprites) {

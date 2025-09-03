@@ -1,3 +1,6 @@
+// the following will be replaced with true by the build process in prod builds
+var IS_PROD_BUILD = false
+
 // used in physics calculation
 var TARGET_TICK_INTERVAL_MS = 1000 / 60
 var GRAVITY = 11 // pixel/sec/sec
