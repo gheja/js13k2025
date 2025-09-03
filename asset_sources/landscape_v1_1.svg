@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="1920mm"
+   height="240mm"
+   viewBox="0 0 1920 240"
+   version="1.1"
+   id="svg4599"
+   sodipodi:docname="landscape_v1_1.svg"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   xml:space="preserve"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><sodipodi:namedview
+     id="namedview4601"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.125"
+     inkscape:cx="2536"
+     inkscape:cy="2048"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     showguides="true" /><defs
+     id="defs4596" /><g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"><path
+       style="fill:#ff7200;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;fill-opacity:1"
+       d="M 0,0 H 1920 V 240 H 0 Z"
+       id="path129589" /><path
+       style="fill:#ff432b;fill-opacity:1;stroke-width:0;stroke-linecap:round;stroke-linejoin:round"
+       d="M 0,211.66667 H 238.18953 V 21.166667 h 119.4746 V 211.66667 H 1355.4793 V 52.916667 h 91.8386 V 211.66667 H 1920 V 240 H 0 Z"
+       id="path129954"
+       sodipodi:nodetypes="ccccccccccccc" /><path
+       style="fill:#ec174c;fill-opacity:1;stroke-width:0;stroke-linecap:round;stroke-linejoin:round"
+       d="m 0,158.75 h 99.483333 v 58.20833 H 292.1 V 158.75 h 94.25619 V 84.666667 H 606.37246 V 158.75 H 737.6583 v 37.04167 h 578.7855 V 158.75 h 308.9105 V 84.666667 h 187.0886 V 158.75 H 1920 V 240 H 0 Z"
+       id="path130682"
+       sodipodi:nodetypes="ccccccccccccccccccccc" /><path
+       style="fill:#bc0048;fill-opacity:1;stroke-width:0;stroke-linecap:round;stroke-linejoin:round"
+       d="m 0,222.25 h 42.39786 v -15.875 h 394.64127 v 15.875 h 627.39847 v -15.875 h 832.672 V 222.25 H 1920 V 240 H 0 Z"
+       id="path132136"
+       sodipodi:nodetypes="ccccccccccccc" /></g></svg>
