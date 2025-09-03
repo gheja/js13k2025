@@ -160,7 +160,8 @@ class GameObjectPlayer extends GameObject {
 
         var inputs = game.getInputArray()
 
-        // will disregard this one in this physicsFrame() run
+        // if set, will disregard all collison objects on this physicsFrame() run
+        // (WAS: will disregard this one in this physicsFrame() run)
         var ignoreCollidingWith = null
 
 
@@ -233,7 +234,10 @@ class GameObjectPlayer extends GameObject {
                     continue
                 }
 
-                if (obj == ignoreCollidingWith)
+                // NOTE: this caused problem when there were multiple collisions on the same line (i.e. two clothes on clothesline, one under the left paw, one under the right)
+                // if (obj == ignoreCollidingWith)
+
+                if (ignoreCollidingWith)
                 {
                     continue
                 }
