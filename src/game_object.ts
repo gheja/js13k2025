@@ -67,13 +67,38 @@ class GameObjectPlayer extends GameObject {
 
         this.animations = [
             [ new GfxSprite(GFX_CAT_IDLE_V2_1) ],
-            [ new GfxSprite(GFX_CAT_WALK_V2_1), new GfxSprite(GFX_CAT_WALK_V2_2), new GfxSprite(GFX_CAT_WALK_V2_3), new GfxSprite(GFX_CAT_WALK_V2_4) ]
+            [ new GfxSprite(GFX_CAT_WALK_V2_1), new GfxSprite(GFX_CAT_WALK_V2_2), new GfxSprite(GFX_CAT_WALK_V2_3), new GfxSprite(GFX_CAT_WALK_V2_4) ],
+            [ new GfxSprite(GFX_CAT_GRAB_V2_1) ],
+            [ new GfxSprite(GFX_CAT_FALL_V1_1) ],
+            [ new GfxSprite(GFX_CAT_JUMP_V4_1) ],
         ]
         this.sprites = this.animations[0]
     }
 
     physicsFrame() {
-        if (Math.abs(this.velocityX) > 0.9)
+        if (this.state == PlayerState.Grabbing)
+        {
+            this.setActiveAnimationIndex(2)
+        }
+        else if (this.state == PlayerState.InAir)
+        {
+            if (this.velocityY < -1)
+            {
+                if (Math.abs(this.velocityX) > 1)
+                {
+                    this.setActiveAnimationIndex(4)
+                }
+                else
+                {
+                    this.setActiveAnimationIndex(2)
+                }
+            }
+            else
+            {
+                this.setActiveAnimationIndex(3)
+            }
+        }
+        else if (Math.abs(this.velocityX) > 0.9)
         {
             this.setActiveAnimationIndex(1)
         }

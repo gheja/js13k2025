@@ -11,3 +11,7 @@ function boxesCollide(ax: number, ay: number, aw: number, ah: number, bx: number
            pointInBox(ax + aw, ay + ah, bx, by, bx + bw, by + bh) ||
            pointInBox(ax,      ay + ah, bx, by, bx + bw, by + bh)
 }
+
+function arrayPick(arr: Array<any>) {
+    return arr[Math.floor(Math.random() * arr.length)]
+}

@@ -9,6 +9,11 @@ const SVG_STYLES = [
     "fill:#773972",
     "fill:#1e1e27",
     "fill:#ffb7a9",
+    "fill:#7d2253",
+    "fill:#ff7200",
+    "fill:#ff432b",
+    "fill:#ec174c",
+    "fill:#bc0048",
 ]
 
 /*
@@ -22,6 +27,11 @@ fill:#392c4e;fill-opacity:1;stroke:none;stroke-width:0;stroke-linecap:round;stro
 fill:#773972;fill-opacity:1;stroke:none;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none
 fill:#1e1e27;fill-opacity:1;stroke:none;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none
 fill:#ffb7a9;fill-opacity:1;stroke-width:0;stroke-linecap:round;stroke-linejoin:round
+fill:#7d2253;fill-opacity:1;stroke-width:0;stroke-linecap:round;stroke-linejoin:round
+fill:#ff7200;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;fill-opacity:1
+fill:#ff432b;fill-opacity:1;stroke-width:0;stroke-linecap:round;stroke-linejoin:round
+fill:#ec174c;fill-opacity:1;stroke-width:0;stroke-linecap:round;stroke-linejoin:round
+fill:#bc0048;fill-opacity:1;stroke-width:0;stroke-linecap:round;stroke-linejoin:round
 */
 
 /*
@@ -35,6 +45,14 @@ const TEST_GFX_DEFINITION_1 = [
         [ // shape 1
             1, // style index
             6,16, 59,6, 92,33, 38,76, 41,41, 10,41 // coordinates
+        ]
+    ]
+]
+
+const GFX_EMPTY = [
+    1, 1, [
+        [ // shape 1
+            0, // style index
         ]
     ]
 ]
@@ -257,6 +275,94 @@ const GFX_CLOTH_SMALL1_V1_1 = [
 		[
 			9,
 			2,3, 4,31, 22,29, 20,99, 94,94, 84,26, 98,29, 97,2, 68,3, 48,11, 29,2, 
+		],
+	]
+]
+
+const GFX_FENCE1_V1_1 = [
+	60, 320, [
+		[
+			10,
+			4,1, 93,2, 95,100, 11,100, 
+		],
+	]
+]
+
+const GFX_FENCE2_V1_1 = [
+	60, 320, [
+		[
+			10,
+			5,3, 99,2, 93,100, 5,100, 
+		],
+	]
+]
+
+const GFX_FENCE3_V1_1 = [
+	60, 320, [
+		[
+			10,
+			5,2, 95,1, 98,100, 9,100, 
+		],
+	]
+]
+
+const GFX_LANDSCAPE_V1_1 = [
+	1920, 240, [
+		[
+			11,
+			0,0, 100,0, 100,100, 0,100, 
+		],
+		[
+			12,
+			0,88, 12,88, 12,9, 19,9, 19,88, 71,88, 71,22, 75,22, 75,88, 100,88, 100,100, 0,100, 
+		],
+		[
+			13,
+			0,66, 5,66, 5,90, 15,90, 15,66, 20,66, 20,35, 32,35, 32,66, 38,66, 38,82, 69,82, 69,66, 85,66, 85,35, 94,35, 94,66, 100,66, 100,100, 0,100, 
+		],
+		[
+			14,
+			0,93, 2,93, 2,86, 23,86, 23,93, 55,93, 55,86, 99,86, 99,93, 100,93, 100,100, 0,100, 
+		],
+	]
+]
+
+const GFX_CAT_GRAB_V2_1 = [
+	100, 160, [
+		[
+			4,
+			41,100, 53,97, 61,90, 52,78, 53,70, 62,69, 73,90, 80,91, 73,62, 66,39, 80,27, 85,3, 78,1, 72,24, 70,27, 71,18, 74,5, 60,13, 43,12, 30,4, 32,17, 31,25, 25,0, 17,1, 23,26, 38,38, 29,62, 23,91, 32,89, 38,67, 45,70, 43,79, 52,90, 39,96, 
+		],
+	]
+]
+
+const GFX_CAT_FALL_V1_1 = [
+	100, 140, [
+		[
+			4,
+			22,28, 30,15, 17,8, 20,0, 34,7, 40,14, 31,31, 33,45, 45,48, 51,51, 53,43, 57,29, 62,37, 76,41, 89,35, 84,47, 79,54, 71,69, 75,78, 87,94, 78,95, 62,74, 65,97, 56,97, 54,75, 41,72, 36,72, 32,76, 27,76, 30,72, 26,73, 16,89, 10,86, 22,55, 
+		],
+		[
+			5,
+			79,52, 76,49, 71,49, 73,52, 
+		],
+		[
+			5,
+			59,44, 65,45, 68,48, 65,48, 
+		],
+	]
+]
+
+
+const GFX_CAT_JUMP_V4_1 = [
+	130, 130, [
+		[
+			4,
+			25,63, 12,67, 2,61, 2,56, 11,61, 18,59, 27,57, 33,56, 47,44, 61,25, 73,18, 75,11, 85,2, 85,10, 90,12, 95,19, 92,24, 84,26, 82,29, 92,30, 99,36, 97,40, 91,35, 81,36, 90,38, 96,44, 93,49, 87,42, 76,42, 71,50, 47,66, 42,79, 21,99, 19,96, 33,79, 36,69, 32,79, 17,94, 12,91, 26,75, 29,68, 27,65, 
+		],
+		[
+			5,
+			84,14, 89,13, 92,16, 89,17, 
 		],
 	]
 ]

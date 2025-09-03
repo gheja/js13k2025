@@ -18,13 +18,36 @@ class Game {
 
         var obj
 
+        obj = new GameObject(0, 0)
+        obj.sprites.push(new GfxSprite(GFX_LANDSCAPE_V1_1))
+        this.objects.push(obj)
+
+
         obj = new GameObject(0, 1070)
-        obj.sprites.push(new GfxSprite(GFX_FLOOR))
+        obj.sprites.push(new GfxSprite(GFX_EMPTY))
         obj.interaction = GameObjectInteractionType.SitOnTop
         obj.boxWidth = 1920
         obj.boxHeight = 10
         obj.canFallThrough = false
         this.objects.push(obj)
+
+        // top of the fence
+        obj = new GameObject(0, 680)
+        obj.sprites.push(new GfxSprite(GFX_EMPTY))
+        obj.interaction = GameObjectInteractionType.SitOnTop
+        obj.boxWidth = 1920
+        obj.boxHeight = 10
+        this.objects.push(obj)
+
+        for (var x=0; x<1920; x+=60)
+        {
+            obj = new GameObject(x, 670)
+            obj.sprites.push(new GfxSprite(arrayPick([ GFX_FENCE1_V1_1, GFX_FENCE2_V1_1, GFX_FENCE3_V1_1 ])))
+            this.objects.push(obj)
+        }
+
+
+
 
         obj = new GameObject(280, 800)
         obj.sprites.push(new GfxSprite(GFX_TRASH_CAN_SHORT_V2_2))
@@ -58,14 +81,19 @@ class Game {
         obj.boxHeight = 70
         this.objects.push(obj)
 
-        // top of the fence
-        obj = new GameObject(0, 680)
-        obj.sprites.push(new GfxSprite(GFX_FLOOR))
-        obj.interaction = GameObjectInteractionType.SitOnTop
-        obj.boxWidth = 1920
-        obj.boxHeight = 10
+        obj = new GameObject(680, 450)
+        obj.sprites.push(new GfxSprite(GFX_CLOTH_SMALL1_V1_1))
+        obj.interaction = GameObjectInteractionType.GrabOnTop
+        obj.boxWidth = 70
+        obj.boxHeight = 70
         this.objects.push(obj)
 
+        obj = new GameObject(750, 450)
+        obj.sprites.push(new GfxSprite(GFX_CLOTH_SMALL1_V1_1))
+        obj.interaction = GameObjectInteractionType.GrabOnTop
+        obj.boxWidth = 70
+        obj.boxHeight = 70
+        this.objects.push(obj)
 
         obj = new GameObjectPlayer(50, 800)
         this.objects.push(obj)
