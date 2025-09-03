@@ -108,7 +108,7 @@ class GameObjectPlayer extends GameObject {
     constructor(x: number, y: number) {
         super(x, y)
         this.boxOffsetX = 30
-        this.boxWidth = 120
+        this.boxWidth = 60
         this.boxHeight = 120
 
         this.animations = [
