@@ -318,3 +318,47 @@ class GameObjectPlayer extends GameObject {
         }
     }
 }
+
+class GameObjectWindow extends GameObject {
+    spriteTop: GfxSprite
+    spriteWindow: GfxSprite
+    spriteBelow: GfxSprite
+    targetOpening: number = 0
+    currentOpening: number = 0
+
+    constructor(x: number, y: number) {
+        super(x, y)
+        this.spriteBelow = new GfxSprite(GFX_WINDOW_OPEN_V1_1)
+        this.spriteWindow = new GfxSprite(GFX_WINDOW_CLOSED_V1_1)
+        this.spriteTop = new GfxSprite(GFX_WINDOW_FRAME_V1_1)
+    }
+
+    physicsFrame() {
+        if (Math.random() < 0.02)
+        {
+            if (this.targetOpening == 0)
+            {
+                this.targetOpening = 180
+            }
+            else
+            {
+                this.targetOpening = 0
+            }
+        }
+
+        if (this.currentOpening < this.targetOpening)
+        {
+            this.currentOpening += 10
+        }
+        else if (this.currentOpening > this.targetOpening)
+        {
+            this.currentOpening -= 10
+        }
+    }
+
+    renderFrame() {
+        this.spriteBelow.moveTo(this.x, this.y)
+        this.spriteWindow.moveTo(this.x, this.y - this.currentOpening)
+        this.spriteTop.moveTo(this.x, this.y)
+    }
+}

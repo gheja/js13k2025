@@ -1,38 +1,24 @@
 const SVG_STYLES = [
     "fill:#c0c6;stroke:#f0fa;stroke-width:2", // just for debug, remove this in final build
-    "fill:#666",
-    "fill:#444",
-    "fill:#fc5",
+	"fill:#666",
+	"fill:#444",
+	"fill:#fc5",
 	"fill:#112",
 	"fill:#fd0",
-    "fill:#392c4e",
-    "fill:#773972",
-    "fill:#1e1e27",
-    "fill:#ffb7a9",
-    "fill:#7d2253",
-    "fill:#ff7200",
-    "fill:#ff432b",
-    "fill:#ec174c",
-    "fill:#bc0048",
+	"fill:#392c4e",
+	"fill:#773972",
+	"fill:#1e1e27",
+	"fill:#ffb7a9",
+	"fill:#7d2253",
+	"fill:#ff7200",
+	"fill:#ff432b",
+	"fill:#ec174c",
+	"fill:#bc0048",
+	"fill:#ffe271",
+	"fill:#ae4871",
+	"fill:#884851",
+	"fill:#542035",
 ]
-
-/*
-0
-1
-2
-3
-fill:#111122;fill-opacity:1;stroke:none;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none
-fill:#f9de00;fill-opacity:1;stroke:#ffffff;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none
-fill:#392c4e;fill-opacity:1;stroke:none;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none
-fill:#773972;fill-opacity:1;stroke:none;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none
-fill:#1e1e27;fill-opacity:1;stroke:none;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none
-fill:#ffb7a9;fill-opacity:1;stroke-width:0;stroke-linecap:round;stroke-linejoin:round
-fill:#7d2253;fill-opacity:1;stroke-width:0;stroke-linecap:round;stroke-linejoin:round
-fill:#ff7200;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;fill-opacity:1
-fill:#ff432b;fill-opacity:1;stroke-width:0;stroke-linecap:round;stroke-linejoin:round
-fill:#ec174c;fill-opacity:1;stroke-width:0;stroke-linecap:round;stroke-linejoin:round
-fill:#bc0048;fill-opacity:1;stroke-width:0;stroke-linecap:round;stroke-linejoin:round
-*/
 
 /*
     definition: original_width, original_height, [ shape, shape, ... ]
@@ -363,6 +349,73 @@ const GFX_CAT_JUMP_V4_1 = [
 		[
 			5,
 			84,14, 89,13, 92,16, 89,17, 
+		],
+	]
+]
+
+const GFX_WINDOW_CLOSED_V1_1 = [
+	300, 360, [
+		[
+			13,
+			95,96, 5,96, 5,54, 95,54, 
+		],
+		[
+			12,
+			56,54, 5,96, 11,96, 62,54, 
+		],
+		[
+			12,
+			69,54, 18,96, 28,96, 79,54, 
+		],
+		[
+			12,
+			95,58, 50,96, 70,96, 95,75, 
+		],
+	]
+]
+
+const GFX_WINDOW_FRAME_V1_1 = [
+	300, 360, [
+		[
+			14,
+			0,0, 100,0, 100,50, 0,50, 
+		],
+		[
+			16,
+			0,50, 5,50, 5,100, 0,100, 
+		],
+		[
+			16,
+			95,50, 100,50, 100,100, 95,100, 
+		],
+		[
+			16,
+			95,96, 5,96, 5,100, 95,100, 
+		],
+		[
+			16,
+			95,50, 5,50, 5,54, 95,54, 
+		],
+	]
+]
+
+const GFX_WINDOW_OPEN_V1_1 = [
+	300, 360, [
+		[
+			17,
+			95,96, 5,96, 5,54, 95,54, 
+		],
+		[
+			18,
+			27,62, 31,72, 21,72, 21,96, 18,96, 18,72, 8,72, 13,62, 
+		],
+		[
+			18,
+			76,74, 76,90, 64,90, 64,96, 85,96, 85,74, 
+		],
+		[
+			18,
+			55,63, 67,63, 67,71, 55,71, 
 		],
 	]
 ]

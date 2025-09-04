@@ -74,26 +74,36 @@ class Game {
         obj.boxHeight = 210
         this.objects.push(obj)
 
-        obj = new GameObject(580, 450)
+
+        for (var x=70; x<1920; x+=370)
+        {
+            obj = new GameObjectWindow(x, 260)
+            this.objects.push(obj)
+        }
+
+
+        obj = new GameObject(580, 360)
         obj.sprites.push(new GfxSprite(GFX_CLOTH_SMALL1_V1_1))
         obj.interaction = GameObjectInteractionType.GrabOnTop
         obj.boxWidth = 70
         obj.boxHeight = 70
         this.objects.push(obj)
 
-        obj = new GameObject(680, 450)
+        obj = new GameObject(680, 360)
         obj.sprites.push(new GfxSprite(GFX_CLOTH_SMALL1_V1_1))
         obj.interaction = GameObjectInteractionType.GrabOnTop
         obj.boxWidth = 70
         obj.boxHeight = 70
         this.objects.push(obj)
 
-        obj = new GameObject(750, 450)
+        obj = new GameObject(750, 360)
         obj.sprites.push(new GfxSprite(GFX_CLOTH_SMALL1_V1_1))
         obj.interaction = GameObjectInteractionType.GrabOnTop
         obj.boxWidth = 70
         obj.boxHeight = 70
         this.objects.push(obj)
+
+
 
         obj = new GameObjectPlayer(50, 800)
         this.objects.push(obj)
