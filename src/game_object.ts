@@ -124,32 +124,38 @@ class GameObjectPlayer extends GameObject {
     physicsFrame() {
         if (this.state == PlayerState.Grabbing)
         {
+            // grab
             this.setActiveAnimationIndex(2)
         }
         else if (this.state == PlayerState.InAir)
         {
-            if (this.velocityY < -1)
+            if (this.velocityY < 0)
             {
                 if (Math.abs(this.velocityX) > 1)
                 {
+                    // jump
                     this.setActiveAnimationIndex(4)
                 }
                 else
                 {
+                    // grab
                     this.setActiveAnimationIndex(2)
                 }
             }
             else
             {
+                // fall
                 this.setActiveAnimationIndex(3)
             }
         }
         else if (Math.abs(this.velocityX) > 0.9)
         {
+            // walk
             this.setActiveAnimationIndex(1)
         }
         else
         {
+            // idle (sitting)
             this.setActiveAnimationIndex(0)
         }
 
