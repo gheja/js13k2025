@@ -29,6 +29,7 @@ function removeFile(filename)
     if (filename in _projectData['inputFiles'])
     {
         delete _projectData['inputFiles'][filename]
+        delete _projectData['imageDefinitions'][filename]
         processAllFiles()
     }
 }
@@ -89,7 +90,7 @@ function processAllFiles()
 {
     var style
     var style_index
-    var s = ""
+    var s
     var parser = new DOMParser()
     var svg
 
@@ -103,6 +104,7 @@ function processAllFiles()
     {
         svg = parser.parseFromString(_projectData['inputFiles'][filename], "image/svg+xml").documentElement
 
+        s = ""
         s += "const GFX_" + (filename.replace('.svg', '').toUpperCase()) + " = [\n"
         s += "\t" + svg["viewBox"].baseVal.width + ", " + svg["viewBox"].baseVal.height + ", [\n"
 
