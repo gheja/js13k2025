@@ -45,7 +45,7 @@ class GameObject {
     {
         // NOTE: this is only accurate in non-flipped sprites
         // NOTE: this might be cut of if the sprite is smaller than the box
-        
+
         if (IS_PROD_BUILD)
         {
             return
@@ -180,6 +180,14 @@ class GameObjectPlayer extends GameObject {
                 {
                     // base jump speed + the running speed extra
                     this.velocityY -= PLAYER_JUMP_SPEED + Math.abs(this.velocityX) * PLAYER_JUMP_SPEED_EXTRA_MULTIPLIER
+                    if (this.y < FENCE_POSITION)
+                    {
+                        this.velocityY -= PLAYER_JUMP_BOOST_ABOVE_FENCE
+                    }
+                    if (this.state == PlayerState.Grabbing)
+                    {
+                        this.velocityY -= PLAYER_JUMP_BOOST_FROM_GRAB
+                    }
                     ignoreCollidingWith = this.currentlyCollidingWith
                 }
                 else if (this.currentlyCollidingWith.canFallThrough && inputs[InputArrayKey.Down])

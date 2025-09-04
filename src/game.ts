@@ -18,10 +18,10 @@ class Game {
 
         var obj
 
+        // TODO: check if this needs to be rendered on top of the window masks
         obj = new GameObject(0, 0)
         obj.sprites.push(new GfxSprite(GFX_LANDSCAPE_V1_1))
         this.objects.push(obj)
-
 
         obj = new GameObject(0, 1070)
         obj.sprites.push(new GfxSprite(GFX_EMPTY))
@@ -32,7 +32,7 @@ class Game {
         this.objects.push(obj)
 
         // top of the fence
-        obj = new GameObject(0, 680)
+        obj = new GameObject(0, FENCE_POSITION + 120)
         obj.sprites.push(new GfxSprite(GFX_EMPTY))
         obj.interaction = GameObjectInteractionType.SitOnTop
         obj.boxWidth = 1920
@@ -79,6 +79,9 @@ class Game {
         {
             obj = new GameObjectWindow(x, 260)
             this.objects.push(obj)
+
+            obj = new GameObjectWindow(x, -40)
+            this.objects.push(obj)
         }
 
 
@@ -97,6 +100,14 @@ class Game {
         this.objects.push(obj)
 
         obj = new GameObject(750, 360)
+        obj.sprites.push(new GfxSprite(GFX_CLOTH_SMALL1_V1_1))
+        obj.interaction = GameObjectInteractionType.GrabOnTop
+        obj.boxWidth = 70
+        obj.boxHeight = 70
+        this.objects.push(obj)
+
+
+        obj = new GameObject(750, 40)
         obj.sprites.push(new GfxSprite(GFX_CLOTH_SMALL1_V1_1))
         obj.interaction = GameObjectInteractionType.GrabOnTop
         obj.boxWidth = 70

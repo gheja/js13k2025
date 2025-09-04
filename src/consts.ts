@@ -7,5 +7,10 @@ const GRAVITY = 11 // pixel/sec/sec
 const FALL_GRAVITY = 22 // pixel/sec/sec
 const PLAYER_JUMP_SPEED = 15
 const PLAYER_JUMP_SPEED_EXTRA_MULTIPLIER = 0.25 // the jump height varies with the running speed. it will be multiplied with this number and added to the jump speed
+const PLAYER_JUMP_BOOST_ABOVE_FENCE = 2 // on the fence and above player needs a bit bigger jump
+const PLAYER_JUMP_BOOST_FROM_GRAB = 5 // from grab
 const PLAYER_DRAG_MULTIPLIER = 0.94
 const PLAYER_DRAG_CLAMP_TO_ZERO = 0.66
+
+// used for checking the jump boost
+const FENCE_POSITION = 560
