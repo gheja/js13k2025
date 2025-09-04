@@ -347,6 +347,11 @@ class GameObjectWindow extends GameObject {
         this.spriteTop = new GfxSprite(GFX_WINDOW_FRAME_V1_1)
     }
 
+    debug1()
+    {
+        this.injectCollisionBoxSvg(this.spriteTop)
+    }
+
     physicsFrame() {
         if (Math.random() < 0.02)
         {

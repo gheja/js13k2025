@@ -78,9 +78,19 @@ class Game {
         for (var x=70; x<1920; x+=370)
         {
             obj = new GameObjectWindow(x, 260)
+            obj.boxWidth = 160
+            obj.boxHeight = 30
+            obj.boxOffsetX = 70
+            obj.boxOffsetY = 250
+            obj.debug1()
             this.objects.push(obj)
 
             obj = new GameObjectWindow(x, -40)
+            obj.boxWidth = 160
+            obj.boxHeight = 30
+            obj.boxOffsetX = 70
+            obj.boxOffsetY = 250
+            obj.debug1()
             this.objects.push(obj)
         }
 
