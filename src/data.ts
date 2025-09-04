@@ -317,3 +317,12 @@ const GFX_WINDOW_FRAME_V1_1 = [
 		],
 	]
 ]
+
+const GFX_TRANSITION_OVERLAY = [
+	1920, 3080, [
+		[
+			6,
+			0,0, 100,32, 100,100, 0,68, 
+		],
+	]
+]

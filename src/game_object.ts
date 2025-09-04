@@ -307,6 +307,7 @@ class GameObjectPlayer extends GameObject {
 
                     if (collided)
                     {
+                        game.beginTransition()
                         // console.log(_tick_count, "!")
                     }
                 }

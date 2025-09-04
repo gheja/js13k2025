@@ -4,6 +4,7 @@ class Game {
     private lastPhysicsTickTime: number
     public objects: Array<GameObject>
     private keyPressed: Array<boolean> = []
+    private transitionOverlayObject: GameObject
 
     constructor(){
         this.lastTickTime = performance.now()
@@ -125,9 +126,16 @@ class Game {
         this.objects.push(obj)
 
 
-
         obj = new GameObjectPlayer(50, 800)
         this.objects.push(obj)
+
+
+        // must be on top
+        obj = new GameObject(0, 2000) // NOTE: anything other than 2000 will result in a transition
+        obj.sprites.push(new GfxSprite(GFX_TRANSITION_OVERLAY))
+        this.objects.push(obj)
+        this.transitionOverlayObject = obj
+
 
         if (!IS_PROD_BUILD)
         {
@@ -138,6 +146,14 @@ class Game {
 
         window.addEventListener("keydown", this.inputEvent.bind(this))
         window.addEventListener("keyup", this.inputEvent.bind(this))
+    }
+
+    beginTransition() {
+        this.transitionOverlayObject.y = 1100
+    }
+
+    doTransition() {
+        console.log("transition!")
     }
 
     getInputArray() {
@@ -159,6 +175,25 @@ class Game {
     physicsFrame(){
         _tick_count += 1
         this.gfx.update()
+
+        // this will be the only thing done during this run
+        if (this.transitionOverlayObject.y != 2000)
+        {
+            this.transitionOverlayObject.y -= 125
+            this.transitionOverlayObject.physicsFrame()
+
+            if (this.transitionOverlayObject.y == -1000)
+            {
+                this.doTransition()
+            }
+
+            if (this.transitionOverlayObject.y < -3080)
+            {
+                this.transitionOverlayObject.y = 2000
+            }
+
+            return
+        }
 
         this.objects.forEach(a => a.physicsFrame())
     }
