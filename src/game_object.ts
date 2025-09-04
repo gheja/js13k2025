@@ -13,7 +13,7 @@ class GameObject {
     canFallThrough: boolean = true
     // these will limit the vertical movement of the player. different levels might require different values
     minX: number = 0
-    maxX: number = 1920 - 200
+    maxX: number = 1920 - 120
     animations: Array<any>
     activeAnimationIndex: number = -1
 
