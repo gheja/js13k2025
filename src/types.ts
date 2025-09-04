@@ -4,6 +4,7 @@ enum GameObjectInteractionType {
     SitOnTop,
     GrabOnTop,
     Player,
+    OverlapNonBlocking,
 }
 enum InputArrayKey {
     Up = 0,

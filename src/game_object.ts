@@ -291,6 +291,26 @@ class GameObjectPlayer extends GameObject {
                     }
                 }
 
+                // check in any state, but only if there was no other collision
+                if (!collided && obj.interaction == GameObjectInteractionType.OverlapNonBlocking)
+                {
+                    collided = boxesCollide(
+                        nextX + this.boxOffsetX,
+                        nextY + this.boxOffsetY,
+                        this.boxWidth,
+                        this.boxHeight,
+                        obj.x + obj.boxOffsetX,
+                        obj.y + obj.boxOffsetY,
+                        obj.boxWidth,
+                        obj.boxHeight
+                    )
+
+                    if (collided)
+                    {
+                        // console.log(_tick_count, "!")
+                    }
+                }
+
                 if (collided)
                 {
                     this.currentlyCollidingWith = obj
@@ -303,7 +323,7 @@ class GameObjectPlayer extends GameObject {
             //     break
             // }
 
-            if (this.currentlyCollidingWith)
+            if (this.currentlyCollidingWith && this.currentlyCollidingWith.interaction != GameObjectInteractionType.OverlapNonBlocking)
             {
                 if (this.currentlyCollidingWith.interaction == GameObjectInteractionType.GrabOnTop)
                 {
@@ -373,6 +393,8 @@ class GameObjectWindow extends GameObject {
         {
             this.currentOpening -= 10
         }
+
+        this.interaction = (this.currentOpening > 60 ? GameObjectInteractionType.OverlapNonBlocking : GameObjectInteractionType.None)
     }
 
     renderFrame() {
