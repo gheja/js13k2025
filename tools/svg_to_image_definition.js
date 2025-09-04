@@ -3,6 +3,26 @@
 var _imageDefinitions = {}
 var _styleDefinitionsArray = []
 
+function cleanupStyle(s)
+{
+    var arr = [
+        'fill-opacity:1',
+        'stroke:none',
+        'stroke-width:0',
+        'stroke-linecap:round',
+        'stroke-linejoin:round',
+        'stroke-dasharray:none',
+        'paint-order:markers stroke fill',
+    ]
+
+    for (var a of arr)
+    {
+        s = s.replace(';' + a, '')
+    }
+
+    return s
+}
+
 function convert()
 {
     startUpload()
@@ -31,6 +51,7 @@ function startUpload()
 
 function processUpload(filename, event)
 {
+    var style
     var style_index
     var s = ""
     var parser = new DOMParser()
@@ -41,10 +62,11 @@ function processUpload(filename, event)
 
     for (var path of svg.querySelectorAll("path"))
     {
-        style_index = _styleDefinitionsArray.indexOf(path.attributes["style"].value)
+        style = cleanupStyle(path.attributes["style"].value)
+        style_index = _styleDefinitionsArray.indexOf(style)
         if (style_index == -1)
         {
-            _styleDefinitionsArray.push(path.attributes["style"].value)
+            _styleDefinitionsArray.push(style)
             style_index = _styleDefinitionsArray.length - 1
         }
 
