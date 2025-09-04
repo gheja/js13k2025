@@ -1,7 +1,69 @@
 "use strict";
 
-var _imageDefinitions = {}
-var _styleDefinitionsArray = []
+var _projectData = {}
+
+function saveState()
+{
+    window.localStorage.setItem('svg_to_image_definition:v1:projectData', JSON.stringify(_projectData))
+}
+
+function loadState()
+{
+    _projectData = {
+        "inputFiles": {},
+        "styleDefinitions": [],
+        "imageDefinitions": {},
+    }
+
+    try {
+        var a = window.localStorage.getItem('svg_to_image_definition:v1:projectData')
+        if (a) {
+            _projectData = JSON.parse(a)
+        }
+    }
+    catch (e) {}
+}
+
+function removeFile(filename)
+{
+    if (filename in _projectData['inputFiles'])
+    {
+        delete _projectData['inputFiles'][filename]
+        processAllFiles()
+    }
+}
+
+function updateFileList()
+{
+    var list = document.getElementById("filelist")
+    list.innerHTML = ""
+    for (var filename in _projectData['inputFiles'])
+    {
+        list.innerHTML += "<li><a href=\"#\" onclick=\"removeFile('" + filename + "');return false;\">X</a> " + filename + "</li>"
+    }
+}
+
+function convert()
+{
+    processAllFiles()
+}
+
+function startUpload()
+{
+    for (var file of document.getElementById("input").files)
+    {
+        var reader = new FileReader()
+        reader.onload = processUpload.bind(null, file.name)
+        reader.readAsText(file)
+    }
+}
+
+function processUpload(filename, event)
+{
+    _projectData['inputFiles'][filename] = event.target.result
+
+    processAllFiles()
+}
 
 function cleanupStyle(s)
 {
@@ -23,84 +85,69 @@ function cleanupStyle(s)
     return s
 }
 
-function convert()
-{
-    startUpload()
-}
-
-function prepareProcessing()
-{
-    _styleDefinitionsArray = []
-    if (document.getElementById("style_definitions").value != "")
-    {
-        _styleDefinitionsArray = document.getElementById("style_definitions").value.split("\n")
-    }
-}
-
-function startUpload()
-{
-    prepareProcessing()
-
-    for (var file of document.getElementById("input").files)
-    {
-        var reader = new FileReader()
-        reader.onload = processUpload.bind(null, file.name)
-        reader.readAsText(file)
-    }
-}
-
-function processUpload(filename, event)
+function processAllFiles()
 {
     var style
     var style_index
     var s = ""
     var parser = new DOMParser()
-    var svg = parser.parseFromString(event.target.result, "image/svg+xml").documentElement
+    var svg
 
-    s += "const GFX_" + (filename.replace('.svg', '').toUpperCase()) + " = [\n"
-    s += "\t" + svg["viewBox"].baseVal.width + ", " + svg["viewBox"].baseVal.height + ", [\n"
+    // reset the processed definitions
+    _projectData['styleDefinitions'] = []
+    _projectData['imageDefinitions'] = {}
 
-    for (var path of svg.querySelectorAll("path"))
+
+    // process all the files
+    for (var filename in _projectData['inputFiles'])
     {
-        style = cleanupStyle(path.attributes["style"].value)
-        style_index = _styleDefinitionsArray.indexOf(style)
-        if (style_index == -1)
+        svg = parser.parseFromString(_projectData['inputFiles'][filename], "image/svg+xml").documentElement
+
+        s += "const GFX_" + (filename.replace('.svg', '').toUpperCase()) + " = [\n"
+        s += "\t" + svg["viewBox"].baseVal.width + ", " + svg["viewBox"].baseVal.height + ", [\n"
+
+        for (var path of svg.querySelectorAll("path"))
         {
-            _styleDefinitionsArray.push(style)
-            style_index = _styleDefinitionsArray.length - 1
+            style = cleanupStyle(path.attributes["style"].value)
+            style_index = _projectData['styleDefinitions'].indexOf(style)
+            if (style_index == -1)
+            {
+                _projectData['styleDefinitions'].push(style)
+                style_index = _projectData['styleDefinitions'].length - 1
+            }
+
+            s += "\t\t[\n"
+            s += "\t\t\t" + style_index + ",\n"
+            s += "\t\t\t" + processShape(path.attributes["d"], svg["viewBox"].baseVal.width, svg["viewBox"].baseVal.height) + "\n"
+            s += "\t\t],\n"
         }
+        s += "\t]\n"
+        s += "]\n"
 
-        s += "\t\t[\n"
-        s += "\t\t\t" + style_index + ",\n"
-        s += "\t\t\t" + processShape(path.attributes["d"], svg["viewBox"].baseVal.width, svg["viewBox"].baseVal.height) + "\n"
-        s += "\t\t],\n"
+        _projectData['imageDefinitions'][filename] = s
     }
-    s += "\t]\n"
-    s += "]\n"
 
-    _imageDefinitions[filename] = s
 
-    finishProcessing()
-}
-
-function finishProcessing()
-{
+    // compose the output
     var t = ""
     t += "const SVG_STYLES = [\n"
-    for (var style of _styleDefinitionsArray)
+    for (var style of _projectData['styleDefinitions'])
     {
         t += "\t\"" + style + "\",\n"
     }
     t += "]\n"
 
-    for (var key in _imageDefinitions)
+    for (var key in _projectData['imageDefinitions'])
     {
         t += "\n"
-        t += _imageDefinitions[key]
+        t += _projectData['imageDefinitions'][key]
     }
 
+
     document.getElementById("output").value = t
-    document.getElementById("style_definitions").value = _styleDefinitionsArray.join("\n")
+
+    saveState()
+    updateFileList()
 }
 
 function processShape(input, width, height)
@@ -418,3 +465,16 @@ function drawOutput(fuzzy)
         drawArrayFuzzy(arr)
     }
 }
+
+function init()
+{
+    loadState()
+    processAllFiles()
+}
+
+function copyOutputToClipboard()
+{
+     navigator.clipboard.writeText(document.getElementById('output').value)
+}
+
+window.addEventListener("load", init)

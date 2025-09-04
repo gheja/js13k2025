@@ -9,11 +9,22 @@
                 background: #111;
                 color: #aaa;
             }
+            body
+            {
+                font-family: sans-serif;
+            }
             textarea
             {
                 width: 100%;
                 height: 200px;
                 font-size: 8pt;
+            }
+            a,
+            a:visited,
+            a:active
+            {
+                text-decoration: none;
+                color: #0cf;
             }
             textarea,
             button
@@ -23,18 +34,26 @@
         </style>
     </head>
     <body>
-        SVG input: <input type="file" id="input" multiple onchange="convert(); return false;"/><br/>
-        Supported modes: <code>m,M,l,L,h,H,v,V,Z</code><br/>
+        Add SVG file to project:<br/>
+        <input type="file" id="input" multiple onchange="startUpload(); return false;"/><br/>
+        Supported path modes: <code>m,M,l,L,h,H,v,V,Z</code><br/>
+        <hr/>
+        Files in project:<br/>
+        <ul id="filelist"></ul>
+        <button onclick="convert(); return false;">Update</button>
+        <hr/>
 <!--
         <input type="checkbox" id="final_map_parameters" /><label for="final_map_parameters">Use the final map parameters</label><br/>
         <input type="checkbox" id="final_sprite_parameters" /><label for="final_sprite_parameters">Use the final sprite parameters</label><br/>
         Resolution: <input id="resolution" type="text" value="100" /><br/>
 -->        
+<!-- 
         <textarea id="style_definitions"></textarea>
         <button onclick="convert(); return false;">Convert</button>
         
         <hr/>
-
+-->
+        Output:
         <textarea id="output" onchange="drawOutput(); return false;" onkeypress="drawOutput(); return false;"></textarea>
 
 <!--
@@ -45,5 +64,6 @@
 
         <canvas id="canvas1"></canvas>
 -->
+        <button onclick="copyOutputToClipboard();return false;">Copy to clipboard</button>
     </body>
 </html>
