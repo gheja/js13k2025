@@ -377,6 +377,11 @@ class GameObjectWindow extends GameObject {
         this.spriteWindow = new GfxSprite(GFX_WINDOW_CLOSED_V1_1)
         this.spriteTop = new GfxSprite(GFX_WINDOW_FRAME_V1_1)
         this.targetSceneIndex = targetSceneIndex
+        if (targetSceneIndex == 0)
+        {
+            this.currentOpening = WINDOW_OPENING_POSITION_MAX
+            this.targetOpening = WINDOW_OPENING_POSITION_MAX
+        }
     }
 
     injectCollisionBox()
