@@ -7292,8 +7292,6 @@ var midi = {
 }
 
 function init() {
-  var events = midi.track[1].event
-
 /*
         {
           "deltaTime": 0,
@@ -7306,11 +7304,12 @@ function init() {
         },
 */
 
+  var events = midi.track[1].event
   var arr = []
   var key_on_times = []
   var total_time = 0
-  // var last_key_on_time = 0
   var b
+  var notes = []
 
   for (var event of events)
   {
@@ -7324,12 +7323,56 @@ function init() {
     {
       b = key_on_times[event.data[0]]
       arr.push([ event.data[0], b, total_time, /*b - last_key_on_time,*/ total_time - b ])
-
-      // last_key_on_time = total_time
+      notes.push({ note: event.data[0], time: b, duration: total_time - b })
     }
   }
 
-  document.getElementById("output").value = arr.join("\n").replaceAll(",", "\t")
+  function compare(a, b) {
+    return a['time'] - b['time']
+  }
+
+  notes.sort(compare)
+
+  // console.log(notes)
+
+
+
+  function fix_duration(t) {
+    return Math.floor(t / 4) * 4
+  }
+
+  var last_time = 0
+  var notes2 = []
+  for (var a of notes)
+  {
+    notes2.push({note: a.note, delta_time: fix_duration(a.time - last_time), duration: fix_duration(a.duration) })
+    last_time = a.time
+  }
+
+  // console.log(notes2)
+
+
+
+/*
+  var arr2 = []
+  for (var a of notes2)
+  {
+    arr2.push(a.delta_time)
+  }
+
+  document.getElementById("output").value = arr2.join("\n").replaceAll(",", "\t")
+*/
+
+  var output = [[], [], []]
+  for (var a of notes2)
+  {
+    output[0].push(a.note)
+    output[1].push(a.delta_time)
+    output[2].push(a.duration)
+  }
+
+  // console.log(output)
+  document.getElementById("output").value = "const MUSIC = " + JSON.stringify(output)
 }
 
 window.addEventListener("load", init)
