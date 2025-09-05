@@ -129,6 +129,9 @@ class Game {
             result.objects.push(new GameObjectWindow(x, -40, 1))
         }
 
+        result.objects.push(new GameObject(0, 360, GFX_CLOTHES_LINE_V1_1))
+        result.objects.push(new GameObject(0, 40, GFX_CLOTHES_LINE_V1_1))
+
 
         obj = new GameObject(580, 360, GFX_CLOTH_SMALL1_V1_1, 70, 70)
         obj.interaction = GameObjectInteractionType.GrabOnTop

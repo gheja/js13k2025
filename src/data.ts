@@ -15,6 +15,7 @@ const SVG_STYLES = [
 	"fill:#000000;fill-opacity:0.1",
 	"fill:#ffffff;fill-opacity:0.1",
 	"fill:#ffffff;fill-opacity:0.2",
+	"fill:#000000;stroke:#884851;stroke-width:6;stroke-dasharray:18, 18",
 ]
 
 const GFX_CAT_FALL_V1_1 = [
@@ -356,6 +357,15 @@ const GFX_CHAIR_V1_1 = [
 		[
 			8,
 			100,0, 100,100, 86,100, 83,73, 20,74, 14,100, 0,100, 4,60, 75,58, 82,2, 
+		],
+	]
+]
+
+const GFX_CLOTHES_LINE_V1_1 = [
+	2400, 6, [
+		[
+			16,
+			0,50, 100,50, 
 		],
 	]
 ]
