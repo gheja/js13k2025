@@ -5,6 +5,9 @@ class Game {
     public objects: Array<GameObject>
     private keyPressed: Array<boolean> = []
     private transitionOverlayObject: GameObject
+    private transitionTargetSceneIndex: number
+
+    private scenes: Array<any> = []
 
     constructor(){
         this.lastTickTime = performance.now()
@@ -15,7 +18,9 @@ class Game {
         _gfx_root = document.getElementById("c") as HTMLDivElement
         this.gfx = new Graphics()
 
-        this.objects = []
+        this.scenes[0] = { objects:[] }
+ 
+        this.objects = this.scenes[0].objects
 
         var obj
 
@@ -130,13 +135,6 @@ class Game {
         this.objects.push(obj)
 
 
-        // must be on top
-        obj = new GameObject(0, 2000) // NOTE: anything other than 2000 will result in a transition
-        obj.sprites.push(new GfxSprite(GFX_TRANSITION_OVERLAY))
-        this.objects.push(obj)
-        this.transitionOverlayObject = obj
-
-
         if (!IS_PROD_BUILD)
         {
             for (var obj2 of this.objects) {
@@ -144,16 +142,63 @@ class Game {
             }
         }
 
+
+        // setup second scene
+        this.scenes[1] = { objects:[] }
+ 
+        this.objects = this.scenes[1].objects
+
+        obj = new GameObject(0, 1070)
+        obj.sprites.push(new GfxSprite(GFX_EMPTY))
+        obj.interaction = GameObjectInteractionType.SitOnTop
+        obj.boxWidth = 1920
+        obj.boxHeight = 10
+        obj.canFallThrough = false
+        this.objects.push(obj)
+
+        obj = new GameObjectWindow(900, 200)
+        obj.boxWidth = 160
+        obj.boxHeight = 30
+        obj.boxOffsetX = 70
+        obj.boxOffsetY = 250
+        obj.debug1()
+        this.objects.push(obj)
+
+        obj = new GameObjectPlayer(1000, 500)
+        this.objects.push(obj)
+
+
+        this.switchSceneTo(0)
+
+
+        // must be on top
+        obj = new GameObject(0, 2000) // NOTE: anything other than 2000 will result in a transition
+        obj.sprites.push(new GfxSprite(GFX_TRANSITION_OVERLAY))
+        this.transitionOverlayObject = obj
+
+
         window.addEventListener("keydown", this.inputEvent.bind(this))
         window.addEventListener("keyup", this.inputEvent.bind(this))
     }
 
-    beginTransition() {
-        this.transitionOverlayObject.y = 1100
+    beginTransition(targetSceneIndex) {
+        this.transitionTargetSceneIndex = targetSceneIndex
+        this.transitionOverlayObject.y = 1125
+    }
+
+    switchSceneTo(sceneIndex) {
+        for (var obj of this.objects)
+        {
+            (obj as GameObject).moveAway()
+        }
+
+        console.log("scene", sceneIndex)
+
+        this.objects = this.scenes[sceneIndex].objects
     }
 
     doTransition() {
-        console.log("transition!")
+        this.switchSceneTo(this.transitionTargetSceneIndex)
     }
 
     getInputArray() {
@@ -215,6 +260,7 @@ class Game {
         window.requestAnimationFrame(this.renderFrame.bind(this))
 
         this.objects.forEach(a => a.renderFrame())
+        this.transitionOverlayObject.renderFrame()
     }
 
     start() {

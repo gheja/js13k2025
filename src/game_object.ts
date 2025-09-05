@@ -99,6 +99,13 @@ class GameObject {
         // flip
         this.sprites[this.activeSpriteIndex].svg.style.transform = (this.velocityX < 0 ? "scaleX(-1)" : "")
     }
+
+    moveAway() {
+        if (this.sprites.length > this.activeSpriteIndex)
+        {
+            this.sprites[this.activeSpriteIndex].moveTo(5000, 5000)
+        }
+    }
 }
 
 class GameObjectPlayer extends GameObject {
@@ -307,7 +314,7 @@ class GameObjectPlayer extends GameObject {
 
                     if (collided)
                     {
-                        game.beginTransition()
+                        game.beginTransition(1)
                         // console.log(_tick_count, "!")
                     }
                 }
@@ -396,6 +403,12 @@ class GameObjectWindow extends GameObject {
         }
 
         this.interaction = (this.currentOpening > 60 ? GameObjectInteractionType.OverlapNonBlocking : GameObjectInteractionType.None)
+    }
+
+    moveAway() {
+        this.spriteBelow.moveTo(5000, 5000)
+        this.spriteWindow.moveTo(5000, 5000)
+        this.spriteTop.moveTo(5000, 5000)
     }
 
     renderFrame() {
