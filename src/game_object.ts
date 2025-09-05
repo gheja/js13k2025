@@ -111,6 +111,28 @@ class GameObject {
             this.sprites[this.activeSpriteIndex].moveAway()
         }
     }
+
+    cleanupSprites() {
+        var a: GfxSprite
+
+        if (this.animations && this.animations.length > 0)
+        {
+            for (var animation of this.animations)
+            {
+                for (a of animation)
+                {
+                    a.cleanup()
+                }
+            }
+        }
+        else
+        {
+            for (a of this.sprites)
+            {
+                a.cleanup()
+            }
+        }
+    }
 }
 
 class GameObjectPlayer extends GameObject {
@@ -127,6 +149,10 @@ class GameObjectPlayer extends GameObject {
             [ new GfxSprite(GFX_CAT_FALL_V1_1) ],
             [ new GfxSprite(GFX_CAT_JUMP_V4_1) ],
         ]
+
+        // we don't need this sprite, but we need to clean it up right now, otherwise we will lose the reference to it and will lead to memory leak
+        this.sprites[0].cleanup()
+
         this.sprites = this.animations[0]
     }
 
@@ -382,6 +408,9 @@ class GameObjectWindow extends GameObject {
             this.currentOpening = WINDOW_OPENING_POSITION_MAX
             this.targetOpening = WINDOW_OPENING_POSITION_MAX
         }
+
+        // we don't need this
+        this.sprites[0].cleanup()
     }
 
     injectCollisionBox()
@@ -417,5 +446,12 @@ class GameObjectWindow extends GameObject {
         this.spriteBelow.moveTo(this.x, this.y)
         this.spriteWindow.moveTo(this.x, this.y - this.currentOpening)
         this.spriteTop.moveTo(this.x, this.y)
+    }
+
+    cleanupSprites()
+    {
+        this.spriteBelow.cleanup()
+        this.spriteWindow.cleanup()
+        this.spriteTop.cleanup()
     }
 }

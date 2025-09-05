@@ -75,4 +75,8 @@ class GfxSprite {
     moveAway() {
         this.moveTo(10000, 10000)
     }
+
+    cleanup() {
+        this.svg.parentNode.removeChild(this.svg)
+    }
 }

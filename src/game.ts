@@ -61,7 +61,20 @@ class Game {
         {
             // always create a new room
             // BUG, TODO: this does not clean up the SVGs in DOM, so effectively this leads to memory leak
+            if (this.scenes[1])
+            {
+                this.wipeObjectsArray(this.scenes[1].objects)
+            }
+
             this.scenes[1] = this.createSceneRoom1()
+        }
+    }
+
+    wipeObjectsArray(objects: Array<GameObject>) {
+        for (var i=objects.length-1; i>=0; i--)
+        {
+            objects[i].cleanupSprites()
+            delete objects[i]
         }
     }
 
