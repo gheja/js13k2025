@@ -7,7 +7,7 @@ class Game {
     private transitionOverlayObject: GameObject
     private transitionTargetSceneIndex: number
 
-    private scenes: Array<any> = []
+    public scenes: Array<any> = []
 
     constructor(){
         this.lastTickTime = performance.now()
@@ -83,7 +83,8 @@ class Game {
     createSceneStreet() {
         var result = {
             objects: [],
-            currentWindow: null
+            currentWindow: null,
+            playerObject: null,
         }
 
         var obj
@@ -129,29 +130,14 @@ class Game {
             result.objects.push(new GameObjectWindow(x, -40, 1))
         }
 
-        result.objects.push(new GameObject(0, 360, GFX_CLOTHES_LINE_V1_1))
-        result.objects.push(new GameObject(0, 40, GFX_CLOTHES_LINE_V1_1))
+
+        result.objects.push(new GameObjectClothesLine(360, result.objects))
+        result.objects.push(new GameObjectClothesLine(40, result.objects))
 
 
-        obj = new GameObject(580, 360, GFX_CLOTH_SMALL1_V1_1, 70, 70)
-        obj.interaction = GameObjectInteractionType.GrabOnTop
+        obj = new GameObjectPlayer(50, 800)
         result.objects.push(obj)
-
-        obj = new GameObject(680, 360, GFX_CLOTH_SMALL1_V1_1, 70, 70)
-        obj.interaction = GameObjectInteractionType.GrabOnTop
-        result.objects.push(obj)
-
-        obj = new GameObject(750, 360, GFX_CLOTH_SMALL1_V1_1, 70, 70)
-        obj.interaction = GameObjectInteractionType.GrabOnTop
-        result.objects.push(obj)
-
-
-        obj = new GameObject(750, 40, GFX_CLOTH_SMALL1_V1_1, 70, 70)
-        obj.interaction = GameObjectInteractionType.GrabOnTop
-        result.objects.push(obj)
-
-
-        result.objects.push(new GameObjectPlayer(50, 800))
+        result.playerObject = obj
 
         this.addDebugToObjects(result.objects)
 
