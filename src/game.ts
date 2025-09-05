@@ -73,8 +73,7 @@ class Game {
         var obj
 
         // TODO: check if this needs to be rendered on top of the window masks
-        obj = new GameObject(0, 0, GFX_LANDSCAPE_V1_1)
-        result.objects.push(obj)
+        result.objects.push(new GameObject(0, 0, GFX_LANDSCAPE_V1_1))
 
         obj = new GameObject(0, 1070, undefined, 1920, 10)
         obj.interaction = GameObjectInteractionType.SitOnTop
@@ -88,23 +87,20 @@ class Game {
 
         for (var x=0; x<1920; x+=60)
         {
-            obj = new GameObject(x, 670, arrayPick([ GFX_FENCE1_V1_1, GFX_FENCE2_V1_1, GFX_FENCE3_V1_1 ]))
-            result.objects.push(obj)
+            result.objects.push(new GameObject(x, 670, arrayPick([ GFX_FENCE1_V1_1, GFX_FENCE2_V1_1, GFX_FENCE3_V1_1 ])))
         }
 
 
 
 
-        obj = new GameObject(280, 800, GFX_TRASH_CAN_SHORT_V2_2)
-        result.objects.push(obj)
-
+        result.objects.push(new GameObject(280, 800, GFX_TRASH_CAN_SHORT_V2_2))
+        
         obj = new GameObject(280, 800, GFX_TRASH_CAN_SHORT_V2_1, 200, 160, 0, 100)
         obj.interaction = GameObjectInteractionType.SitOnTop
         result.objects.push(obj)
 
 
-        obj = new GameObject(580, 750, GFX_TRASH_CAN_SHORT_V2_2)
-        result.objects.push(obj)
+        result.objects.push(new GameObject(580, 750, GFX_TRASH_CAN_SHORT_V2_2))
 
         obj = new GameObject(580, 800, GFX_TRASH_CAN_TALL_V2_1, 200, 210, 0, 50)
         obj.interaction = GameObjectInteractionType.SitOnTop
@@ -113,13 +109,8 @@ class Game {
 
         for (var x=70; x<1920; x+=370)
         {
-            obj = new GameObjectWindow(x, 260, 1)
-            obj.debug1()
-            result.objects.push(obj)
-
-            obj = new GameObjectWindow(x, -40, 1)
-            obj.debug1()
-            result.objects.push(obj)
+            result.objects.push(new GameObjectWindow(x, 260, 1))
+            result.objects.push(new GameObjectWindow(x, -40, 1))
         }
 
 
@@ -141,8 +132,9 @@ class Game {
         result.objects.push(obj)
 
 
-        obj = new GameObjectPlayer(50, 800)
-        result.objects.push(obj)
+        result.objects.push(new GameObjectPlayer(50, 800))
+
+        this.addDebugToObjects(result.objects)
 
         return result
     }
@@ -154,17 +146,14 @@ class Game {
 
         var obj
 
-        obj = new GameObject(0, 0, GFX_ROOM_OVERLAY)
-        result.objects.push(obj)
+        result.objects.push(new GameObject(0, 0, GFX_ROOM_OVERLAY))
 
         obj = new GameObject(0, 1000, undefined, 1920, 10)
         obj.interaction = GameObjectInteractionType.SitOnTop
         obj.canFallThrough = false
         result.objects.push(obj)
 
-        obj = new GameObjectWindow(900, 200, 0)
-        obj.debug1()
-        result.objects.push(obj)
+        result.objects.push(new GameObjectWindow(900, 200, 0))
 
 
         {
@@ -177,10 +166,24 @@ class Game {
             result.objects.push(obj)
         }
 
-        obj = new GameObjectPlayer(1000, 500)
-        result.objects.push(obj)
+        result.objects.push(new GameObjectPlayer(1000, 500))
+
+        this.addDebugToObjects(result.objects)
 
         return result
+    }
+
+    addDebugToObjects(arr: Array<GameObject>)
+    {
+        if (IS_PROD_BUILD)
+        {
+            return
+        }
+
+        for (var obj of arr)
+        {
+            obj.injectCollisionBox()
+        }
     }
 
     switchSceneTo(sceneIndex: number) {

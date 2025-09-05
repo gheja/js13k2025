@@ -390,8 +390,13 @@ class GameObjectWindow extends GameObject {
         this.targetSceneIndex = targetSceneIndex
     }
 
-    debug1()
+    injectCollisionBox()
     {
+        if (IS_PROD_BUILD)
+        {
+            return
+        }
+        
         this.injectCollisionBoxSvg(this.spriteTop)
     }
 
