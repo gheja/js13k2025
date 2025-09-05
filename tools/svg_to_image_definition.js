@@ -68,6 +68,7 @@ function processUpload(filename, event)
 
 function cleanupStyle(s)
 {
+    // NOTE: all my SVGs use "round" linecaps and linejoins, that's why I remove these here. this is incorrect, I know.
     var arr = [
         'fill-opacity:1',
         'stroke:none',
@@ -76,6 +77,8 @@ function cleanupStyle(s)
         'stroke-linejoin:round',
         'stroke-dasharray:none',
         'paint-order:markers stroke fill',
+        'stroke-opacity:1',
+        'stroke-dashoffset:0',
     ]
 
     for (var a of arr)
@@ -106,7 +109,7 @@ function processAllFiles()
 
         s = ""
         s += "const GFX_" + (filename.replace('.svg', '').toUpperCase()) + " = [\n"
-        s += "\t" + svg["viewBox"].baseVal.width + ", " + svg["viewBox"].baseVal.height + ", [\n"
+        s += "\t" + Math.round(svg["viewBox"].baseVal.width) + ", " + Math.round(svg["viewBox"].baseVal.height) + ", [\n"
 
         for (var path of svg.querySelectorAll("path"))
         {
