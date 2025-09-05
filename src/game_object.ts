@@ -385,23 +385,11 @@ class GameObjectWindow extends GameObject {
         {
             return
         }
-        
+
         this.injectCollisionBoxSvg(this.spriteTop)
     }
 
     physicsFrame() {
-        if (Math.random() < 0.02)
-        {
-            if (this.targetOpening == 0)
-            {
-                this.targetOpening = 180
-            }
-            else
-            {
-                this.targetOpening = 0
-            }
-        }
-
         if (this.currentOpening < this.targetOpening)
         {
             this.currentOpening += 10
@@ -411,7 +399,7 @@ class GameObjectWindow extends GameObject {
             this.currentOpening -= 10
         }
 
-        this.interaction = (this.currentOpening > 60 ? GameObjectInteractionType.OverlapNonBlocking : GameObjectInteractionType.None)
+        this.interaction = (this.currentOpening > WINDOW_OPENING_POSITION_JUMPABLE ? GameObjectInteractionType.OverlapNonBlocking : GameObjectInteractionType.None)
     }
 
     moveAway() {

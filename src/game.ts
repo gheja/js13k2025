@@ -65,9 +65,12 @@ class Game {
         }
     }
 
+    // === scene #0 stuffs ===
+
     createSceneStreet() {
         var result = {
-            objects: []
+            objects: [],
+            currentWindow: null
         }
 
         var obj
@@ -139,6 +142,48 @@ class Game {
         return result
     }
 
+    pickNewStreetWindow() {
+        var a = []
+
+        for (var obj of this.scenes[0].objects)
+        {
+            if (obj instanceof GameObjectWindow)
+            {
+                a.push(obj)
+            }
+        }
+
+        this.scenes[0].currentWindow = arrayPick(a)
+    }
+
+    processStreetWindow() {
+        // NOTE: although the windows are closed when getting back to this scene, this counter does not stop, so it is possible that
+        // a window will open very soon after returning to this scene - maybe the player will even enter this new window! but that's
+        // fine and fun, so for now I keep this
+        var a = _tick_count % 300
+
+        // TODO: fine-tune the timing, probably based on difficulty level. also, only pick window that is visible on the screen
+        if (a == 120)
+        {
+            this.pickNewStreetWindow()
+
+            // open the window
+            this.scenes[0].currentWindow.targetOpening = WINDOW_OPENING_POSITION_MAX
+        }
+        else if (a == 130) {
+            console.log("throw!")
+            // throw something from window
+        }
+        else if (a == 299)
+        {
+            // close the window
+            this.scenes[0].currentWindow.targetOpening = WINDOW_OPENING_POSITION_MIN
+        }
+    }
+
+
+    // === scene #1 stuffs ===
+
     createSceneRoom1() {
         var result = {
             objects: []
@@ -173,6 +218,9 @@ class Game {
 
         return result
     }
+
+
+    // ===
 
     addDebugToObjects(arr: Array<GameObject>)
     {
@@ -220,9 +268,14 @@ class Game {
         this.keyPressed["a" + e.code.toLowerCase()] = (e.type == "keydown")
     }
 
+
     physicsFrame(){
         _tick_count += 1
         this.gfx.update()
+
+        if (true) { // TODO: check scene index
+            this.processStreetWindow()
+        }
 
         // this will be the only thing done during this run
         if (this.transitionOverlayObject.y != 2000)
