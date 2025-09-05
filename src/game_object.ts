@@ -314,7 +314,7 @@ class GameObjectPlayer extends GameObject {
 
                     if (collided)
                     {
-                        game.beginTransition(1)
+                        game.beginTransition((obj as GameObjectWindow).targetSceneIndex)
                         // console.log(_tick_count, "!")
                     }
                 }
@@ -367,6 +367,7 @@ class GameObjectWindow extends GameObject {
     spriteBelow: GfxSprite
     targetOpening: number = 0
     currentOpening: number = 0
+    targetSceneIndex: number = 0
 
     constructor(x: number, y: number) {
         super(x, y)
