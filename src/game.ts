@@ -21,8 +21,7 @@ class Game {
         this.switchSceneTo(0)
 
         // must be on top
-        this.transitionOverlayObject = new GameObject(0, 2000) // NOTE: anything other than 2000 will result in a transition
-        this.transitionOverlayObject.sprites.push(new GfxSprite(GFX_TRANSITION_OVERLAY))
+        this.transitionOverlayObject = new GameObject(0, 2000, GFX_TRANSITION_OVERLAY) // NOTE: anything other than 2000 will result in a transition
         this.transitionOverlayObject.sprites[0].svg.style.zIndex = "500"
 
         window.addEventListener("keydown", this.inputEvent.bind(this))
@@ -74,48 +73,40 @@ class Game {
         var obj
 
         // TODO: check if this needs to be rendered on top of the window masks
-        obj = new GameObject(0, 0)
-        obj.sprites.push(new GfxSprite(GFX_LANDSCAPE_V1_1))
+        obj = new GameObject(0, 0, GFX_LANDSCAPE_V1_1)
         result.objects.push(obj)
 
-        obj = new GameObject(0, 1070, 1920, 10)
-        obj.sprites.push(new GfxSprite(GFX_EMPTY))
+        obj = new GameObject(0, 1070, undefined, 1920, 10)
         obj.interaction = GameObjectInteractionType.SitOnTop
         obj.canFallThrough = false
         result.objects.push(obj)
 
         // top of the fence
-        obj = new GameObject(0, FENCE_POSITION + 120, 1920, 10)
-        obj.sprites.push(new GfxSprite(GFX_EMPTY))
+        obj = new GameObject(0, FENCE_POSITION + 120, undefined, 1920, 10)
         obj.interaction = GameObjectInteractionType.SitOnTop
         result.objects.push(obj)
 
         for (var x=0; x<1920; x+=60)
         {
-            obj = new GameObject(x, 670)
-            obj.sprites.push(new GfxSprite(arrayPick([ GFX_FENCE1_V1_1, GFX_FENCE2_V1_1, GFX_FENCE3_V1_1 ])))
+            obj = new GameObject(x, 670, arrayPick([ GFX_FENCE1_V1_1, GFX_FENCE2_V1_1, GFX_FENCE3_V1_1 ]))
             result.objects.push(obj)
         }
 
 
 
 
-        obj = new GameObject(280, 800)
-        obj.sprites.push(new GfxSprite(GFX_TRASH_CAN_SHORT_V2_2))
+        obj = new GameObject(280, 800, GFX_TRASH_CAN_SHORT_V2_2)
         result.objects.push(obj)
 
-        obj = new GameObject(280, 800, 200, 160, 0, 100)
-        obj.sprites.push(new GfxSprite(GFX_TRASH_CAN_SHORT_V2_1))
+        obj = new GameObject(280, 800, GFX_TRASH_CAN_SHORT_V2_1, 200, 160, 0, 100)
         obj.interaction = GameObjectInteractionType.SitOnTop
         result.objects.push(obj)
 
 
-        obj = new GameObject(580, 750)
-        obj.sprites.push(new GfxSprite(GFX_TRASH_CAN_SHORT_V2_2))
+        obj = new GameObject(580, 750, GFX_TRASH_CAN_SHORT_V2_2)
         result.objects.push(obj)
 
-        obj = new GameObject(580, 800, 200, 210, 0, 50)
-        obj.sprites.push(new GfxSprite(GFX_TRASH_CAN_TALL_V2_1))
+        obj = new GameObject(580, 800, GFX_TRASH_CAN_TALL_V2_1, 200, 210, 0, 50)
         obj.interaction = GameObjectInteractionType.SitOnTop
         result.objects.push(obj)
 
@@ -132,24 +123,20 @@ class Game {
         }
 
 
-        obj = new GameObject(580, 360, 70, 70)
-        obj.sprites.push(new GfxSprite(GFX_CLOTH_SMALL1_V1_1))
+        obj = new GameObject(580, 360, GFX_CLOTH_SMALL1_V1_1, 70, 70)
         obj.interaction = GameObjectInteractionType.GrabOnTop
         result.objects.push(obj)
 
-        obj = new GameObject(680, 360, 70, 70)
-        obj.sprites.push(new GfxSprite(GFX_CLOTH_SMALL1_V1_1))
+        obj = new GameObject(680, 360, GFX_CLOTH_SMALL1_V1_1, 70, 70)
         obj.interaction = GameObjectInteractionType.GrabOnTop
         result.objects.push(obj)
 
-        obj = new GameObject(750, 360, 70, 70)
-        obj.sprites.push(new GfxSprite(GFX_CLOTH_SMALL1_V1_1))
+        obj = new GameObject(750, 360, GFX_CLOTH_SMALL1_V1_1, 70, 70)
         obj.interaction = GameObjectInteractionType.GrabOnTop
         result.objects.push(obj)
 
 
-        obj = new GameObject(750, 40, 70, 70)
-        obj.sprites.push(new GfxSprite(GFX_CLOTH_SMALL1_V1_1))
+        obj = new GameObject(750, 40, GFX_CLOTH_SMALL1_V1_1, 70, 70)
         obj.interaction = GameObjectInteractionType.GrabOnTop
         result.objects.push(obj)
 
@@ -167,12 +154,10 @@ class Game {
 
         var obj
 
-        obj = new GameObject(0, 0)
-        obj.sprites.push(new GfxSprite(GFX_ROOM_OVERLAY))
+        obj = new GameObject(0, 0, GFX_ROOM_OVERLAY)
         result.objects.push(obj)
 
-        obj = new GameObject(0, 1000, 1920, 10)
-        obj.sprites.push(new GfxSprite(GFX_EMPTY))
+        obj = new GameObject(0, 1000, undefined, 1920, 10)
         obj.interaction = GameObjectInteractionType.SitOnTop
         obj.canFallThrough = false
         result.objects.push(obj)
@@ -183,13 +168,11 @@ class Game {
 
 
         {
-            obj = new GameObject(1200, 650, 80, 30, 200, 50)
-            obj.sprites.push(new GfxSprite(GFX_CHAIR_V1_1))
+            obj = new GameObject(1200, 650, GFX_CHAIR_V1_1, 80, 30, 200, 50)
             obj.interaction = GameObjectInteractionType.SitOnTop
             result.objects.push(obj)
 
-            obj = new GameObject(1200, 650, 200, 50, 0, 200)
-            obj.sprites.push(new GfxSprite(GFX_EMPTY))
+            obj = new GameObject(1200, 650, undefined, 200, 50, 0, 200)
             obj.interaction = GameObjectInteractionType.SitOnTop
             result.objects.push(obj)
         }
