@@ -7,8 +7,8 @@ class GameObject {
     velocityY: number = 0
     boxWidth: number
     boxHeight: number
-    boxOffsetX: number = 0
-    boxOffsetY: number = 0
+    boxOffsetX: number
+    boxOffsetY: number
     interaction: GameObjectInteractionType = GameObjectInteractionType.None
     canFallThrough: boolean = true
     // these will limit the vertical movement of the player. different levels might require different values
@@ -17,11 +17,15 @@ class GameObject {
     animations: Array<any>
     activeAnimationIndex: number = -1
 
-    constructor(x: number, y: number){
+    constructor(x: number, y: number, boxWidth: number = 0, boxHeight: number = 0, boxOffsetX: number = 0, boxOffsetY: number = 0) {
         // this.sprites = [ new GfxSprite(TEST_GFX_DEFINITION_1) ]
         this.sprites = []
         this.x = x
         this.y = y
+        this.boxWidth = boxWidth
+        this.boxHeight = boxHeight
+        this.boxOffsetX = boxOffsetX
+        this.boxOffsetY = boxOffsetY
     }
 
     injectCollisionBoxSvg(sprite: GfxSprite)
@@ -113,10 +117,7 @@ class GameObjectPlayer extends GameObject {
     state: PlayerState = PlayerState.InAir
 
     constructor(x: number, y: number) {
-        super(x, y)
-        this.boxOffsetX = 30
-        this.boxWidth = 60
-        this.boxHeight = 120
+        super(x, y, 60, 120, 30, 0)
 
         this.animations = [
             [ new GfxSprite(GFX_CAT_IDLE_V2_1) ],
@@ -367,13 +368,14 @@ class GameObjectWindow extends GameObject {
     spriteBelow: GfxSprite
     targetOpening: number = 0
     currentOpening: number = 0
-    targetSceneIndex: number = 0
+    targetSceneIndex: number
 
-    constructor(x: number, y: number) {
-        super(x, y)
+    constructor(x: number, y: number, targetSceneIndex: number = 0) {
+        super(x, y, 160, 30, 70, 250)
         this.spriteBelow = new GfxSprite(GFX_WINDOW_OPEN_V1_1)
         this.spriteWindow = new GfxSprite(GFX_WINDOW_CLOSED_V1_1)
         this.spriteTop = new GfxSprite(GFX_WINDOW_FRAME_V1_1)
+        this.targetSceneIndex = targetSceneIndex
     }
 
     debug1()
