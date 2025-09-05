@@ -75,13 +75,13 @@ class Game {
         // TODO: check if this needs to be rendered on top of the window masks
         result.objects.push(new GameObject(0, 0, GFX_LANDSCAPE_V1_1))
 
-        obj = new GameObject(0, 1070, undefined, 1920, 10)
+        obj = new GameObject(0, 1070, null, 1920, 10)
         obj.interaction = GameObjectInteractionType.SitOnTop
         obj.canFallThrough = false
         result.objects.push(obj)
 
         // top of the fence
-        obj = new GameObject(0, FENCE_POSITION + 120, undefined, 1920, 10)
+        obj = new GameObject(0, FENCE_POSITION + 120, null, 1920, 10)
         obj.interaction = GameObjectInteractionType.SitOnTop
         result.objects.push(obj)
 
@@ -147,21 +147,19 @@ class Game {
         var obj
 
         result.objects.push(new GameObject(0, 0, GFX_ROOM_OVERLAY))
+        result.objects.push(new GameObjectWindow(900, 200, 0))
 
-        obj = new GameObject(0, 1000, undefined, 1920, 10)
+        obj = new GameObject(0, 1000, null, 1920, 10)
         obj.interaction = GameObjectInteractionType.SitOnTop
         obj.canFallThrough = false
         result.objects.push(obj)
-
-        result.objects.push(new GameObjectWindow(900, 200, 0))
-
 
         {
             obj = new GameObject(1200, 650, GFX_CHAIR_V1_1, 80, 30, 200, 50)
             obj.interaction = GameObjectInteractionType.SitOnTop
             result.objects.push(obj)
 
-            obj = new GameObject(1200, 650, undefined, 200, 50, 0, 200)
+            obj = new GameObject(1200, 650, null, 200, 50, 0, 200)
             obj.interaction = GameObjectInteractionType.SitOnTop
             result.objects.push(obj)
         }

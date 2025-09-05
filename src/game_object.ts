@@ -17,7 +17,7 @@ class GameObject {
     animations: Array<any>
     activeAnimationIndex: number = -1
 
-    constructor(x: number, y: number, baseSpriteData: any = GFX_EMPTY, boxWidth: number = 0, boxHeight: number = 0, boxOffsetX: number = 0, boxOffsetY: number = 0) {
+    constructor(x: number, y: number, baseSpriteData: any, boxWidth: number = 0, boxHeight: number = 0, boxOffsetX: number = 0, boxOffsetY: number = 0) {
         // this.sprites = [ new GfxSprite(TEST_GFX_DEFINITION_1) ]
         this.sprites = []
         this.x = x
@@ -26,18 +26,7 @@ class GameObject {
         this.boxHeight = boxHeight
         this.boxOffsetX = boxOffsetX
         this.boxOffsetY = boxOffsetY
-
-        if (!IS_PROD_BUILD)
-        {
-            if (baseSpriteData === null)
-            {
-                // NOTE: the default value is only used when the parameter is undefined (not when null)
-                // NOTE 2: *sigh* I tested it, and this instead of "new GfxSprite(baseSpriteData || GFX_EMPTY)" only saves one byte in the final ZIP...
-                throw "baseSpriteData cannot be \"null\", use \"undefined\""
-            }
-        }
-
-        this.sprites[0] = new GfxSprite(baseSpriteData)
+        this.sprites[0] = new GfxSprite(baseSpriteData || GFX_EMPTY)
     }
 
     injectCollisionBoxSvg(sprite: GfxSprite)
@@ -129,7 +118,7 @@ class GameObjectPlayer extends GameObject {
     state: PlayerState = PlayerState.InAir
 
     constructor(x: number, y: number) {
-        super(x, y, undefined, 60, 120, 30, 0)
+        super(x, y, null, 60, 120, 30, 0)
 
         this.animations = [
             [ new GfxSprite(GFX_CAT_IDLE_V2_1) ],
@@ -383,7 +372,7 @@ class GameObjectWindow extends GameObject {
     targetSceneIndex: number
 
     constructor(x: number, y: number, targetSceneIndex: number = 0) {
-        super(x, y, undefined, 160, 30, 70, 250)
+        super(x, y, null, 160, 30, 70, 250)
         this.spriteBelow = new GfxSprite(GFX_WINDOW_OPEN_V1_1)
         this.spriteWindow = new GfxSprite(GFX_WINDOW_CLOSED_V1_1)
         this.spriteTop = new GfxSprite(GFX_WINDOW_FRAME_V1_1)
