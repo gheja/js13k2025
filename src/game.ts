@@ -154,11 +154,14 @@ class Game {
         obj.canFallThrough = false
         result.objects.push(obj)
 
+        // chair
         {
+            // this only has the collision box for the top part
             obj = new GameObject(1200, 650, GFX_CHAIR_V1_1, 80, 30, 200, 50)
             obj.interaction = GameObjectInteractionType.SitOnTop
             result.objects.push(obj)
 
+            // a separate invisible object for the collision box of the bottom part
             obj = new GameObject(1200, 650, null, 200, 50, 0, 200)
             obj.interaction = GameObjectInteractionType.SitOnTop
             result.objects.push(obj)
@@ -190,7 +193,7 @@ class Game {
             (obj as GameObject).moveAway()
         }
 
-        console.log("scene", sceneIndex)
+        // console.log("scene", sceneIndex)
 
         this.prepareCurrentScene(sceneIndex)
 
