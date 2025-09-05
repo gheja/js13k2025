@@ -148,6 +148,10 @@ class Game {
  
         this.objects = this.scenes[1].objects
 
+        obj = new GameObject(0, 0)
+        obj.sprites.push(new GfxSprite(GFX_ROOM_OVERLAY))
+        this.objects.push(obj)
+
         obj = new GameObject(0, 1070)
         obj.sprites.push(new GfxSprite(GFX_EMPTY))
         obj.interaction = GameObjectInteractionType.SitOnTop

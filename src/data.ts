@@ -12,6 +12,9 @@ const SVG_STYLES = [
 	"fill:#1e1e27",
 	"fill:#884851",
 	"fill:#542035",
+	"fill:#000000;fill-opacity:0.1",
+	"fill:#ffffff;fill-opacity:0.1",
+	"fill:#ffffff;fill-opacity:0.2",
 ]
 
 const GFX_CAT_FALL_V1_1 = [
@@ -323,6 +326,27 @@ const GFX_TRANSITION_OVERLAY = [
 		[
 			6,
 			0,0, 100,32, 100,100, 0,68, 
+		],
+	]
+]
+
+const GFX_ROOM_OVERLAY = [
+	1920, 1080, [
+		[
+			13,
+			100,0, 85,13, 85,84, 100,100, 
+		],
+		[
+			14,
+			0,0, 100,0, 85,13, 15,13, 
+		],
+		[
+			13,
+			0,0, 15,13, 15,84, 0,100, 
+		],
+		[
+			15,
+			0,100, 15,84, 85,84, 100,100, 
 		],
 	]
 ]
