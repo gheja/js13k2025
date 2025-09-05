@@ -467,7 +467,14 @@ class GameObjectClothesLine extends GameObject {
         {
             if (Math.random() <= chance)
             {
-                obj = new GameObject(x, y, GFX_CLOTH_SMALL1_V1_1, 70, 70)
+                obj = new GameObject(x, y, arrayPick([
+                    GFX_CLOTH_SMALL1_V1_1, GFX_CLOTH_SMALL1_V1_1,
+                    GFX_CLOTH_SMALL2_V1_1,
+                    GFX_CLOTH_SMALL3_V1_1,
+                    GFX_CLOTH_SMALL4_V1_1,
+                    GFX_CLOTH_SMALL5_V1_1, GFX_CLOTH_SMALL5_V1_1,
+                    GFX_CLOTH_SMALL6_V1_1, GFX_CLOTH_SMALL6_V1_1,
+                ]) , 70, 70)
                 obj.interaction = GameObjectInteractionType.GrabOnTop
 
                 this.clothes.push(obj)
