@@ -59,6 +59,8 @@ class GfxSprite {
         var parser = new DOMParser()
         this.svg = parser.parseFromString(str, "image/svg+xml").documentElement as SvgInHtml
         _gfx_root.appendChild(this.svg)
+
+        this.moveAway()
     }
 
     moveTo(x: number, y: number){
@@ -68,5 +70,9 @@ class GfxSprite {
         // TODO: now the sprite position and scale is only updated when moveTo() is called
         this.svg.style.width = (this.originalWidth * _gfx_scale) + "px"
         this.svg.style.height = (this.originalHeight * _gfx_scale) + "px"
+    }
+
+    moveAway() {
+        this.moveTo(10000, 10000)
     }
 }

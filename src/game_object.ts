@@ -73,7 +73,7 @@ class GameObject {
     setActiveSpriteIndex(n: number) {
         this.activeSpriteIndex = n
         for (var sprite of this.sprites) {
-            sprite.moveTo(5000, 5000)
+            sprite.moveAway()
         }
         // NOTE: the active sprite will be moved to the correct place by the next renderFrame() call
     }
@@ -103,7 +103,7 @@ class GameObject {
     moveAway() {
         if (this.sprites.length > this.activeSpriteIndex)
         {
-            this.sprites[this.activeSpriteIndex].moveTo(5000, 5000)
+            this.sprites[this.activeSpriteIndex].moveAway()
         }
     }
 }
@@ -406,9 +406,9 @@ class GameObjectWindow extends GameObject {
     }
 
     moveAway() {
-        this.spriteBelow.moveTo(5000, 5000)
-        this.spriteWindow.moveTo(5000, 5000)
-        this.spriteTop.moveTo(5000, 5000)
+        this.spriteBelow.moveAway()
+        this.spriteWindow.moveAway()
+        this.spriteTop.moveAway()
     }
 
     renderFrame() {
