@@ -78,6 +78,45 @@ class Game {
         }
     }
 
+    setupBasicRoom(result: any, tablePositions: Array<number>, leftChairPositions: Array<number>, rightChairPositions: Array<number>) {
+        var obj: GameObject
+
+        for (var x of tablePositions)
+        {
+            obj = new GameObject(x, 720, GFX_TABLE_V1_1, 200, 30, 40, 5)
+            obj.interaction = GameObjectInteractionType.SitOnTop
+            result.objects.push(obj)
+        }
+
+        for (var x of leftChairPositions)
+        {
+            // this is a separate stuff, because the svg can be flipped but the collision boxes can't
+
+            // this only has the collision box for the top part
+            obj = new GameObject(x, 650, GFX_CHAIR_V1_FLIPPED_1, 80, 30, 0, 50)
+            obj.interaction = GameObjectInteractionType.SitOnTop
+            result.objects.push(obj)
+
+            // a separate invisible object for the collision box of the bottom part
+            obj = new GameObject(x, 650, null, 200, 50, 50, 200)
+            obj.interaction = GameObjectInteractionType.SitOnTop
+            result.objects.push(obj)
+        }
+
+        for (var x of rightChairPositions)
+        {
+            // this only has the collision box for the top part
+            obj = new GameObject(x, 650, GFX_CHAIR_V1_1, 80, 30, 200, 50)
+            obj.interaction = GameObjectInteractionType.SitOnTop
+            result.objects.push(obj)
+
+            // a separate invisible object for the collision box of the bottom part
+            obj = new GameObject(x, 650, null, 200, 50, 0, 200)
+            obj.interaction = GameObjectInteractionType.SitOnTop
+            result.objects.push(obj)
+        }
+    }
+
     // === scene #0 stuffs ===
 
     createSceneStreet() {
@@ -201,37 +240,10 @@ class Game {
         obj.canFallThrough = false
         result.objects.push(obj)
 
-        // chair
-        {
-            // this only has the collision box for the top part
-            obj = new GameObject(1110, 650, GFX_CHAIR_V1_1, 80, 30, 200, 50)
-            obj.interaction = GameObjectInteractionType.SitOnTop
-            result.objects.push(obj)
+        // this.setupBasicRoom(result, [810], [560], [1110])
+        this.setupBasicRoom(result, [510], [260], [810])
 
-            // a separate invisible object for the collision box of the bottom part
-            obj = new GameObject(1110, 650, null, 200, 50, 0, 200)
-            obj.interaction = GameObjectInteractionType.SitOnTop
-            result.objects.push(obj)
-        }
-
-        // chair
-        {
-            // this is a separate stuff, because the svg can be flipped but the collision boxes can't
-
-            // this only has the collision box for the top part
-            obj = new GameObject(560, 650, GFX_CHAIR_V1_FLIPPED_1, 80, 30, 0, 50)
-            obj.interaction = GameObjectInteractionType.SitOnTop
-            result.objects.push(obj)
-
-            // a separate invisible object for the collision box of the bottom part
-            obj = new GameObject(560, 650, null, 200, 50, 50, 200)
-            obj.interaction = GameObjectInteractionType.SitOnTop
-            result.objects.push(obj)
-        }
-
-        obj = new GameObject(810, 720, GFX_TABLE_V1_1, 200, 30, 40, 5)
-        obj.interaction = GameObjectInteractionType.SitOnTop
-        result.objects.push(obj)
+        // result.objects.push(new GameObjectBirdAndCage(560, 600, result.objects))
 
         result.objects.push(new GameObjectPlayer(910, 500))
 
