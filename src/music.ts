@@ -18,7 +18,7 @@ function startMusic() {
     const scriptNode = audioCtx.createScriptProcessor(4096 * 2, 1, 1);
 
     var sounds = [ ]
-    var nextNoteTime = 0.1 // the audioProcessingEvent.playbackTime marks the end of the buffer, it is easier to fix it here
+    var nextNoteTime = 0.2 // the audioProcessingEvent.playbackTime marks the end of the buffer, it is easier to fix it here
 
     var music_data = MUSIC_1
     var n = 0
