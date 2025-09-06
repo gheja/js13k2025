@@ -46,7 +46,7 @@ function startMusic() {
                     nextNoteTime += music_data[2][n] * music_data[0]
                 }
 
-                for (var i=0; i<sounds.length; i++)
+                for (var i=sounds.length-1; i>=0; i--)
                 {
                     if (sounds[i].pos < sounds[i].data.length)
                     {
