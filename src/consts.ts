@@ -24,3 +24,8 @@ const CLOTHES_STEP_COUNT = 40
 const CLOTHES_STEP_CHANCE = 0.02
 const CLOTHES_MIN_X = -70
 const CLOTHES_MAX_X = 1920
+
+// y coordinate of "floor"
+const BIRD_CAGE_CRASH_POSITION = 920
+
+const PI = 3.14159

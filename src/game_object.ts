@@ -342,8 +342,28 @@ class GameObjectPlayer extends GameObject {
 
                     if (collided)
                     {
-                        game.beginTransition((obj as GameObjectWindow).targetSceneIndex)
-                        // console.log(_tick_count, "!")
+                        if (obj instanceof GameObjectWindow)
+                        {
+                            game.beginTransition((obj as GameObjectWindow).targetSceneIndex)
+                        }
+                        else if (obj instanceof GameObjectBirdAndCage)
+                        {
+                            var n = 10
+                            if (this.x >= obj.x)
+                            {
+                                n = -10
+                            }
+
+                            (obj as GameObjectBirdAndCage).getPushed(n)
+
+                            nextX -= n * 2
+                            nextY -= 5
+                            this.velocityX = 0
+                        }
+                        else if (obj instanceof GameObjectBird) {
+                            console.log("win")
+                            game.beginTransition(0)
+                        }
                     }
                 }
 
@@ -534,6 +554,113 @@ class GameObjectClothesLine extends GameObject {
             {
                 obj.x -= CLOTHES_MAX_X + -CLOTHES_MIN_X
             }
+        }
+    }
+}
+
+class GameObjectBird extends GameObject {
+    currentDirection: number
+    
+    constructor(x: number, y: number) {
+        super(x, y, null, 70, 70)
+        this.interaction = GameObjectInteractionType.None
+
+        this.animations = [
+            [ new GfxSprite(GFX_BIRD_SITTING_V1_1) ],
+            [ new GfxSprite(GFX_BIRD_FLYING_V1_1), new GfxSprite(GFX_BIRD_FLYING_V1_2) ]
+        ]
+
+        this.setActiveAnimationIndex(0)
+    }
+
+    pickDestination() {
+        this.currentDirection = Math.random() * 2 * PI
+    }
+
+    setFree() {
+        this.interaction = GameObjectInteractionType.OverlapNonBlocking
+        this.setActiveAnimationIndex(1)
+        this.pickDestination()
+    }
+
+    physicsFrame() {
+        if (_tick_count % 60 == 0) {
+            this.pickDestination()
+        }
+
+        // this check is not really great... the bird can get stuck in the corner
+        if (this.x < 200 || this.x > 1920-200 || this.y < 200 || this.y > 1080-50)
+        {
+            this.currentDirection += PI / 2
+        }
+
+        if (_tick_count % 6 == 0)
+        {
+            this.setActiveSpriteIndex((this.activeSpriteIndex + 1) % this.sprites.length)
+        }
+
+        this.x += Math.cos(this.currentDirection) * 10
+        this.y += Math.sin(this.currentDirection) * 10
+    }
+}
+
+class GameObjectBirdAndCage extends GameObject {
+    bird: GameObjectBird
+    state: BirdCageState = BirdCageState.Initial
+    safeMinX: number
+    safeMaxX: number
+
+    constructor(x: number, y: number, objectsArray: Array<GameObject>) {
+        super(x, y, GFX_BIRD_CAGE_V1_1, 120, 130)
+        this.safeMinX = x - 50
+        this.safeMaxX = x + 50
+        this.interaction = GameObjectInteractionType.OverlapNonBlocking
+
+        this.bird = new GameObjectBird(0, 0)
+
+        objectsArray.push(this.bird)
+
+        // this should be in front of the bird
+        this.sprites[0].svg.style.zIndex = "50"
+    }
+
+    syncBirdPosition() {
+        this.bird.x = this.x + 15
+        this.bird.y = this.y + 15
+    }
+
+    getPushed(x: number) {
+        if (this.state != BirdCageState.Initial) {
+            return
+        }
+
+        this.x += x
+    }
+
+    physicsFrame() {
+        if (this.state == BirdCageState.Initial) {
+            if (this.x < this.safeMinX || this.x > this.safeMaxX) {
+                this.state = BirdCageState.Falling
+                this.interaction = GameObjectInteractionType.None
+            }
+        }
+        else if (this.state == BirdCageState.Falling) {
+            this.velocityY += FALL_GRAVITY * 1/TARGET_TICK_INTERVAL_MS
+
+            this.y += this.velocityY
+
+            if (this.y >= BIRD_CAGE_CRASH_POSITION)
+            {
+                this.state = BirdCageState.Crashed
+
+                this.sprites[0].cleanup()
+                this.sprites[0] = new GfxSprite(GFX_BIRD_CAGE_CRUSHED_V1_1)
+                this.bird.setFree()
+            }
+        }
+
+        if (this.state != BirdCageState.Crashed) {
+            this.syncBirdPosition()
         }
     }
 }

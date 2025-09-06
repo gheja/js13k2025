@@ -19,3 +19,8 @@ enum PlayerState {
     Grabbing,
     InAir,
 }
+enum BirdCageState {
+    Initial = 0,
+    Falling,
+    Crashed
+}

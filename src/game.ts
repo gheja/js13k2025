@@ -240,10 +240,9 @@ class Game {
         obj.canFallThrough = false
         result.objects.push(obj)
 
-        // this.setupBasicRoom(result, [810], [560], [1110])
         this.setupBasicRoom(result, [510], [260], [810])
 
-        // result.objects.push(new GameObjectBirdAndCage(560, 600, result.objects))
+        result.objects.push(new GameObjectBirdAndCage(560, 600, result.objects))
 
         result.objects.push(new GameObjectPlayer(910, 500))
 
