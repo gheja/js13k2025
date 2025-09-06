@@ -94,7 +94,7 @@ zip_prefix="${name}_${now}"
 _title "Copying files to build directory..."
 
 try rsync -xa --exclude '*.js' --exclude '*.js.map' --exclude '*.zip' "${source_dir}/" ./
-# try rsync -xa "${source_dir}/3rdparty/" ./3rdparty/
+try rsync -xa "${source_dir}/3rdparty/" ./3rdparty/
 # try rsync -xa "${source_dir}/bonus/" ./bonus/
 # try cp "${source_dir}/server/server.min.js" ./
 try cp "${source_dir}/externs.js" ./
@@ -120,10 +120,10 @@ export PATH="${target_dir}/stage1/node_modules/.bin:${PATH}"
 # note: near.js has a near.min.js version
 
 files_html="index.html"
-# files_javascript=`cat index.html | grep -E '<script.* src="([^"]+)"' | grep -Eo 'src=\".*\"' | cut -d \" -f 2 | grep -vE '/socket.io|https:|bonus/near\.js' | grep -vE '^(3rdparty|bonus|https:)/'`
-files_javascript=`cat index.html | grep -E '<script.* src="([^"]+)"' | grep -Eo 'src=\".*\"' | cut -d \" -f 2`
-# files_javascript_extra=`cat index.html | grep -E '<script.* src="([^"]+)"' | grep -Eo 'src=\".*\"' | cut -d \" -f 2 | grep -vE '/socket.io|https:|bonus/near\.js' | grep -E '^(3rdparty|bonus)/'`
-files_javascript_extra=""
+files_javascript=`cat index.html | grep -E '<script.* src="([^"]+)"' | grep -Eo 'src=\".*\"' | cut -d \" -f 2 | grep -vE '/socket.io|https:|bonus/near\.js' | grep -vE '^(3rdparty|bonus|https:)/'`
+# files_javascript=`cat index.html | grep -E '<script.* src="([^"]+)"' | grep -Eo 'src=\".*\"' | cut -d \" -f 2`
+files_javascript_extra=`cat index.html | grep -E '<script.* src="([^"]+)"' | grep -Eo 'src=\".*\"' | cut -d \" -f 2 | grep -vE '/socket.io|https:|bonus/near\.js' | grep -E '^(3rdparty|bonus)/'`
+# files_javascript_extra=""
 files_typescript=`echo "$files_javascript" | sed -r 's/\.js$/.ts/g'`
 files_css=`cat index.html | grep -E '<link type="text/css" rel="stylesheet" href="([^"]+)"' | grep -Eo 'href=\".*\"' | cut -d \" -f 2`
 

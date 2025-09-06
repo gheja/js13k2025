@@ -94,7 +94,7 @@ zip_prefix="${name}_${now}"
 _title "Copying files to build directory..."
 
 try rsync -xa --exclude '*.js' --exclude '*.js.map' --exclude '*.zip' "${source_dir}/" ./
-# try rsync -xa "${source_dir}/3rdparty/" ./3rdparty/
+try rsync -xa "${source_dir}/3rdparty/" ./3rdparty/
 # try rsync -xa "${source_dir}/bonus/" ./bonus/
 # try cp "${source_dir}/server/server.min.js" ./
 try cp "${source_dir}/externs.js" ./
