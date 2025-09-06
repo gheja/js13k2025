@@ -1,4 +1,8 @@
-var zz1 = [.25,0,,.05,,.2]
+// var zz1 = [.25,0,,.05,,.2]
+
+var zz1 = [,0,,.1,,.2,,10,,,,,,.03,,,.16,.2,.1,1]
+var zz3 = [,0,,.1,,.2,,,,,,,,.03,,,.16,.2,.1,1]
+var zz4 = [,0,,.02,,,,15]
 
 // thanks https://github.com/nicolas-van/sonant-x
 // n: halfnote, 128 = A4, 129 = A#4, 130 = B4, ...
@@ -37,9 +41,21 @@ function startMusic() {
 
                 while (nextNoteTime <= now)
                 {
-                    zz1[2] = getNoteFrequency(music_data[1][n])
-
+                    zz1[0] = 0.3 * 0.25
+                    zz1[2] = getNoteFrequency(music_data[1][n]) * 0.25
                     sounds.push({ data: zzfx(outputBuffer.sampleRate, ...zz1), pos: 0 })
+
+                    zz1[0] = 0.4 * 0.25
+                    zz1[2] = getNoteFrequency(music_data[1][n]) * 0.5
+                    sounds.push({ data: zzfx(outputBuffer.sampleRate, ...zz1), pos: 0 })
+
+                    zz4[0] = 0.5 * 0.25
+                    zz4[2] = getNoteFrequency(music_data[1][n]) * 0.5
+                    sounds.push({ data: zzfx(outputBuffer.sampleRate, ...zz4), pos: 0 })
+
+                    zz3[0] = 0.7 * 0.25
+                    zz3[2] = getNoteFrequency(music_data[1][n]) * 1.0
+                    sounds.push({ data: zzfx(outputBuffer.sampleRate, ...zz3), pos: 0 })
 
                     n = (n + 1) % music_data[1].length
 
