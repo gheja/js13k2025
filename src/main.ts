@@ -14,4 +14,17 @@ function init() {
     game.start()
 }
 
+var _firstInteractionDone = false
+function checkFirstInteraction()
+{
+    if (_firstInteractionDone)
+    {
+        return
+    }
+
+    _firstInteractionDone = true
+    startMusic()
+}
+
 window.addEventListener("load", init)
+window.addEventListener("click", checkFirstInteraction)
