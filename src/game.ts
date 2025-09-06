@@ -194,7 +194,7 @@ class Game {
         var obj
 
         result.objects.push(new GameObject(0, 0, GFX_ROOM_OVERLAY))
-        result.objects.push(new GameObjectWindow(900, 200, 0))
+        result.objects.push(new GameObjectWindow(810, 200, 0))
 
         obj = new GameObject(0, 1000, null, 1920, 10)
         obj.interaction = GameObjectInteractionType.SitOnTop
@@ -204,17 +204,36 @@ class Game {
         // chair
         {
             // this only has the collision box for the top part
-            obj = new GameObject(1200, 650, GFX_CHAIR_V1_1, 80, 30, 200, 50)
+            obj = new GameObject(1110, 650, GFX_CHAIR_V1_1, 80, 30, 200, 50)
             obj.interaction = GameObjectInteractionType.SitOnTop
             result.objects.push(obj)
 
             // a separate invisible object for the collision box of the bottom part
-            obj = new GameObject(1200, 650, null, 200, 50, 0, 200)
+            obj = new GameObject(1110, 650, null, 200, 50, 0, 200)
             obj.interaction = GameObjectInteractionType.SitOnTop
             result.objects.push(obj)
         }
 
-        result.objects.push(new GameObjectPlayer(1000, 500))
+        // chair
+        {
+            // this is a separate stuff, because the svg can be flipped but the collision boxes can't
+
+            // this only has the collision box for the top part
+            obj = new GameObject(560, 650, GFX_CHAIR_V1_FLIPPED_1, 80, 30, 0, 50)
+            obj.interaction = GameObjectInteractionType.SitOnTop
+            result.objects.push(obj)
+
+            // a separate invisible object for the collision box of the bottom part
+            obj = new GameObject(560, 650, null, 200, 50, 50, 200)
+            obj.interaction = GameObjectInteractionType.SitOnTop
+            result.objects.push(obj)
+        }
+
+        obj = new GameObject(810, 720, GFX_TABLE_V1_1, 200, 30, 40, 5)
+        obj.interaction = GameObjectInteractionType.SitOnTop
+        result.objects.push(obj)
+
+        result.objects.push(new GameObjectPlayer(910, 500))
 
         this.addDebugToObjects(result.objects)
 

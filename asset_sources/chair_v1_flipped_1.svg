@@ -7,7 +7,7 @@
    viewBox="0 0 250 350"
    version="1.1"
    id="svg4599"
-   sodipodi:docname="chair_v1_1.svg"
+   sodipodi:docname="chair_v1_flipped_1.svg"
    inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
    xml:space="preserve"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -25,8 +25,8 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="0.50000001"
-     inkscape:cx="393.99999"
-     inkscape:cy="733.99998"
+     inkscape:cx="211"
+     inkscape:cy="733.99999"
      inkscape:window-width="1920"
      inkscape:window-height="1009"
      inkscape:window-x="-8"
@@ -38,10 +38,10 @@
      inkscape:groupmode="layer"
      id="layer1"><path
        style="fill:#773972;fill-opacity:1;stroke:none;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:0;paint-order:markers stroke fill"
-       d="m 10.125485,209.31233 55.729724,-34.9457 H 197.56563 l -4.49013,35.17267 z"
+       d="m 239.87452,209.31233 -55.72973,-34.9457 H 52.43437 l 4.49013,35.17267 z"
        id="path63632"
        sodipodi:nodetypes="ccccc" /><path
        style="fill:#392c4e;fill-opacity:1;stroke:none;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
-       d="M 250,0 V 350 H 215.65651 L 207.25372,255.06801 48.789866,260.52384 34.273195,350 H 1.1860236 L 10.363282,208.76466 186.44779,202.69545 204.058,6.2092715 Z"
+       d="m 0,0 v 350 h 34.34349 l 8.40279,-94.93199 158.46385,5.45583 L 215.72681,350 h 33.08717 L 239.63672,208.76466 63.55221,202.69545 45.942,6.2092715 Z"
        id="path109737"
        sodipodi:nodetypes="ccccccccccc" /></g></svg>
