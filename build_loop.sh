@@ -43,7 +43,10 @@ while true; do
 	if [ $? == 0 ]; then
 		echo -e "${prefix}Build was successful."
 		
-		rsync -xav --exclude 'node_modules' --exclude '*.zip' /tmp/build/stage1/ /var/www/html/; chmod -R ugo+rX /var/www/html
+		# rsync -xav --exclude 'node_modules' --exclude '*.zip' /tmp/build/stage1/ /var/www/html/; chmod -R ugo+rX /var/www/html
+		rsync -xa --exclude 'node_modules' --exclude '*.zip' /tmp/build/stage1/ /var/www/html/; chmod -R ugo+rX /var/www/html
+		
+		echo "Deployed."
 	else
 		echo -e "${prefix_error}Build failed!"
 		
