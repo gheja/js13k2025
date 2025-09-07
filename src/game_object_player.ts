@@ -1,6 +1,7 @@
 class GameObjectPlayer extends GameObject {
     currentlyCollidingWith: GameObject
     state: PlayerState = PlayerState.InAir
+    wasBittenByMouseCooldownTicks: number = 0 // to prevent catching the mouse that just bit the player
 
     constructor(x: number, y: number) {
         super(x, y, null, 60, 120, 30, 0)
@@ -67,6 +68,8 @@ class GameObjectPlayer extends GameObject {
         // if set, will disregard all collison objects on this physicsFrame() run
         // (WAS: will disregard this one in this physicsFrame() run)
         var ignoreCollidingWith = null
+
+        this.wasBittenByMouseCooldownTicks -= 1
 
 
         if (this.currentlyCollidingWith)
@@ -233,10 +236,11 @@ class GameObjectPlayer extends GameObject {
                             // because we only handle the first collision this would make the cat let go of the cloth, but make sure
                             if (this.state == PlayerState.Grabbing)
                             {
+                                this.wasBittenByMouseCooldownTicks = 15
                                 ignoreCollidingWith = true
                                 break
                             }
-                            else if (this.state == PlayerState.InAir)
+                            else if (this.state == PlayerState.InAir && this.wasBittenByMouseCooldownTicks < 0)
                             {
                                 var obj2 = new GameObject(obj.x - 150, obj.y - 50, GFX_TEXT_BUBBLE_YUM_V2_1)
                                 obj2.autoDeleteTicksLeft = 30
