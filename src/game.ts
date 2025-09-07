@@ -256,6 +256,15 @@ class Game {
 
     // ===
 
+    cleanupObject(obj: GameObject) {
+        obj.cleanupSprites()
+        for (var i=this.objects.length-1; i>=0; i--) {
+            if (this.objects[i] == obj) {
+                this.objects.splice(i, 1)
+            }
+        }
+    }
+
     addDebugToObjects(arr: Array<GameObject>)
     {
         if (IS_PROD_BUILD)
