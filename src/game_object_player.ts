@@ -239,6 +239,11 @@ class GameObjectPlayer extends GameObject {
                 }
             }
 
+            if (ignoreCollidingWith)
+            {
+                this.currentlyCollidingWith = null
+            }
+
             // if (this.currentlyCollidingWith)
             // {
             //     break
