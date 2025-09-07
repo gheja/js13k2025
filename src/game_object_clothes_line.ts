@@ -61,8 +61,6 @@ class GameObjectClothesLine extends GameObject {
             this.x = -200
         }
 
-        this.sprites[0].moveTo(this.x, this.y)
-
         for (var obj of this.clothes)
         {
             obj.x += n
