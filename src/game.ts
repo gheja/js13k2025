@@ -6,6 +6,7 @@ class Game {
     private keyPressed: Array<boolean> = []
     private transitionOverlayObject: GameObject
     private transitionTargetSceneIndex: number
+    private transitionPauseTicksLeft: number
 
     public scenes: Array<any> = []
 
@@ -28,9 +29,10 @@ class Game {
         window.addEventListener("keyup", this.inputEvent.bind(this))
     }
 
-    beginTransition(targetSceneIndex) {
+    beginTransition(targetSceneIndex: number, transitionPauseTicks: number = 0) {
         this.transitionTargetSceneIndex = targetSceneIndex
         this.transitionOverlayObject.y = 1125
+        this.transitionPauseTicksLeft = transitionPauseTicks
     }
 
     prepareCurrentScene(sceneIndex: number) {
@@ -312,6 +314,14 @@ class Game {
         // this will be the only thing done during this run
         if (this.transitionOverlayObject.y != 2000)
         {
+            // NOTE: this pause is only for giving a minimal time to the player to see a feedback of their interaction, and
+            // unfortunately the transition sprite is already on the way (can be seen in the lower left corner), it might
+            // worth some time sometime to fix this
+            if (this.transitionPauseTicksLeft > 0) {
+                this.transitionPauseTicksLeft -= 1
+                return
+            }
+
             this.transitionOverlayObject.y -= 125
             this.transitionOverlayObject.physicsFrame()
 
