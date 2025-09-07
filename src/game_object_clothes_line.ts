@@ -52,7 +52,7 @@ class GameObjectClothesLine extends GameObject {
 
         this.moveLeft += n
 
-        var player = (game.scenes[0].playerObject as GameObjectPlayer)
+        var player = (game.scenes[SCENE_INDEX_STREET].playerObject as GameObjectPlayer)
 
         this.x += n
 

@@ -210,7 +210,7 @@ class GameObjectPlayer extends GameObject {
                     {
                         if (obj instanceof GameObjectWindow)
                         {
-                            game.beginTransition((obj as GameObjectWindow).targetSceneIndex)
+                            game.beginTransition(arrayPick((obj as GameObjectWindow).possibleTargetSceneIndexes))
                         }
                         else if (obj instanceof GameObjectBirdAndCage)
                         {
@@ -230,6 +230,7 @@ class GameObjectPlayer extends GameObject {
                             var obj2 = new GameObject(obj.x - 150, obj.y - 50, GFX_TEXT_BUBBLE_YUM_V2_1)
                             game.objects.push(obj2)
 
+                            game.sceneCompleted(SCENE_INDEX_BIRD_CAGE)
                             game.beginTransition(0, 30)
                         }
                         else if (obj instanceof GameObjectMouse) {
@@ -296,5 +297,7 @@ class GameObjectPlayer extends GameObject {
             this.x = nextX
             this.y = nextY
         }
+
+        // setDebugMessage(this.wasBittenByMouseCooldownTicks.toString())
     }
 }

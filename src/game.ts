@@ -39,19 +39,22 @@ class Game {
         if (sceneIndex == 0)
         {
             // only create the scene once
-            if (!this.scenes[0])
+            if (!this.scenes[SCENE_INDEX_STREET])
             {
-                this.scenes[0] = this.createSceneStreet()
+                this.scenes[SCENE_INDEX_STREET] = this.createSceneStreet()
             }
 
-            // close all the windows
-            for (var obj2 of this.scenes[0].objects)
+            for (var obj2 of this.scenes[SCENE_INDEX_STREET].objects)
             {
+                // close all the windows
                 if (obj2 instanceof GameObjectWindow)
                 {
                     obj2.targetOpening = 0
                     obj2.currentOpening = 0
+                    // obj2.removePossibleScene(lastSceneIndex)
                 }
+
+                // stop the player (will fall down)
                 if (obj2 instanceof GameObjectPlayer)
                 {
                     obj2.velocityX = 0
@@ -63,14 +66,20 @@ class Game {
         {
             // always create a new room
             // BUG, TODO: this does not clean up the SVGs in DOM, so effectively this leads to memory leak
-            if (this.scenes[1])
+            if (this.scenes[SCENE_INDEX_BIRD_CAGE])
             {
-                this.wipeObjectsArray(this.scenes[1].objects)
+                this.wipeObjectsArray(this.scenes[SCENE_INDEX_BIRD_CAGE].objects)
             }
 
-            this.scenes[1] = this.createSceneRoom1()
+            this.scenes[SCENE_INDEX_BIRD_CAGE] = this.createSceneRoom1()
         }
     }
+
+/*
+    switchToRandomScene(sceneIndexes: Array<number>) {
+
+    }
+*/
 
     wipeObjectsArray(objects: Array<GameObject>) {
         for (var i=objects.length-1; i>=0; i--)
@@ -167,8 +176,8 @@ class Game {
 
         for (var x=70; x<1920; x+=370)
         {
-            result.objects.push(new GameObjectWindow(x, 260, 1))
-            result.objects.push(new GameObjectWindow(x, -40, 1))
+            result.objects.push(new GameObjectWindow(x, 260, [SCENE_INDEX_BIRD_CAGE]))
+            result.objects.push(new GameObjectWindow(x, -40, [SCENE_INDEX_BIRD_CAGE]))
         }
 
 
@@ -188,15 +197,23 @@ class Game {
     pickNewStreetWindow() {
         var a = []
 
-        for (var obj of this.scenes[0].objects)
+        for (var obj of this.scenes[SCENE_INDEX_STREET].objects)
         {
-            if (obj instanceof GameObjectWindow)
+            if (obj instanceof GameObjectWindow && obj.possibleTargetSceneIndexes.length > 0)
             {
                 a.push(obj)
             }
         }
 
-        this.scenes[0].currentWindow = arrayPick(a)
+        if (!IS_PROD_BUILD)
+        {
+            if (a.length == 0)
+            {
+                throw "No window can be picked!"
+            }
+        }
+
+        this.scenes[SCENE_INDEX_STREET].currentWindow = arrayPick(a)
     }
 
     processStreetWindow() {
@@ -211,7 +228,7 @@ class Game {
             this.pickNewStreetWindow()
 
             // open the window
-            this.scenes[0].currentWindow.targetOpening = WINDOW_OPENING_POSITION_MAX
+            this.scenes[SCENE_INDEX_STREET].currentWindow.targetOpening = WINDOW_OPENING_POSITION_MAX
         }
         else if (a == 130) {
             console.log("throw!")
@@ -220,7 +237,7 @@ class Game {
         else if (a == 299)
         {
             // close the window
-            this.scenes[0].currentWindow.targetOpening = WINDOW_OPENING_POSITION_MIN
+            this.scenes[SCENE_INDEX_STREET].currentWindow.targetOpening = WINDOW_OPENING_POSITION_MIN
         }
     }
 
@@ -235,7 +252,7 @@ class Game {
         var obj
 
         result.objects.push(new GameObject(0, 0, GFX_ROOM_OVERLAY))
-        result.objects.push(new GameObjectWindow(810, 200, 0))
+        result.objects.push(new GameObjectWindow(810, 200, [SCENE_INDEX_STREET]))
 
         obj = new GameObject(0, 1000, null, 1920, 10)
         obj.interaction = GameObjectInteractionType.SitOnTop
@@ -255,6 +272,16 @@ class Game {
 
 
     // ===
+
+    sceneCompleted(n: number) {
+        for (var obj2 of this.scenes[SCENE_INDEX_STREET].objects)
+        {
+            if (obj2 instanceof GameObjectWindow)
+            {
+                obj2.removePossibleTargetSceneIndex(n)
+            }
+        }
+    }
 
     cleanupObject(obj: GameObject) {
         obj.cleanupSprites()
@@ -283,8 +310,6 @@ class Game {
         {
             (obj as GameObject).moveAway()
         }
-
-        // console.log("scene", sceneIndex)
 
         this.prepareCurrentScene(sceneIndex)
 

@@ -4,15 +4,17 @@ class GameObjectWindow extends GameObject {
     spriteBelow: GfxSprite
     targetOpening: number = 0
     currentOpening: number = 0
-    targetSceneIndex: number
+    possibleTargetSceneIndexes: Array<number>
 
-    constructor(x: number, y: number, targetSceneIndex: number = 0) {
+    constructor(x: number, y: number, possibleTargetSceneIndexes: Array<number>) {
         super(x, y, null, 160, 30, 70, 250)
         this.spriteBelow = new GfxSprite(GFX_WINDOW_OPEN_V1_1)
         this.spriteWindow = new GfxSprite(GFX_WINDOW_CLOSED_V1_1)
         this.spriteTop = new GfxSprite(GFX_WINDOW_FRAME_V1_1)
-        this.targetSceneIndex = targetSceneIndex
-        if (targetSceneIndex == 0)
+        this.possibleTargetSceneIndexes = possibleTargetSceneIndexes
+
+        // the exit window should always be open
+        if (possibleTargetSceneIndexes[0] == 0)
         {
             this.currentOpening = WINDOW_OPENING_POSITION_MAX
             this.targetOpening = WINDOW_OPENING_POSITION_MAX
@@ -20,6 +22,10 @@ class GameObjectWindow extends GameObject {
 
         // we don't need this
         this.sprites[0].cleanup()
+    }
+
+    removePossibleTargetSceneIndex(n: number) {
+        this.possibleTargetSceneIndexes = this.possibleTargetSceneIndexes.filter(a => { return a != n })
     }
 
     injectCollisionBox()
