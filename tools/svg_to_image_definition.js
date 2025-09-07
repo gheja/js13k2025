@@ -69,6 +69,7 @@ function processUpload(filename, event)
 function cleanupStyle(s)
 {
     // NOTE: all my SVGs use "round" linecaps and linejoins, that's why I remove these here. this is incorrect, I know.
+    // TODO: check the default values for these properties, only remove those, add those in the existing SVGs, so the game's rendering is fully consistent with Inkscape
     var arr = [
         'fill-opacity:1',
         'stroke:none',
@@ -77,6 +78,7 @@ function cleanupStyle(s)
         'stroke-linejoin:round',
         'stroke-dasharray:none',
         'paint-order:markers stroke fill',
+        'paint-order:normal',
         'stroke-opacity:1',
         'stroke-dashoffset:0',
     ]
