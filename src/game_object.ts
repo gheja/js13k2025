@@ -361,7 +361,9 @@ class GameObjectPlayer extends GameObject {
                             this.velocityX = 0
                         }
                         else if (obj instanceof GameObjectBird) {
-                            console.log("win")
+                            var obj2 = new GameObject(obj.x - 150, obj.y - 50, GFX_TEXT_BUBBLE_YUM_V2_1)
+                            game.objects.push(obj2)
+
                             game.beginTransition(0)
                         }
                     }
