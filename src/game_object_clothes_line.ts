@@ -5,7 +5,7 @@ class GameObjectClothesLine extends GameObject {
     constructor(y: number, objectsArray: Array<GameObject>, chance: number=0.4) {
         var obj
         super(0, y, GFX_CLOTHES_LINE_V1_1)
-        for (var x=0; x<1920; x+=70)
+        for (var x=CLOTHES_MIN_X; x<CLOTHES_MAX_X; x+=70)
         {
             if (Math.random() <= chance)
             {
