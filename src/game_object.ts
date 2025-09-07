@@ -17,6 +17,7 @@ class GameObject {
     animations: Array<any>
     activeAnimationIndex: number = -1
     spriteFlipped: boolean = false
+    autoDeleteTicksLeft: number = -1 // will delete this object in this many ticks
 
     constructor(x: number, y: number, baseSpriteData: any, boxWidth: number = 0, boxHeight: number = 0, boxOffsetX: number = 0, boxOffsetY: number = 0) {
         // this.sprites = [ new GfxSprite(TEST_GFX_DEFINITION_1) ]
@@ -92,6 +93,15 @@ class GameObject {
             this.sprites = this.animations[n]
             this.setActiveSpriteIndex(0)
             this.activeAnimationIndex = n
+        }
+    }
+
+    processAutoDelete() {
+        if (this.autoDeleteTicksLeft > 0) {
+            this.autoDeleteTicksLeft -= 1
+        }
+        else if (this.autoDeleteTicksLeft == 0) {
+            game.cleanupObject(this)
         }
     }
 

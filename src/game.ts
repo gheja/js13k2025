@@ -347,7 +347,7 @@ class Game {
             return
         }
 
-        this.objects.forEach(a => a.physicsFrame())
+        this.objects.forEach(a => { a.processAutoDelete(); a.physicsFrame(); })
     }
 
     renderFrame() {
