@@ -3,7 +3,7 @@ class GameObjectMouse extends GameObject {
 
     constructor(x: number, y: number) {
         super(x, y, null, 70, 70)
-        this.interaction = GameObjectInteractionType.None
+        this.interaction = GameObjectInteractionType.OverlapNonBlocking
 
         this.animations = [
             [ new GfxSprite(GFX_MOUSE_IDLE_V1_1) ],

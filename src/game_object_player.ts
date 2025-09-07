@@ -229,6 +229,22 @@ class GameObjectPlayer extends GameObject {
 
                             game.beginTransition(0, 30)
                         }
+                        else if (obj instanceof GameObjectMouse) {
+                            // because we only handle the first collision this would make the cat let go of the cloth, but make sure
+                            if (this.state == PlayerState.Grabbing)
+                            {
+                                ignoreCollidingWith = true
+                                break
+                            }
+                            else if (this.state == PlayerState.InAir)
+                            {
+                                var obj2 = new GameObject(obj.x - 150, obj.y - 50, GFX_TEXT_BUBBLE_YUM_V2_1)
+                                obj2.autoDeleteTicksLeft = 30
+                                game.objects.push(obj2)
+                                
+                                game.cleanupObject(obj)
+                            }
+                        }
                     }
                 }
 
