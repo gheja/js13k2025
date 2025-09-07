@@ -7,7 +7,7 @@ class GameObjectMouse extends GameObject {
 
         this.animations = [
             [ new GfxSprite(GFX_MOUSE_IDLE_V1_1) ],
-            [ new GfxSprite(GFX_MOUSE_RUN_V1_1), new GfxSprite(GFX_MOUSE_RUN_V1_2) ]
+            [ new GfxSprite(GFX_MOUSE_RUN_V1_1) ]
         ]
 
         this.setActiveAnimationIndex(0)
