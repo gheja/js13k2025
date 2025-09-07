@@ -8,6 +8,13 @@ var _gfx_scale = 1.0
 
 var _gfx_root: HTMLDivElement = null
 
+    function setDebugMessage(s: string) {
+        if (IS_PROD_BUILD) {
+            return
+        }
+        document.getElementById("debug_messages").innerHTML = s
+    }
+
 function init() {
     game = new Game()
     game.init()
