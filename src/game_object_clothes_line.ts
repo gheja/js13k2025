@@ -1,5 +1,6 @@
 class GameObjectClothesLine extends GameObject {
     clothes: Array<GameObject> = []
+    mice: Array<GameObjectMouse> = []
     moveLeft: number = 0
 
     constructor(y: number, objectsArray: Array<GameObject>, chance: number=0.4) {
@@ -81,6 +82,12 @@ class GameObjectClothesLine extends GameObject {
             {
                 obj.x -= CLOTHES_MAX_X + -CLOTHES_MIN_X
             }
+        }
+
+        for (var obj2 of this.mice)
+        {
+            obj2.x += n
+            obj2.targetX += n
         }
     }
 }
