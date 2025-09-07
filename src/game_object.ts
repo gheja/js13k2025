@@ -16,6 +16,7 @@ class GameObject {
     maxX: number = 1920 - 120
     animations: Array<any>
     activeAnimationIndex: number = -1
+    spriteFlipped: boolean = false
 
     constructor(x: number, y: number, baseSpriteData: any, boxWidth: number = 0, boxHeight: number = 0, boxOffsetX: number = 0, boxOffsetY: number = 0) {
         // this.sprites = [ new GfxSprite(TEST_GFX_DEFINITION_1) ]
@@ -99,10 +100,19 @@ class GameObject {
     }
 
     renderFrame() {
-        this.sprites[this.activeSpriteIndex].moveTo(this.x, this.y)
+        // only update flipped when actually moving - this will prevent flipping back the sprite when the object just stopped
+        // update this var, instead of the sprite directly so even if the sprite changes the flip is retained
+        if (this.velocityX < -0.5)
+        {
+            this.spriteFlipped = true
+        }
+        else if (this.velocityX > 0.5)
+        {
+            this.spriteFlipped = false
+        }
 
-        // flip
-        this.sprites[this.activeSpriteIndex].svg.style.transform = (this.velocityX < 0 ? "scaleX(-1)" : "")
+        this.sprites[this.activeSpriteIndex].flipped = this.spriteFlipped
+        this.sprites[this.activeSpriteIndex].moveTo(this.x, this.y)
     }
 
     moveAway() {

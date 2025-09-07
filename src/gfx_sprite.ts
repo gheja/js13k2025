@@ -2,6 +2,7 @@ class GfxSprite {
     originalWidth: number
     originalHeight: number
     svg: SvgInHtml
+    flipped: boolean = false
 
     constructor(data) {
         this.originalWidth = data[0]
@@ -42,6 +43,7 @@ class GfxSprite {
         // TODO: now the sprite position and scale is only updated when moveTo() is called
         this.svg.style.width = (this.originalWidth * _gfx_scale) + "px"
         this.svg.style.height = (this.originalHeight * _gfx_scale) + "px"
+        this.svg.style.transform = (this.flipped ? "scaleX(-1)" : "")
     }
 
     moveAway() {

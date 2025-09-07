@@ -51,6 +51,9 @@ class GameObjectMouse extends GameObject {
             this.targetX -= CLOTHES_MAX_X + -CLOTHES_MIN_X
         }
 
+        // just the sign is important because of the automatic update of spriteFlipped
+        this.velocityX = this.targetX - this.x
+
         if (this.targetX - this.x > 8)
         {
             this.x += 8
