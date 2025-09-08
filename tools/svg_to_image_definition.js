@@ -5,15 +5,26 @@ var _projectData = {}
 function saveState()
 {
     window.localStorage.setItem('svg_to_image_definition:v1:projectData', JSON.stringify(_projectData))
+
+    var a = document.getElementById("download_project")
+    a.href = URL.createObjectURL(new Blob([JSON.stringify(_projectData)], { "type": "application/json" }))
+    a.download = "project_" + Date.now() + ".json"
+}
+
+function getEmptyProject() {
+    return {
+        "version": 2,
+        "inputFiles": {},
+        "styleDefinitions": [],
+        "imageDefinitions": {},
+        "styleReplacementsInput": "",
+        "styleReplacements": [],
+    }
 }
 
 function loadState()
 {
-    _projectData = {
-        "inputFiles": {},
-        "styleDefinitions": [],
-        "imageDefinitions": {},
-    }
+    _projectData = getEmptyProject()
 
     try {
         var a = window.localStorage.getItem('svg_to_image_definition:v1:projectData')
@@ -22,6 +33,19 @@ function loadState()
         }
     }
     catch (e) {}
+
+    // delete _projectData["style_replacements"]
+
+    // migrate the data to newer versions (if available)
+    if (!("version" in _projectData) || _projectData['version'] == 1)
+    {
+        _projectData["version"] = 2
+        _projectData["styleReplacementsInput"] = ""
+        _projectData["styleReplacements"] = []
+    }
+
+    // process the loaded data
+    document.getElementById("style_replacements").value = _projectData['styleReplacementsInput']
 }
 
 function removeFile(filename)
@@ -68,6 +92,12 @@ function processUpload(filename, event)
 
 function cleanupStyle(s)
 {
+    // do the replacement on the original string
+    for (var a of _projectData["styleReplacements"])
+    {
+        s = s.replace(a[0], a[1])
+    }
+
     // NOTE: all my SVGs use "round" linecaps and linejoins, that's why I remove these here. this is incorrect, I know.
     // TODO: check the default values for these properties, only remove those, add those in the existing SVGs, so the game's rendering is fully consistent with Inkscape
     var arr = [
@@ -88,7 +118,26 @@ function cleanupStyle(s)
         s = s.replace(';' + a, '')
     }
 
+    // do the replacement on the new string too
+    for (var a of _projectData["styleReplacements"])
+    {
+        s = s.replace(a[0], a[1])
+    }
+
     return s
+}
+
+function getArray2(s, separator2) {
+    var result = []
+    for (var line of s.split("\n")) {
+        if (line.indexOf(separator2) == -1)
+        {
+            continue
+        }
+
+        result.push(line.split(separator2))
+    }
+    return result
 }
 
 function processAllFiles()
@@ -102,7 +151,8 @@ function processAllFiles()
     // reset the processed definitions
     _projectData['styleDefinitions'] = []
     _projectData['imageDefinitions'] = {}
-
+    _projectData['styleReplacementsInput'] = document.getElementById("style_replacements").value
+    _projectData['styleReplacements'] = getArray2(_projectData['styleReplacementsInput'], ">")
 
     // process all the files
     for (var filename in _projectData['inputFiles'])
@@ -155,6 +205,7 @@ function processAllFiles()
 
     saveState()
     updateFileList()
+    // updateStyleRelpacements()
 }
 
 function processShape(input, width, height)
@@ -482,6 +533,50 @@ function init()
 function copyOutputToClipboard()
 {
      navigator.clipboard.writeText(document.getElementById('output').value)
+}
+
+// project
+function clearProject()
+{
+    if (!confirm("Discard current project?"))
+    {
+        return
+    }
+
+    _projectData = getEmptyProject()
+    processAllFiles()
+}
+
+function loadProject()
+{
+    if (!confirm("Discard current project and load it from the file?"))
+    {
+        return
+    }
+
+    for (var file of document.getElementById("upload_project").files)
+    {
+        var reader = new FileReader()
+        reader.onload = processProjectUpload.bind(null, file.name)
+        reader.readAsText(file)
+    }
+}
+
+function processProjectUpload(filename, event)
+{
+    var data = null
+
+    try {
+        data = JSON.parse(event.target.result)
+    }
+    catch (e) {
+        alert("Failed to load data from file: " + e)
+    }
+
+    if (data) {
+        _projectData = data
+        processAllFiles()
+    }
 }
 
 window.addEventListener("load", init)
