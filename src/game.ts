@@ -11,7 +11,9 @@ class Game {
     public scenes: Array<any> = []
     public currentScene: any
 
-    scrollMinLimit: number = 700 // changes with unlocked levels
+    processStreetWindowTicks: number = 0 // to count the interval of the windows opening - will reset to a value if there is no window available
+
+    scrollMinLimit: number = 0 // changes with unlocked levels, [ 0, 700 ]
     scrollMaxLimit: number = 0 // no change
 
     constructor(){
@@ -291,6 +293,10 @@ class Game {
 
 
     // ===
+
+    updateScrollLimits() {
+        this.scrollMinLimit = 700
+    }
 
     sceneCompleted(n: number) {
         for (var obj2 of this.scenes[SCENE_INDEX_STREET].objects)
