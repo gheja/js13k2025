@@ -193,6 +193,9 @@ class Game {
         result.objects.push(obj)
         result.playerObject = obj
 
+        obj = new GameObject(1920 - 770, 1080 - 860, GFX_STREET_LIGHT_1)
+        result.objects.push(obj)
+
         this.addDebugToObjects(result.objects)
 
         return result
