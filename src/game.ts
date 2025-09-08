@@ -135,6 +135,7 @@ class Game {
         var result = {
             objects: [],
             playerObject: null,
+            scrollingEnabled: true,
             currentWindow: null,
         }
 
@@ -248,6 +249,7 @@ class Game {
     createSceneRoom1() {
         var result = {
             objects: [],
+            scrollingEnabled: false,
             playerObject: null
         }
 
@@ -341,9 +343,30 @@ class Game {
         this.keyPressed["a" + e.code.toLowerCase()] = (e.type == "keydown")
     }
 
+    updateScreenScroll() {
+        if (!this.currentScene.scrollingEnabled)
+        {
+            _gfx_screen_scroll_y = 0
+            return
+        }
+
+        var scrollMin = - ((this.currentScene.playerObject as GameObjectPlayer).y - 200) // top
+        var scrollMax = - ((this.currentScene.playerObject as GameObjectPlayer).y - 700) // bottom
+        scrollMax = Math.max(scrollMax, 0)
+
+        _gfx_screen_scroll_y = Math.max(Math.min(_gfx_screen_scroll_y, scrollMax), scrollMin)
+
+        setDebugMessage(
+            Math.round((this.currentScene.playerObject as GameObjectPlayer).y) + " " +
+            Math.round(scrollMin) + " " +
+            Math.round(scrollMax) + " " +
+            Math.round(_gfx_screen_scroll_y)
+        )
+    }
 
     physicsFrame(){
         _tick_count += 1
+
         this.gfx.update()
 
         if (true) { // TODO: check scene index
@@ -395,6 +418,8 @@ class Game {
         }
 
         window.requestAnimationFrame(this.renderFrame.bind(this))
+
+        this.updateScreenScroll()
 
         this.objects.forEach(a => a.renderFrame())
         this.transitionOverlayObject.renderFrame()

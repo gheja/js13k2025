@@ -38,7 +38,7 @@ class GfxSprite {
 
     moveTo(x: number, y: number) {
         this.svg.style.left = (x * _gfx_scale + _gfx_pad_x) + "px"
-        this.svg.style.top = (y * _gfx_scale + _gfx_pad_y) + "px"
+        this.svg.style.top = ((y + _gfx_screen_scroll_y) * _gfx_scale + _gfx_pad_y) + "px"
         // TODO: maybe we should only change the width and height when the window was rescaled
         // TODO: now the sprite position and scale is only updated when moveTo() is called
         this.svg.style.width = (this.originalWidth * _gfx_scale) + "px"
