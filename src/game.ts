@@ -183,13 +183,17 @@ class Game {
 
         for (var x=70; x<1920; x+=370)
         {
-            result.objects.push(new GameObjectWindow(x, 260, [SCENE_INDEX_BIRD_CAGE]))
-            result.objects.push(new GameObjectWindow(x, -40, [SCENE_INDEX_BIRD_CAGE]))
+            result.objects.push(new GameObjectWindow(x, 260 - 320*0, [SCENE_INDEX_BIRD_CAGE]))
+            result.objects.push(new GameObjectWindow(x, 260 - 320*1, [SCENE_INDEX_BIRD_CAGE]))
+            result.objects.push(new GameObjectWindow(x, 260 - 320*2, [SCENE_INDEX_BIRD_CAGE]))
+            result.objects.push(new GameObjectWindow(x, 260 - 320*3, [SCENE_INDEX_BIRD_CAGE]))
         }
 
 
-        result.objects.push(new GameObjectClothesLine(360, result.objects))
-        result.objects.push(new GameObjectClothesLine(40, result.objects))
+        result.objects.push(new GameObjectClothesLine(360 - 320*0, result.objects))
+        result.objects.push(new GameObjectClothesLine(360 - 320*1, result.objects))
+        result.objects.push(new GameObjectClothesLine(360 - 320*2, result.objects))
+        result.objects.push(new GameObjectClothesLine(360 - 320*3, result.objects))
 
 
         obj = new GameObjectPlayer(50, 800)
