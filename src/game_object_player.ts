@@ -142,121 +142,126 @@ class GameObjectPlayer extends GameObject {
             nextX = this.x + stepX
             nextY = this.y + stepY
 
-            for (var obj of game.objects)
+            // only check collisions if the player is still on the screen (they can leave it only on the top side)
+            // NOTE, BUG: if the window is tall, then the screen ratio is different, the player can see objects above the top side! fix it?!
+            if (this.y > 0 - _gfx_screen_scroll_y)
             {
-                if (obj == this)
+                for (var obj of game.objects)
                 {
-                    continue
-                }
-
-                // NOTE: this caused problem when there were multiple collisions on the same line (i.e. two clothes on clothesline, one under the left paw, one under the right)
-                // if (obj == ignoreCollidingWith)
-
-                if (ignoreCollidingWith)
-                {
-                    continue
-                }
-
-                var collided = false
-
-                // NOTE: currently the collision check only works reliably when the player's box is smaller or equal to the other object's box,
-                // because otherwise the top points might fall through on both side of the other object's box
-
-                // only check when falling
-                if (this.velocityY > 0) {
-                    if (obj.interaction == GameObjectInteractionType.SitOnTop)
+                    if (obj == this)
                     {
-                        collided = boxesCollide(
-                            nextX + this.boxOffsetX,
-                            nextY + this.boxOffsetY + this.boxHeight - 1,
-                            this.boxWidth,
-                            1,
-                            obj.x + obj.boxOffsetX,
-                            obj.y + obj.boxOffsetY,
-                            obj.boxWidth,
-                            1
-                        )
+                        continue
                     }
-                    else if (obj.interaction == GameObjectInteractionType.GrabOnTop)
+
+                    // NOTE: this caused problem when there were multiple collisions on the same line (i.e. two clothes on clothesline, one under the left paw, one under the right)
+                    // if (obj == ignoreCollidingWith)
+
+                    if (ignoreCollidingWith)
+                    {
+                        continue
+                    }
+
+                    var collided = false
+
+                    // NOTE: currently the collision check only works reliably when the player's box is smaller or equal to the other object's box,
+                    // because otherwise the top points might fall through on both side of the other object's box
+
+                    // only check when falling
+                    if (this.velocityY > 0) {
+                        if (obj.interaction == GameObjectInteractionType.SitOnTop)
+                        {
+                            collided = boxesCollide(
+                                nextX + this.boxOffsetX,
+                                nextY + this.boxOffsetY + this.boxHeight - 1,
+                                this.boxWidth,
+                                1,
+                                obj.x + obj.boxOffsetX,
+                                obj.y + obj.boxOffsetY,
+                                obj.boxWidth,
+                                1
+                            )
+                        }
+                        else if (obj.interaction == GameObjectInteractionType.GrabOnTop)
+                        {
+                            collided = boxesCollide(
+                                nextX + this.boxOffsetX,
+                                nextY + this.boxOffsetY,
+                                this.boxWidth,
+                                1,
+                                obj.x + obj.boxOffsetX,
+                                obj.y + obj.boxOffsetY,
+                                obj.boxWidth,
+                                1
+                            )
+                        }
+                    }
+
+                    // check in any state, but only if there was no other collision
+                    if (!collided && obj.interaction == GameObjectInteractionType.OverlapNonBlocking)
                     {
                         collided = boxesCollide(
                             nextX + this.boxOffsetX,
                             nextY + this.boxOffsetY,
                             this.boxWidth,
-                            1,
+                            this.boxHeight,
                             obj.x + obj.boxOffsetX,
                             obj.y + obj.boxOffsetY,
                             obj.boxWidth,
-                            1
+                            obj.boxHeight
                         )
-                    }
-                }
 
-                // check in any state, but only if there was no other collision
-                if (!collided && obj.interaction == GameObjectInteractionType.OverlapNonBlocking)
-                {
-                    collided = boxesCollide(
-                        nextX + this.boxOffsetX,
-                        nextY + this.boxOffsetY,
-                        this.boxWidth,
-                        this.boxHeight,
-                        obj.x + obj.boxOffsetX,
-                        obj.y + obj.boxOffsetY,
-                        obj.boxWidth,
-                        obj.boxHeight
-                    )
+                        if (collided)
+                        {
+                            if (obj instanceof GameObjectWindow)
+                            {
+                                game.beginTransition(arrayPick((obj as GameObjectWindow).possibleTargetSceneIndexes))
+                            }
+                            else if (obj instanceof GameObjectBirdAndCage)
+                            {
+                                var n = 10
+                                if (this.x >= obj.x)
+                                {
+                                    n = -10
+                                }
+
+                                (obj as GameObjectBirdAndCage).getPushed(n)
+
+                                nextX -= n * 2
+                                nextY -= 5
+                                this.velocityX = 0
+                            }
+                            else if (obj instanceof GameObjectBird) {
+                                var obj2 = new GameObject(obj.x - 150, obj.y - 50, GFX_TEXT_BUBBLE_YUM_V2_1)
+                                game.objects.push(obj2)
+
+                                game.sceneCompleted(SCENE_INDEX_BIRD_CAGE)
+                                game.beginTransition(0, 30)
+                            }
+                            else if (obj instanceof GameObjectMouse) {
+                                // because we only handle the first collision this would make the cat let go of the cloth, but make sure
+                                if (this.state == PlayerState.Grabbing)
+                                {
+                                    this.wasBittenByMouseCooldownTicks = 15
+                                    ignoreCollidingWith = true
+                                    break
+                                }
+                                else if (this.state == PlayerState.InAir && this.wasBittenByMouseCooldownTicks < 0)
+                                {
+                                    var obj2 = new GameObject(obj.x - 150, obj.y - 50, GFX_TEXT_BUBBLE_YUM_V2_1)
+                                    obj2.autoDeleteTicksLeft = 30
+                                    game.objects.push(obj2)
+                                    
+                                    game.cleanupObject(obj)
+                                }
+                            }
+                        }
+                    }
 
                     if (collided)
                     {
-                        if (obj instanceof GameObjectWindow)
-                        {
-                            game.beginTransition(arrayPick((obj as GameObjectWindow).possibleTargetSceneIndexes))
-                        }
-                        else if (obj instanceof GameObjectBirdAndCage)
-                        {
-                            var n = 10
-                            if (this.x >= obj.x)
-                            {
-                                n = -10
-                            }
-
-                            (obj as GameObjectBirdAndCage).getPushed(n)
-
-                            nextX -= n * 2
-                            nextY -= 5
-                            this.velocityX = 0
-                        }
-                        else if (obj instanceof GameObjectBird) {
-                            var obj2 = new GameObject(obj.x - 150, obj.y - 50, GFX_TEXT_BUBBLE_YUM_V2_1)
-                            game.objects.push(obj2)
-
-                            game.sceneCompleted(SCENE_INDEX_BIRD_CAGE)
-                            game.beginTransition(0, 30)
-                        }
-                        else if (obj instanceof GameObjectMouse) {
-                            // because we only handle the first collision this would make the cat let go of the cloth, but make sure
-                            if (this.state == PlayerState.Grabbing)
-                            {
-                                this.wasBittenByMouseCooldownTicks = 15
-                                ignoreCollidingWith = true
-                                break
-                            }
-                            else if (this.state == PlayerState.InAir && this.wasBittenByMouseCooldownTicks < 0)
-                            {
-                                var obj2 = new GameObject(obj.x - 150, obj.y - 50, GFX_TEXT_BUBBLE_YUM_V2_1)
-                                obj2.autoDeleteTicksLeft = 30
-                                game.objects.push(obj2)
-                                
-                                game.cleanupObject(obj)
-                            }
-                        }
+                        this.currentlyCollidingWith = obj
+                        break
                     }
-                }
-
-                if (collided)
-                {
-                    this.currentlyCollidingWith = obj
-                    break
                 }
             }
 
