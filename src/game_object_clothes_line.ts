@@ -2,8 +2,9 @@ class GameObjectClothesLine extends GameObject {
     clothes: Array<GameObject> = []
     mice: Array<GameObjectMouse> = []
     moveLeft: number = 0
+    scrollingEnabled: boolean
 
-    constructor(y: number, objectsArray: Array<GameObject>, chance: number=0.4) {
+    constructor(y: number, objectsArray: Array<GameObject>, chance: number, scrolling: boolean, miceCount) {
         var obj
         super(0, y, GFX_CLOTHES_LINE_V1_1)
         for (var x=CLOTHES_MIN_X; x<CLOTHES_MAX_X; x+=70)
@@ -24,14 +25,24 @@ class GameObjectClothesLine extends GameObject {
                 objectsArray.push(obj)
             }
         }
-        obj = new GameObjectMouse(1000, y - 38)
+
+        for (var i=0; i<miceCount; i++)
+        {
+            obj = new GameObjectMouse(Math.random() * 1920, y - 38)
+        }
         // obj.interaction = GameObjectInteractionType.GrabOnTop
+
+        this.scrollingEnabled = scrolling
 
         this.mice.push(obj)
         objectsArray.push(obj)
     }
 
     physicsFrame() {
+        if (!this.scrollingEnabled) {
+            return
+        }
+
         var n = 0
 
         if (this.moveLeft < 0)

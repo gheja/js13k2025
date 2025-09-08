@@ -192,10 +192,10 @@ class Game {
         }
 
 
-        result.objects.push(new GameObjectClothesLine(360 - 320*0, result.objects))
-        result.objects.push(new GameObjectClothesLine(360 - 320*1, result.objects))
-        result.objects.push(new GameObjectClothesLine(360 - 320*2, result.objects))
-        result.objects.push(new GameObjectClothesLine(360 - 320*3, result.objects))
+        result.objects.push(new GameObjectClothesLine(360 - 320*0, result.objects, 0.7, false, 0))
+        result.objects.push(new GameObjectClothesLine(360 - 320*1, result.objects, 0.7, false, 0))
+        result.objects.push(new GameObjectClothesLine(360 - 320*2, result.objects, 0.4, true, 1))
+        result.objects.push(new GameObjectClothesLine(360 - 320*3, result.objects, 0.4, true, 1))
 
 
         obj = new GameObjectPlayer(50, 800)
