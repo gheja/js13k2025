@@ -9,6 +9,7 @@ class Game {
     private transitionPauseTicksLeft: number
 
     public scenes: Array<any> = []
+    public currentScene: any
 
     constructor(){
         this.lastTickTime = performance.now()
@@ -133,8 +134,8 @@ class Game {
     createSceneStreet() {
         var result = {
             objects: [],
-            currentWindow: null,
             playerObject: null,
+            currentWindow: null,
         }
 
         var obj
@@ -246,7 +247,8 @@ class Game {
 
     createSceneRoom1() {
         var result = {
-            objects: []
+            objects: [],
+            playerObject: null
         }
 
         var obj
@@ -263,7 +265,9 @@ class Game {
 
         result.objects.push(new GameObjectBirdAndCage(560, 600, result.objects))
 
-        result.objects.push(new GameObjectPlayer(910, 500))
+        obj = new GameObjectPlayer(910, 500)
+        result.objects.push(obj)
+        result.playerObject = obj
 
         this.addDebugToObjects(result.objects)
 
@@ -313,6 +317,7 @@ class Game {
 
         this.prepareCurrentScene(sceneIndex)
 
+        this.currentScene = this.scenes[sceneIndex]
         this.objects = this.scenes[sceneIndex].objects
     }
 
