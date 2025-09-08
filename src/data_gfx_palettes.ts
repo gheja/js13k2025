@@ -1,0 +1,19 @@
+const PALETTE_LIST = [
+	[
+		"#392c4e",
+		"#7d2253",
+		"#bc0048",
+		"#ec174c",
+		"#ff432b",
+        "#773972"
+	],
+	[	"#190d24",
+		"#392c4e",
+		"#7d2253",
+		"#bc0048",
+		"#ec174c",
+        "#7d2253"
+	],
+]
+
+const PALETTE_BACKGROUND_INDEX = 2
