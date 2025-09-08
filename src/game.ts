@@ -193,7 +193,8 @@ class Game {
         result.objects.push(obj)
         result.playerObject = obj
 
-        obj = new GameObject(1920 - 770, 1080 - 860, GFX_STREET_LIGHT_1)
+        obj = new GameObject(1920 - 770, 1080 - 860, GFX_STREET_LIGHT_1, 100, 40, 630, 0)
+        obj.interaction = GameObjectInteractionType.SitOnTop
         result.objects.push(obj)
 
         this.addDebugToObjects(result.objects)
