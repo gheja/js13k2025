@@ -298,6 +298,7 @@ class Game {
         this.setupBasicRoom(result, [510], [260], [810])
 
         result.objects.push(new GameObjectBirdAndCage(560, 600, result.objects))
+        result.objects.push(new GameObjectBookShelf(1200, 30, result.objects))
 
         obj = new GameObjectPlayer(910, 500)
         result.objects.push(obj)
