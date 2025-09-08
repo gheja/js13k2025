@@ -216,12 +216,19 @@ class Game {
 
         for (var obj of this.scenes[SCENE_INDEX_STREET].objects)
         {
-            if (obj instanceof GameObjectWindow && obj.possibleTargetSceneIndexes.length > 0)
+            // pick a window that has valid targets and is currently visible
+            // NOTE: the top left corner counts which is invisible and well above the window - calculate with that
+            if (obj instanceof GameObjectWindow &&
+                obj.possibleTargetSceneIndexes.length > 0 &&
+                obj.y + _gfx_screen_scroll_y + 260 >= 0 &&
+                obj.y + _gfx_screen_scroll_y + 260 <= 1080
+            )
             {
                 a.push(obj)
             }
         }
 
+/*
         if (!IS_PROD_BUILD)
         {
             if (a.length == 0)
@@ -229,20 +236,30 @@ class Game {
                 throw "No window can be picked!"
             }
         }
+*/
 
-        this.scenes[SCENE_INDEX_STREET].currentWindow = arrayPick(a)
+        this.scenes[SCENE_INDEX_STREET].currentWindow = (a.length > 0 ? arrayPick(a) : null)
     }
 
     processStreetWindow() {
+        this.processStreetWindowTicks += 1
         // NOTE: although the windows are closed when getting back to this scene, this counter does not stop, so it is possible that
         // a window will open very soon after returning to this scene - maybe the player will even enter this new window! but that's
         // fine and fun, so for now I keep this
-        var a = _tick_count % 300
+
+        var a = this.processStreetWindowTicks % 300
 
         // TODO: fine-tune the timing, probably based on difficulty level. also, only pick window that is visible on the screen
         if (a == 120)
         {
             this.pickNewStreetWindow()
+
+            if (!this.scenes[SCENE_INDEX_STREET].currentWindow)
+            {
+                // if we could not pick a window, retry it soon
+                this.processStreetWindowTicks = 110
+                return
+            }
 
             // open the window
             this.scenes[SCENE_INDEX_STREET].currentWindow.targetOpening = WINDOW_OPENING_POSITION_MAX
