@@ -11,6 +11,9 @@ class Game {
     public scenes: Array<any> = []
     public currentScene: any
 
+    scrollMinLimit: number = 700 // changes with unlocked levels
+    scrollMaxLimit: number = 0 // no change
+
     constructor(){
         this.lastTickTime = performance.now()
         this.lastPhysicsTickTime = performance.now()
@@ -293,6 +296,7 @@ class Game {
                 obj2.removePossibleTargetSceneIndex(n)
             }
         }
+        this.updateScrollLimits()
     }
 
     cleanupObject(obj: GameObject) {
@@ -358,7 +362,8 @@ class Game {
 
         var scrollMin = - ((this.currentScene.playerObject as GameObjectPlayer).y - 200) // top
         var scrollMax = - ((this.currentScene.playerObject as GameObjectPlayer).y - 700) // bottom
-        scrollMax = Math.max(scrollMax, 0)
+        scrollMin = Math.min(scrollMin, this.scrollMinLimit)
+        scrollMax = Math.max(scrollMax, this.scrollMaxLimit)
 
         _gfx_screen_scroll_y = Math.max(Math.min(_gfx_screen_scroll_y, scrollMax), scrollMin)
 
