@@ -298,7 +298,15 @@ class Game {
         this.setupBasicRoom(result, [510], [260], [810])
 
         result.objects.push(new GameObjectBirdAndCage(560, 600, result.objects))
-        result.objects.push(new GameObjectBookShelf(1200, 30, result.objects))
+        result.objects.push(new GameObjectBookShelf(1200, 320, result.objects))
+
+        obj = new GameObject(400, 100, GFX_CEILING_LAMP_V1_1, 64, 40, 244, 172)
+        obj.interaction = GameObjectInteractionType.GrabOnTop
+        result.objects.push(obj)
+
+        obj = new GameObject(950, 450, GFX_STANDING_LAMP_V1_1, 64, 40, 138, 32)
+        obj.interaction = GameObjectInteractionType.GrabOnTop
+        result.objects.push(obj)
 
         obj = new GameObjectPlayer(910, 500)
         result.objects.push(obj)
