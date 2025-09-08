@@ -38,7 +38,7 @@ class GameObject {
             return
         }
 
-        var s = '<path style="fill:#0ff2;stroke:#0ffa;stroke-width:4" d="M ' +
+        var s = '<path style="fill:#0ff2;stroke:#0ffa;stroke-width:4" os="fill:#0ff2;stroke:#0ffa;stroke-width:4" d="M ' +
             (this.boxOffsetX)                 + ',' + (this.boxOffsetY)                  + ' ' +
             (this.boxOffsetX + this.boxWidth) + ',' + (this.boxOffsetY)                  + ' ' +
             (this.boxOffsetX + this.boxWidth) + ',' + (this.boxOffsetY + this.boxHeight) + ' ' +

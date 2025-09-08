@@ -24,7 +24,7 @@ class GfxSprite {
             // this closes the shape, we don't need the final move back to the first point
             s += "Z"
 
-            str += '<path style="' + SVG_STYLES[arr[0]] + '" d="' + s + '"/>'
+            str += '<path style="' + SVG_STYLES[arr[0]] + '" os="' + SVG_STYLES[arr[0]] + '" d="' + s + '"/>'
         }
 
         str += '</svg>'

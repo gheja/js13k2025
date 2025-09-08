@@ -2,8 +2,11 @@ html,
 body {
     margin: 0;
     padding: 0;
-    background: #bc0048;
     overflow: hidden;
+}
+
+body {
+        background: #bc0048;
 }
 
 #c * {

@@ -24,4 +24,22 @@ class Graphics {
             _gfx_pad_y = 0
         }
     }
+
+    applyPalette(n: number) {
+        var path: SVGPathElement
+        for (path of _gfx_root.querySelectorAll("svg>path"))
+        {
+            var style = path.getAttribute("os")
+            for (var i in PALETTE_LIST[0])
+            {
+                style = style.replace(PALETTE_LIST[0][i], "!" + i)
+            }
+            for (var i in PALETTE_LIST[0])
+            {
+                style = style.replace("!" + i, PALETTE_LIST[n][i])
+            }
+            path.setAttribute("style", style)
+        }
+        document.body.style.background = PALETTE_LIST[n][PALETTE_BACKGROUND_INDEX]
+    }
 }

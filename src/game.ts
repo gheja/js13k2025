@@ -74,6 +74,8 @@ class Game {
 
             this.scenes[SCENE_INDEX_BIRD_CAGE] = this.createSceneRoom1()
         }
+
+        this.gfx.applyPalette(0)
     }
 
 /*
