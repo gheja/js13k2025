@@ -1,3 +1,6 @@
+
+// NOTE: we should handle the secondary window type (#364374, #4975a9) too, but the color won't match any of these windows, so... it is still distingishable
+
 const PALETTE_LIST = [
 	[
 		"#392c4e",

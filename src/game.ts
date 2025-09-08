@@ -185,10 +185,10 @@ class Game {
 
         for (var x=70; x<1920; x+=370)
         {
-            result.objects.push(new GameObjectWindow(x, 260 - 320*0, [SCENE_INDEX_BIRD_CAGE]))
-            result.objects.push(new GameObjectWindow(x, 260 - 320*1, [SCENE_INDEX_BIRD_CAGE]))
-            result.objects.push(new GameObjectWindow(x, 260 - 320*2, [SCENE_INDEX_BIRD_CAGE]))
-            result.objects.push(new GameObjectWindow(x, 260 - 320*3, [SCENE_INDEX_BIRD_CAGE]))
+            result.objects.push(new GameObjectWindow(x, 260 - 320*0, [SCENE_INDEX_BIRD_CAGE], 0))
+            result.objects.push(new GameObjectWindow(x, 260 - 320*1, [SCENE_INDEX_BIRD_CAGE], 0))
+            result.objects.push(new GameObjectWindow(x, 260 - 320*2, [SCENE_INDEX_BIRD_CAGE], 1))
+            result.objects.push(new GameObjectWindow(x, 260 - 320*3, [SCENE_INDEX_BIRD_CAGE], 1))
         }
 
 
@@ -288,7 +288,7 @@ class Game {
         var obj
 
         result.objects.push(new GameObject(0, 0, GFX_ROOM_OVERLAY))
-        result.objects.push(new GameObjectWindow(810, 200, [SCENE_INDEX_STREET]))
+        result.objects.push(new GameObjectWindow(810, 200, [SCENE_INDEX_STREET], 2))
 
         obj = new GameObject(0, 1000, null, 1920, 10)
         obj.interaction = GameObjectInteractionType.SitOnTop

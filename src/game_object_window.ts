@@ -6,10 +6,10 @@ class GameObjectWindow extends GameObject {
     currentOpening: number = 0
     possibleTargetSceneIndexes: Array<number>
 
-    constructor(x: number, y: number, possibleTargetSceneIndexes: Array<number>) {
+    constructor(x: number, y: number, possibleTargetSceneIndexes: Array<number>, typeIndex: number) {
         super(x, y, null, 160, 30, 70, 250)
-        this.spriteBelow = new GfxSprite(GFX_WINDOW_OPEN_V1_1)
-        this.spriteWindow = new GfxSprite(GFX_WINDOW_CLOSED_V1_1)
+        this.spriteBelow = new GfxSprite(typeIndex == 2 ? GFX_WINDOW_OPEN_V1_2: GFX_WINDOW_OPEN_V1_1)
+        this.spriteWindow = new GfxSprite(typeIndex == 1 ? GFX_WINDOW_CLOSED_V1_2 : GFX_WINDOW_CLOSED_V1_1)
         this.spriteTop = new GfxSprite(GFX_WINDOW_FRAME_V1_1)
         this.possibleTargetSceneIndexes = possibleTargetSceneIndexes
 
