@@ -69,7 +69,8 @@ class GameObjectPlayer extends GameObject {
         // if set, will disregard all collison objects on this physicsFrame() run
         // (WAS: will disregard this one in this physicsFrame() run)
         var ignoreCollidingWith = null
-        var maxVelocityX = 20
+        var maxVelocityX = 15
+        var moving = inputs[InputArrayKey.Up] || inputs[InputArrayKey.Down] || inputs[InputArrayKey.Left] || inputs[InputArrayKey.Right]
 
         this.wasBittenByMouseCooldownTicks -= 1
 
@@ -118,7 +119,7 @@ class GameObjectPlayer extends GameObject {
             maxVelocityX = 4
 
             // we only need to clamp the speed when swimming
-            this.velocityY = dragAndClamp(this.velocityY, -4, 4, PLAYER_DRAG_MULTIPLIER, PLAYER_DRAG_CLAMP_TO_ZERO)
+            this.velocityY = dragAndClamp(this.velocityY, -4, 4, moving ? 1 : PLAYER_DRAG_MULTIPLIER, PLAYER_DRAG_CLAMP_TO_ZERO)
         }
 
         // we need vertical movement both when platforming and when swimming
@@ -131,7 +132,7 @@ class GameObjectPlayer extends GameObject {
             this.velocityX += +1
         }
 
-        this.velocityX = dragAndClamp(this.velocityX, -maxVelocityX, maxVelocityX, PLAYER_DRAG_MULTIPLIER, PLAYER_DRAG_CLAMP_TO_ZERO)
+        this.velocityX = dragAndClamp(this.velocityX, -maxVelocityX, maxVelocityX, moving ? 1 : PLAYER_DRAG_MULTIPLIER, PLAYER_DRAG_CLAMP_TO_ZERO)
 
         setDebugMessage(this.velocityX.toFixed(2) + ", " + this.velocityY.toFixed(2))
 
