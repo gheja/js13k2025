@@ -10,6 +10,7 @@ class GameObject {
     boxOffsetX: number
     boxOffsetY: number
     interaction: GameObjectInteractionType = GameObjectInteractionType.None
+    interactionParam1: any
     canFallThrough: boolean = true
     // these will limit the vertical movement of the player. different levels might require different values
     minX: number = 0
@@ -19,7 +20,7 @@ class GameObject {
     spriteFlipped: boolean = false
     autoDeleteTicksLeft: number = -1 // will delete this object in this many ticks
 
-    constructor(x: number, y: number, baseSpriteData: any, boxWidth: number = 0, boxHeight: number = 0, boxOffsetX: number = 0, boxOffsetY: number = 0, interaction = GameObjectInteractionType.None) {
+    constructor(x: number, y: number, baseSpriteData: any, boxWidth: number = 0, boxHeight: number = 0, boxOffsetX: number = 0, boxOffsetY: number = 0, interaction = GameObjectInteractionType.None, interactionParam1: any = null) {
         // this.sprites = [ new GfxSprite(TEST_GFX_DEFINITION_1) ]
         this.sprites = []
         this.x = x
@@ -30,6 +31,7 @@ class GameObject {
         this.boxOffsetY = boxOffsetY
         this.sprites[0] = new GfxSprite(baseSpriteData || GFX_EMPTY)
         this.interaction = interaction
+        this.interactionParam1 = interactionParam1
     }
 
     injectCollisionBoxSvg(sprite: GfxSprite)

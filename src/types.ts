@@ -28,3 +28,8 @@ enum PlayerControlMode {
     Platform = 0,
     Swim
 }
+enum InteractionParam {
+    None = 0,
+    JumpToFishBowlScene,
+    EelBite
+}
