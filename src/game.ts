@@ -66,6 +66,12 @@ class Game {
                     obj2.velocityX = 0
                     obj2.velocityY = 0
                 }
+
+                // respawn the mice on the clothes lines
+                if (obj2 instanceof GameObjectClothesLine)
+                {
+                    obj2.addMice()
+                }
             }
         }
         else

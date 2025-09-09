@@ -3,13 +3,21 @@ class GameObjectClothesLine extends GameObject {
     mice: Array<GameObjectMouse> = []
     moveLeft: number = 0
     scrollingEnabled: boolean
+    targetMouseCount: number = 0
+    objectsArray: Array<GameObject>
 
-    constructor(y: number, objectsArray: Array<GameObject>, chance: number, scrolling: boolean, miceCount) {
-        var obj
+    constructor(y: number, objectsArray: Array<GameObject>, clothChance: number, scrollingEnabled: boolean, targetMouseCount: number) {
         super(0, y, GFX_CLOTHES_LINE_V1_1)
+
+        var obj: GameObject
+
+        this.objectsArray = objectsArray
+        this.targetMouseCount = targetMouseCount
+        this.scrollingEnabled = scrollingEnabled
+
         for (var x=CLOTHES_MIN_X; x<CLOTHES_MAX_X; x+=70)
         {
-            if (Math.random() <= chance)
+            if (Math.random() <= clothChance)
             {
                 obj = new GameObject(x, y, arrayPick([
                     GFX_CLOTH_SMALL1_V1_1, GFX_CLOTH_SMALL1_V1_1,
@@ -21,20 +29,22 @@ class GameObjectClothesLine extends GameObject {
                 ]) , 70, 70, 0, 0, GameObjectInteractionType.GrabOnTop)
 
                 this.clothes.push(obj)
-                objectsArray.push(obj)
+                this.objectsArray.push(obj)
             }
         }
 
-        for (var i=0; i<miceCount; i++)
+        this.addMice()
+    }
+
+    addMice() {
+        var obj: GameObjectMouse
+
+        for (var i=this.mice.length; i<this.targetMouseCount; i++)
         {
-            obj = new GameObjectMouse(Math.random() * 1920, y - 38)
+            obj = new GameObjectMouse(Math.random() * 1920, this.y - 35)
+            this.mice.push(obj)
+            this.objectsArray.push(obj)
         }
-        // obj.interaction = GameObjectInteractionType.GrabOnTop
-
-        this.scrollingEnabled = scrolling
-
-        this.mice.push(obj)
-        objectsArray.push(obj)
     }
 
     physicsFrame() {
