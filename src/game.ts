@@ -42,6 +42,16 @@ class Game {
     }
 
     prepareCurrentScene(sceneIndex: number) {
+        if (sceneIndex != 0)
+        {
+            // always re-create the scene
+            // BUG, TODO: this might still leave some DOM objects which might lead to memory leak. check if there any is left
+            if (this.scenes[sceneIndex])
+            {
+                this.wipeObjectsArray(this.scenes[sceneIndex].objects)
+            }
+        }
+
         if (sceneIndex == 0)
         {
             // only create the scene once
@@ -74,16 +84,13 @@ class Game {
                 }
             }
         }
-        else
+        else if (sceneIndex == SCENE_INDEX_BIRD_CAGE)
         {
-            // always create a new room
-            // BUG, TODO: this does not clean up the SVGs in DOM, so effectively this leads to memory leak
-            if (this.scenes[SCENE_INDEX_BIRD_CAGE])
-            {
-                this.wipeObjectsArray(this.scenes[SCENE_INDEX_BIRD_CAGE].objects)
-            }
-
             this.scenes[SCENE_INDEX_BIRD_CAGE] = this.createSceneRoom1()
+        }
+        else if (sceneIndex == SCENE_INDEX_FISH_ROOM)
+        {
+            this.scenes[SCENE_INDEX_FISH_ROOM] = this.createSceneFishRoom()
         }
 
         this.gfx.applyPalette(0)
@@ -167,8 +174,8 @@ class Game {
 
         for (var x=70; x<1920; x+=370)
         {
-            result.objects.push(new GameObjectWindow(x, 260 - 320*0, [SCENE_INDEX_BIRD_CAGE], 0))
-            result.objects.push(new GameObjectWindow(x, 260 - 320*1, [SCENE_INDEX_BIRD_CAGE], 0))
+            result.objects.push(new GameObjectWindow(x, 260 - 320*0, [SCENE_INDEX_BIRD_CAGE, SCENE_INDEX_FISH_ROOM], 0))
+            result.objects.push(new GameObjectWindow(x, 260 - 320*1, [SCENE_INDEX_BIRD_CAGE, SCENE_INDEX_FISH_ROOM], 0))
             result.objects.push(new GameObjectWindow(x, 260 - 320*2, [SCENE_INDEX_BIRD_CAGE], 1))
             result.objects.push(new GameObjectWindow(x, 260 - 320*3, [SCENE_INDEX_BIRD_CAGE], 1))
         }
@@ -288,6 +295,38 @@ class Game {
         result.objects.push(new GameObject(400, 100, GFX_CEILING_LAMP_V1_1, 64, 40, 244, 172, GameObjectInteractionType.GrabOnTop))
         result.objects.push(new GameObject(950, 450, GFX_STANDING_LAMP_V1_1, 64, 40, 138, 32, GameObjectInteractionType.GrabOnTop))
         result.objects.push(new GameObject(400, 400, GFX_PICTURE_ON_WALL_V1_1, 156, 100, 0, 60, GameObjectInteractionType.GrabOnTop))
+
+        obj = new GameObjectPlayer(910, 500)
+        result.objects.push(obj)
+        result.playerObject = obj
+
+        this.addDebugToObjects(result.objects)
+
+        return result
+    }
+
+    // === room with the fish bowl ===
+
+    createSceneFishRoom() {
+        var result = {
+            objects: [],
+            scrollingEnabled: false,
+            playerObject: null
+        }
+
+        var obj
+
+        obj = new GameObject(0, 1070, null, 1920, 10, 0, 0, GameObjectInteractionType.SitOnTop)
+        obj.canFallThrough = false
+        result.objects.push(obj)
+
+        result.objects.push(new GameObject(0, 0, GFX_ROOM_OVERLAY))
+        result.objects.push(new GameObjectWindow(810, 200, [SCENE_INDEX_STREET], 2))
+
+        this.setupBasicRoom(result, [810, 1400], [560], [1110])
+
+        result.objects.push(new GameObject(250, 450, GFX_STANDING_LAMP_V1_1, 64, 40, 138, 32, GameObjectInteractionType.GrabOnTop))
+        result.objects.push(new GameObject(1500, 650, GFX_FISH_BOWL_V1_1, 68, 20, 10, 3, GameObjectInteractionType.OverlapNonBlocking))
 
         obj = new GameObjectPlayer(910, 500)
         result.objects.push(obj)

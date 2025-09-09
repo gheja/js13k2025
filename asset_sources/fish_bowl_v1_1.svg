@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="88mm"
+   height="70mm"
+   viewBox="0 0 88 70"
+   version="1.1"
+   id="svg4599"
+   sodipodi:docname="fish_bowl_v1_1.svg"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   xml:space="preserve"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><sodipodi:namedview
+     id="namedview4601"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="true"
+     inkscape:zoom="1"
+     inkscape:cx="-6.4999998"
+     inkscape:cy="342.99999"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     showguides="false"><inkscape:grid
+       type="xygrid"
+       id="grid53742"
+       originx="0"
+       originy="0" /></sodipodi:namedview><defs
+     id="defs4596" /><g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"><path
+       style="fill:#6ebed3;fill-opacity:1;stroke:#4975a9;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+       d="M 24,68 12,60 4,44 V 20 L 12,4 24,8 h 40 l 12,-4 8,16 v 24 l -8,16 -12.000001,8 z"
+       id="path108724"
+       sodipodi:nodetypes="ccccccccccccc" /><path
+       style="fill:#ae4871;fill-opacity:1;stroke-width:0;stroke-linecap:round;stroke-linejoin:round"
+       d="M 16,40 V 54.628572 L 22.4,47.314286 28.800001,52.8 h 12.8 l 6.4,-5.485714 V 45.485715 L 41.600001,40 h -12.8 L 22.4,45.485715 Z"
+       id="path82086"
+       sodipodi:nodetypes="ccccccccccc" /></g></svg>
