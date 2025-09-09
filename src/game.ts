@@ -202,6 +202,12 @@ class Game {
         result.objects.push(obj)
         result.playerObject = obj
 
+        result.objects.push(new GameObjectEel(200, 600))
+        result.objects.push(new GameObjectEel(600, 700))
+        result.objects.push(new GameObjectEel(900, 800))
+
+        result.objects.push(new GameObjectFish(700, 850))
+        
         obj = new GameObject(1920 - 770, 1080 - 860, GFX_STREET_LIGHT_1, 100, 40, 630, 0)
         obj.interaction = GameObjectInteractionType.SitOnTop
         result.objects.push(obj)
