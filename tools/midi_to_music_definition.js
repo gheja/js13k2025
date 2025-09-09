@@ -15923,7 +15923,8 @@ function init() {
 
 
   function fix_duration(t) {
-    return Math.floor(t / 4) * 4
+    return Math.floor(t / 4)
+    // return Math.floor(t / 4) * 4
   }
 
   var last_time = 0

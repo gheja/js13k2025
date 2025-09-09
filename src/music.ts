@@ -59,7 +59,7 @@ function startMusic() {
 
                     n = (n + 1) % music_data[1].length
 
-                    nextNoteTime += music_data[2][n] * music_data[0]
+                    nextNoteTime += music_data[2][n] * 4 * music_data[0]
                 }
 
                 for (var i=sounds.length-1; i>=0; i--)
