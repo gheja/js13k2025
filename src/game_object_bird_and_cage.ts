@@ -5,10 +5,9 @@ class GameObjectBirdAndCage extends GameObject {
     safeMaxX: number
 
     constructor(x: number, y: number, objectsArray: Array<GameObject>) {
-        super(x, y, GFX_BIRD_CAGE_V1_1, 120, 130)
+        super(x, y, GFX_BIRD_CAGE_V1_1, 120, 130, 0, 0, GameObjectInteractionType.OverlapNonBlocking)
         this.safeMinX = x - 50
         this.safeMaxX = x + 50
-        this.interaction = GameObjectInteractionType.OverlapNonBlocking
 
         this.bird = new GameObjectBird(0, 0)
 

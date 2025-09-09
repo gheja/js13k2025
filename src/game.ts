@@ -102,9 +102,7 @@ class Game {
 
         for (var x of tablePositions)
         {
-            obj = new GameObject(x, 720, GFX_TABLE_V1_1, 200, 30, 40, 5)
-            obj.interaction = GameObjectInteractionType.SitOnTop
-            result.objects.push(obj)
+            result.objects.push(new GameObject(x, 720, GFX_TABLE_V1_1, 200, 30, 40, 5, GameObjectInteractionType.SitOnTop))
         }
 
         for (var x of leftChairPositions)
@@ -112,27 +110,19 @@ class Game {
             // this is a separate stuff, because the svg can be flipped but the collision boxes can't
 
             // this only has the collision box for the top part
-            obj = new GameObject(x, 650, GFX_CHAIR_V1_FLIPPED_1, 80, 30, 0, 50)
-            obj.interaction = GameObjectInteractionType.SitOnTop
-            result.objects.push(obj)
+            result.objects.push(new GameObject(x, 650, GFX_CHAIR_V1_FLIPPED_1, 80, 30, 0, 50, GameObjectInteractionType.SitOnTop))
 
             // a separate invisible object for the collision box of the bottom part
-            obj = new GameObject(x, 650, null, 200, 50, 50, 200)
-            obj.interaction = GameObjectInteractionType.SitOnTop
-            result.objects.push(obj)
+            result.objects.push(new GameObject(x, 650, null, 200, 50, 50, 200, GameObjectInteractionType.SitOnTop))
         }
 
         for (var x of rightChairPositions)
         {
             // this only has the collision box for the top part
-            obj = new GameObject(x, 650, GFX_CHAIR_V1_1, 80, 30, 200, 50)
-            obj.interaction = GameObjectInteractionType.SitOnTop
-            result.objects.push(obj)
+            result.objects.push(new GameObject(x, 650, GFX_CHAIR_V1_1, 80, 30, 200, 50, GameObjectInteractionType.SitOnTop))
 
             // a separate invisible object for the collision box of the bottom part
-            obj = new GameObject(x, 650, null, 200, 50, 0, 200)
-            obj.interaction = GameObjectInteractionType.SitOnTop
-            result.objects.push(obj)
+            result.objects.push(new GameObject(x, 650, null, 200, 50, 0, 200, GameObjectInteractionType.SitOnTop))
         }
     }
 
@@ -151,37 +141,23 @@ class Game {
         // TODO: check if this needs to be rendered on top of the window masks
         result.objects.push(new GameObject(0, 0, GFX_LANDSCAPE_V1_1))
 
-        obj = new GameObject(0, 1070, null, 1920, 10)
-        obj.interaction = GameObjectInteractionType.SitOnTop
+        obj = new GameObject(0, 1070, null, 1920, 10, 0, 0, GameObjectInteractionType.SitOnTop)
         obj.canFallThrough = false
         result.objects.push(obj)
 
         // top of the fence
-        obj = new GameObject(0, FENCE_POSITION + 120, null, 1920, 10)
-        obj.interaction = GameObjectInteractionType.SitOnTop
-        result.objects.push(obj)
+        result.objects.push(new GameObject(0, FENCE_POSITION + 120, null, 1920, 10, 0, 0, GameObjectInteractionType.SitOnTop))
 
         for (var x=0; x<1920; x+=60)
         {
             result.objects.push(new GameObject(x, 670, arrayPick([ GFX_FENCE1_V1_1, GFX_FENCE2_V1_1, GFX_FENCE3_V1_1 ])))
         }
 
-
-
-
         result.objects.push(new GameObject(280, 800, GFX_TRASH_CAN_SHORT_V2_2))
-        
-        obj = new GameObject(280, 800, GFX_TRASH_CAN_SHORT_V2_1, 200, 160, 0, 100)
-        obj.interaction = GameObjectInteractionType.SitOnTop
-        result.objects.push(obj)
-
+        result.objects.push(new GameObject(280, 800, GFX_TRASH_CAN_SHORT_V2_1, 200, 160, 0, 100, GameObjectInteractionType.SitOnTop))
 
         result.objects.push(new GameObject(580, 750, GFX_TRASH_CAN_SHORT_V2_2))
-
-        obj = new GameObject(580, 800, GFX_TRASH_CAN_TALL_V2_1, 200, 210, 0, 50)
-        obj.interaction = GameObjectInteractionType.SitOnTop
-        result.objects.push(obj)
-
+        result.objects.push(new GameObject(580, 800, GFX_TRASH_CAN_TALL_V2_1, 200, 210, 0, 50, GameObjectInteractionType.SitOnTop))
 
         for (var x=70; x<1920; x+=370)
         {
@@ -207,10 +183,8 @@ class Game {
         result.objects.push(new GameObjectEel(900, 800))
 
         result.objects.push(new GameObjectFish(700, 850))
-        
-        obj = new GameObject(1920 - 770, 1080 - 860, GFX_STREET_LIGHT_1, 100, 40, 630, 0)
-        obj.interaction = GameObjectInteractionType.SitOnTop
-        result.objects.push(obj)
+
+        result.objects.push(new GameObject(1920 - 770, 1080 - 860, GFX_STREET_LIGHT_1, 100, 40, 630, 0, GameObjectInteractionType.SitOnTop))
 
         this.addDebugToObjects(result.objects)
 
@@ -296,8 +270,7 @@ class Game {
         result.objects.push(new GameObject(0, 0, GFX_ROOM_OVERLAY))
         result.objects.push(new GameObjectWindow(810, 200, [SCENE_INDEX_STREET], 2))
 
-        obj = new GameObject(0, 1000, null, 1920, 10)
-        obj.interaction = GameObjectInteractionType.SitOnTop
+        obj = new GameObject(0, 1000, null, 1920, 10, 0, 0, GameObjectInteractionType.SitOnTop)
         obj.canFallThrough = false
         result.objects.push(obj)
 
@@ -306,17 +279,9 @@ class Game {
         result.objects.push(new GameObjectBirdAndCage(560, 600, result.objects))
         result.objects.push(new GameObjectBookShelf(1200, 320, result.objects))
 
-        obj = new GameObject(400, 100, GFX_CEILING_LAMP_V1_1, 64, 40, 244, 172)
-        obj.interaction = GameObjectInteractionType.GrabOnTop
-        result.objects.push(obj)
-
-        obj = new GameObject(950, 450, GFX_STANDING_LAMP_V1_1, 64, 40, 138, 32)
-        obj.interaction = GameObjectInteractionType.GrabOnTop
-        result.objects.push(obj)
-
-        obj = new GameObject(400, 400, GFX_PICTURE_ON_WALL_V1_1, 156, 100, 0, 60)
-        obj.interaction = GameObjectInteractionType.GrabOnTop
-        result.objects.push(obj)
+        result.objects.push(new GameObject(400, 100, GFX_CEILING_LAMP_V1_1, 64, 40, 244, 172, GameObjectInteractionType.GrabOnTop))
+        result.objects.push(new GameObject(950, 450, GFX_STANDING_LAMP_V1_1, 64, 40, 138, 32, GameObjectInteractionType.GrabOnTop))
+        result.objects.push(new GameObject(400, 400, GFX_PICTURE_ON_WALL_V1_1, 156, 100, 0, 60, GameObjectInteractionType.GrabOnTop))
 
         obj = new GameObjectPlayer(910, 500)
         result.objects.push(obj)

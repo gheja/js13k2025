@@ -2,8 +2,7 @@ class GameObjectEel extends GameObject {
     targetX: number = 0
 
     constructor(x: number, y: number) {
-        super(x, y, null, 110, 25)
-        this.interaction = GameObjectInteractionType.OverlapNonBlocking
+        super(x, y, null, 110, 25, 0, 0, GameObjectInteractionType.OverlapNonBlocking)
 
         this.animations = [
             [ new GfxSprite(GFX_ELECTRIC_EEL_V1_1), new GfxSprite(GFX_ELECTRIC_EEL_V1_2), new GfxSprite(GFX_ELECTRIC_EEL_V1_3), new GfxSprite(GFX_ELECTRIC_EEL_V1_4) ],

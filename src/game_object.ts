@@ -19,7 +19,7 @@ class GameObject {
     spriteFlipped: boolean = false
     autoDeleteTicksLeft: number = -1 // will delete this object in this many ticks
 
-    constructor(x: number, y: number, baseSpriteData: any, boxWidth: number = 0, boxHeight: number = 0, boxOffsetX: number = 0, boxOffsetY: number = 0) {
+    constructor(x: number, y: number, baseSpriteData: any, boxWidth: number = 0, boxHeight: number = 0, boxOffsetX: number = 0, boxOffsetY: number = 0, interaction = GameObjectInteractionType.None) {
         // this.sprites = [ new GfxSprite(TEST_GFX_DEFINITION_1) ]
         this.sprites = []
         this.x = x
@@ -29,6 +29,7 @@ class GameObject {
         this.boxOffsetX = boxOffsetX
         this.boxOffsetY = boxOffsetY
         this.sprites[0] = new GfxSprite(baseSpriteData || GFX_EMPTY)
+        this.interaction = interaction
     }
 
     injectCollisionBoxSvg(sprite: GfxSprite)

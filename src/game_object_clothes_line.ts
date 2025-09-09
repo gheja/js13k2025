@@ -18,8 +18,7 @@ class GameObjectClothesLine extends GameObject {
                     GFX_CLOTH_SMALL4_V1_1,
                     GFX_CLOTH_SMALL5_V1_1, GFX_CLOTH_SMALL5_V1_1,
                     GFX_CLOTH_SMALL6_V1_1, GFX_CLOTH_SMALL6_V1_1,
-                ]) , 70, 70)
-                obj.interaction = GameObjectInteractionType.GrabOnTop
+                ]) , 70, 70, 0, 0, GameObjectInteractionType.GrabOnTop)
 
                 this.clothes.push(obj)
                 objectsArray.push(obj)

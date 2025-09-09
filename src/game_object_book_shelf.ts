@@ -6,10 +6,7 @@ class GameObjectBookShelf extends GameObject {
         {
             for (var ay=0; ay<6; ay++)
             {
-                obj = new GameObject(x + 20 + ax * 100, y + 32 + ay * 100, arrayPick([GFX_BOOKS_V1_1, GFX_BOOKS_V1_1, GFX_BOOKS_V1_2, GFX_BOOKS_V1_2, GFX_BOOKS_V1_3]), 100, 70)
-                objectsArray.push(obj)
-
-                obj.interaction = GameObjectInteractionType.GrabOnTop
+                objectsArray.push(new GameObject(x + 20 + ax * 100, y + 32 + ay * 100, arrayPick([GFX_BOOKS_V1_1, GFX_BOOKS_V1_1, GFX_BOOKS_V1_2, GFX_BOOKS_V1_2, GFX_BOOKS_V1_3]), 100, 70, 0, 0, GameObjectInteractionType.GrabOnTop))
             }
         }
     }

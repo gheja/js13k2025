@@ -1,7 +1,6 @@
 class GameObjectFish extends GameObject {
     constructor(x: number, y: number) {
-        super(x, y, GFX_FISH_V1_1, 60, 40)
-        this.interaction = GameObjectInteractionType.OverlapNonBlocking
+        super(x, y, GFX_FISH_V1_1, 60, 40, 0, 0, GameObjectInteractionType.OverlapNonBlocking)
         this.pickDestination()
     }
 
