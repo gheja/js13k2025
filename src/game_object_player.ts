@@ -254,6 +254,12 @@ class GameObjectPlayer extends GameObject {
                                     game.cleanupObject(obj)
                                 }
                             }
+                            else if (obj.interactionParam1 == InteractionParam.JumpToFishBowlScene) {
+                                game.beginTransition(SCENE_INDEX_FISH_BOWL, 0)
+                            }
+                            else if (obj.interactionParam1 == InteractionParam.EelBite) {
+                                game.beginTransition(SCENE_INDEX_STREET, 0)
+                            }
                         }
                     }
 
