@@ -16,6 +16,8 @@ class Game {
     scrollMinLimit: number = 0 // changes with unlocked levels, [ 0, 700 ]
     scrollMaxLimit: number = 0 // no change
 
+    completedLevelCount: number = 0
+
     constructor(){
         this.lastTickTime = performance.now()
         this.lastPhysicsTickTime = performance.now()
@@ -96,8 +98,6 @@ class Game {
         {
             this.scenes[SCENE_INDEX_FISH_BOWL] = this.createSceneFishBowl()
         }
-
-        this.gfx.applyPalette(0)
     }
 
 /*
@@ -303,6 +303,7 @@ class Game {
         return result
     }
 
+
     // === room with the fish bowl ===
 
     createSceneFishRoom() {
@@ -336,6 +337,8 @@ class Game {
     }
 
 
+    // === fish bowl ===
+
     createSceneFishBowl() {
         var result = {
             objects: [],
@@ -364,12 +367,23 @@ class Game {
         return result
     }
 
+    checkWinConditionFishBowl() {
+        for (var obj of this.scenes[SCENE_INDEX_FISH_BOWL].objects)
+        {
+            if (obj instanceof GameObjectFish)
+            {
+                // immediately return if a fish still exists
+                return
+            }
+        }
+
+        // we will only get this far if there are no fish left
+        this.sceneCompleted(SCENE_INDEX_FISH_ROOM)
+        this.beginTransition(SCENE_INDEX_STREET, 0)
+    }
+
 
     // ===
-
-    updateScrollLimits() {
-        this.scrollMinLimit = 700
-    }
 
     sceneCompleted(n: number) {
         for (var obj2 of this.scenes[SCENE_INDEX_STREET].objects)
@@ -379,7 +393,19 @@ class Game {
                 obj2.removePossibleTargetSceneIndex(n)
             }
         }
-        this.updateScrollLimits()
+
+        this.completedLevelCount += 1
+    }
+
+    applySceneCompletedChanges() {
+        if (this.completedLevelCount == 1)
+        {
+            this.scrollMinLimit = 700
+        }
+        else if (this.completedLevelCount == 2)
+        {
+            this.gfx.applyPalette(1)
+        }
     }
 
     cleanupObject(obj: GameObject) {
@@ -414,6 +440,8 @@ class Game {
 
         this.currentScene = this.scenes[sceneIndex]
         this.objects = this.scenes[sceneIndex].objects
+
+        this.applySceneCompletedChanges()
     }
 
     doTransition() {

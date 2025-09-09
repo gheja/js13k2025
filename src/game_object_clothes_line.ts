@@ -36,6 +36,7 @@ class GameObjectClothesLine extends GameObject {
         this.addMice()
     }
 
+    // BUG: when the mouse is eaten it only gets removed from the objectsArray, but stays in this.mice[], so this won't detect that we need new mice
     addMice() {
         var obj: GameObjectMouse
 

@@ -244,6 +244,8 @@ class GameObjectPlayer extends GameObject {
 
                                 game.sceneCompleted(SCENE_INDEX_BIRD_CAGE)
                                 game.beginTransition(0, 30)
+
+                                game.cleanupObject(obj)
                             }
                             else if (obj instanceof GameObjectMouse) {
                                 // because we only handle the first collision this would make the cat let go of the cloth, but make sure
@@ -267,6 +269,14 @@ class GameObjectPlayer extends GameObject {
                             }
                             else if (obj.interactionParam1 == InteractionParam.EelBite) {
                                 game.beginTransition(SCENE_INDEX_STREET, 0)
+                            }
+                            else if (obj instanceof GameObjectFish) {
+                                var obj2 = new GameObject(obj.x - 150, obj.y - 50, GFX_TEXT_BUBBLE_YUM_V2_1)
+                                obj2.autoDeleteTicksLeft = 30
+                                game.objects.push(obj2)
+                                    
+                                game.cleanupObject(obj)
+                                game.checkWinConditionFishBowl()
                             }
                         }
                     }
