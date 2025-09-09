@@ -308,6 +308,10 @@ class Game {
         obj.interaction = GameObjectInteractionType.GrabOnTop
         result.objects.push(obj)
 
+        obj = new GameObject(400, 400, GFX_PICTURE_ON_WALL_V1_1, 156, 100, 0, 60)
+        obj.interaction = GameObjectInteractionType.GrabOnTop
+        result.objects.push(obj)
+
         obj = new GameObjectPlayer(910, 500)
         result.objects.push(obj)
         result.playerObject = obj
