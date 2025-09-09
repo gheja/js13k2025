@@ -24,3 +24,7 @@ enum BirdCageState {
     Falling,
     Crashed
 }
+enum PlayerControlMode {
+    Platform = 0,
+    Swim
+}

@@ -360,7 +360,7 @@ class Game {
         result.objects.push(new GameObjectEel(900, 800))
 
         obj = new GameObjectPlayer(910, 500)
-        // obj.cotrolMode = PlayerControlMode.Swim
+        obj.cotrolMode = PlayerControlMode.Swim
         result.objects.push(obj)
         result.playerObject = obj
 
