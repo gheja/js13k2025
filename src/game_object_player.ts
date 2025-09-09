@@ -99,25 +99,16 @@ class GameObjectPlayer extends GameObject {
         }
 
 
-        var a = this.velocityX
-
         if (inputs[InputArrayKey.Left])
         {
-            a += -1
+            this.velocityX += -1
         }
         else if (inputs[InputArrayKey.Right])
         {
-            a += +1
+            this.velocityX += +1
         }
 
-        a = Math.min(Math.max(a, -15), 15)
-        a = a * PLAYER_DRAG_MULTIPLIER
-        if (Math.abs(a) <= PLAYER_DRAG_CLAMP_TO_ZERO)
-        {
-            a = 0
-        }
-
-        this.velocityX = a
+        this.velocityX = dragAndClamp(this.velocityX, -15, 15, PLAYER_DRAG_MULTIPLIER, PLAYER_DRAG_CLAMP_TO_ZERO)
         this.applyGravity()
 
 

@@ -15,3 +15,13 @@ function boxesCollide(ax: number, ay: number, aw: number, ah: number, bx: number
 function arrayPick(arr: Array<any>) {
     return arr[Math.floor(Math.random() * arr.length)]
 }
+
+function dragAndClamp(speed: number, speedMin: number, speedMax: number, dragMultiplier: number, dragClampToZero: number) {
+    speed = Math.min(Math.max(speed, speedMin), speedMax) * dragMultiplier
+    
+    if (Math.abs(speed) < dragClampToZero) {
+        return 0
+    }
+
+    return speed
+}
