@@ -450,12 +450,14 @@ class Game {
 
         _gfx_screen_scroll_y = Math.max(Math.min(_gfx_screen_scroll_y, scrollMax), scrollMin)
 
+/*
         setDebugMessage(
             Math.round((this.currentScene.playerObject as GameObjectPlayer).y) + " " +
             Math.round(scrollMin) + " " +
             Math.round(scrollMax) + " " +
             Math.round(_gfx_screen_scroll_y)
         )
+*/
     }
 
     physicsFrame(){
