@@ -92,6 +92,10 @@ class Game {
         {
             this.scenes[SCENE_INDEX_FISH_ROOM] = this.createSceneFishRoom()
         }
+        else if (sceneIndex == SCENE_INDEX_FISH_BOWL)
+        {
+            this.scenes[SCENE_INDEX_FISH_BOWL] = this.createSceneFishBowl()
+        }
 
         this.gfx.applyPalette(0)
     }
@@ -190,12 +194,6 @@ class Game {
         obj = new GameObjectPlayer(50, 800)
         result.objects.push(obj)
         result.playerObject = obj
-
-        result.objects.push(new GameObjectEel(200, 600))
-        result.objects.push(new GameObjectEel(600, 700))
-        result.objects.push(new GameObjectEel(900, 800))
-
-        result.objects.push(new GameObjectFish(700, 850))
 
         result.objects.push(new GameObject(1920 - 770, 1080 - 860, GFX_STREET_LIGHT_1, 100, 40, 630, 0, GameObjectInteractionType.SitOnTop))
 
@@ -327,8 +325,42 @@ class Game {
 
         result.objects.push(new GameObject(250, 450, GFX_STANDING_LAMP_V1_1, 64, 40, 138, 32, GameObjectInteractionType.GrabOnTop))
         result.objects.push(new GameObject(1500, 650, GFX_FISH_BOWL_V1_1, 68, 20, 10, 3, GameObjectInteractionType.OverlapNonBlocking))
+        // result.objects.push(new GameObject(1500, 650, GFX_FISH_BOWL_V1_1, 68, 20, 10, 3, GameObjectInteractionType.OverlapNonBlocking, InteractionParam.JumpToFishBowlScene))
 
         obj = new GameObjectPlayer(910, 500)
+        result.objects.push(obj)
+        result.playerObject = obj
+
+        this.addDebugToObjects(result.objects)
+
+        return result
+    }
+
+
+    createSceneFishBowl() {
+        var result = {
+            objects: [],
+            scrollingEnabled: false,
+            playerObject: null
+        }
+
+        var obj
+
+        result.objects.push(new GameObjectFish(700, 850))
+        result.objects.push(new GameObject(0, 0, GFX_ROOM_OVERLAY))
+        result.objects.push(new GameObjectWindow(810, 200, [SCENE_INDEX_STREET], 2))
+
+        this.setupBasicRoom(result, [810, 1400], [560], [1110])
+
+        result.objects.push(new GameObject(250, 450, GFX_STANDING_LAMP_V1_1, 64, 40, 138, 32, GameObjectInteractionType.GrabOnTop))
+        result.objects.push(new GameObject(1500, 650, GFX_FISH_BOWL_V1_1, 68, 20, 10, 3, GameObjectInteractionType.OverlapNonBlocking))
+
+        result.objects.push(new GameObjectEel(200, 600))
+        result.objects.push(new GameObjectEel(600, 700))
+        result.objects.push(new GameObjectEel(900, 800))
+
+        obj = new GameObjectPlayer(910, 500)
+        // obj.cotrolMode = PlayerControlMode.Swim
         result.objects.push(obj)
         result.playerObject = obj
 
