@@ -29,12 +29,6 @@ class GameObjectMouse extends GameObject {
         }
     }
 
-    setFree() {
-        this.interaction = GameObjectInteractionType.OverlapNonBlocking
-        this.setActiveAnimationIndex(1)
-        this.pickDestination()
-    }
-
     physicsFrame() {
         if (_tick_count % 60 == 0) {
             this.pickDestination()
