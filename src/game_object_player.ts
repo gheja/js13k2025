@@ -118,14 +118,7 @@ class GameObjectPlayer extends GameObject {
         }
 
         this.velocityX = a
-
-
-        if (this.velocityY < 0) {
-            this.velocityY += GRAVITY * 1/TARGET_TICK_INTERVAL_MS
-        }
-        else {
-            this.velocityY += FALL_GRAVITY * 1/TARGET_TICK_INTERVAL_MS
-        }
+        this.applyGravity()
 
 
         // collision checks

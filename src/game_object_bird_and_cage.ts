@@ -38,7 +38,7 @@ class GameObjectBirdAndCage extends GameObject {
             }
         }
         else if (this.state == BirdCageState.Falling) {
-            this.velocityY += FALL_GRAVITY * 1/TARGET_TICK_INTERVAL_MS
+            this.applyGravity()
 
             this.y += this.velocityY
 

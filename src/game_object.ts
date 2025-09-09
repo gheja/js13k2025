@@ -106,6 +106,10 @@ class GameObject {
         }
     }
 
+    applyGravity() {
+        this.velocityY += (this.velocityY < 0 ? GRAVITY : FALL_GRAVITY) * 1/TARGET_TICK_INTERVAL_MS
+    }
+
     physicsFrame() {
         //
     }
