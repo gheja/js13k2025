@@ -98,6 +98,10 @@ class Game {
         {
             this.scenes[SCENE_INDEX_FISH_BOWL] = this.createSceneFishBowl()
         }
+        else if (sceneIndex == SCENE_INDEX_SPIDER_ROOM)
+        {
+            this.scenes[SCENE_INDEX_SPIDER_ROOM] = this.createSceneSpiderRoom()
+        }
     }
 
 /*
@@ -180,8 +184,8 @@ class Game {
         {
             result.objects.push(new GameObjectWindow(x, 260 - 320*0, [SCENE_INDEX_BIRD_CAGE, SCENE_INDEX_FISH_ROOM], 0))
             result.objects.push(new GameObjectWindow(x, 260 - 320*1, [SCENE_INDEX_BIRD_CAGE, SCENE_INDEX_FISH_ROOM], 0))
-            result.objects.push(new GameObjectWindow(x, 260 - 320*2, [SCENE_INDEX_BIRD_CAGE], 1))
-            result.objects.push(new GameObjectWindow(x, 260 - 320*3, [SCENE_INDEX_BIRD_CAGE], 1))
+            result.objects.push(new GameObjectWindow(x, 260 - 320*2, [SCENE_INDEX_SPIDER_ROOM], 1))
+            result.objects.push(new GameObjectWindow(x, 260 - 320*3, [SCENE_INDEX_SPIDER_ROOM], 1))
         }
 
 
@@ -381,6 +385,46 @@ class Game {
         this.sceneCompleted(SCENE_INDEX_FISH_ROOM)
         this.beginTransition(SCENE_INDEX_STREET, 0)
     }
+
+
+    // === spider room
+    createSceneSpiderRoom() {
+        var result = {
+            objects: [],
+            scrollingEnabled: false,
+            playerObject: null
+        }
+
+        var obj
+
+        obj = new GameObject(0, 1070, null, 1920, 10, 0, 0, GameObjectInteractionType.SitOnTop)
+        obj.canFallThrough = false
+        result.objects.push(obj)
+
+        result.objects.push(new GameObject(0, 0, GFX_ROOM_OVERLAY))
+        result.objects.push(new GameObjectWindow(810, 200, [SCENE_INDEX_STREET], 2))
+
+
+        this.setupBasicRoom(result, [510], [260], [810])
+
+        result.objects.push(new GameObjectBookShelf(1200, 320, result.objects))
+
+
+
+        result.objects.push(new GameObject(400, 100, GFX_CEILING_LAMP_V1_1, 64, 40, 244, 172, GameObjectInteractionType.GrabOnTop))
+        result.objects.push(new GameObject(400, 400, GFX_PICTURE_ON_WALL_V1_1, 156, 100, 0, 60, GameObjectInteractionType.GrabOnTop))
+
+
+        obj = new GameObjectPlayer(910, 500)
+        result.objects.push(obj)
+        result.playerObject = obj
+
+        this.addDebugToObjects(result.objects)
+
+        return result
+    }
+
+
 
 
     // ===
