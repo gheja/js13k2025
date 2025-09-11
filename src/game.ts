@@ -286,7 +286,7 @@ class Game {
         result.objects.push(new GameObject(0, 0, GFX_ROOM_OVERLAY))
         result.objects.push(new GameObjectWindow(810, 200, [SCENE_INDEX_STREET], 2))
 
-        obj = new GameObject(0, 1000, null, 1920, 10, 0, 0, GameObjectInteractionType.SitOnTop)
+        obj = new GameObject(0, ROOM_FLOOR_POSITION, null, 1920, 10, 0, 0, GameObjectInteractionType.SitOnTop)
         obj.canFallThrough = false
         result.objects.push(obj)
 
@@ -320,7 +320,7 @@ class Game {
 
         var obj
 
-        obj = new GameObject(0, 1000, null, 1920, 10, 0, 0, GameObjectInteractionType.SitOnTop)
+        obj = new GameObject(0, ROOM_FLOOR_POSITION, null, 1920, 10, 0, 0, GameObjectInteractionType.SitOnTop)
         obj.canFallThrough = false
         result.objects.push(obj)
 
@@ -417,7 +417,7 @@ class Game {
 
         var obj
 
-        obj = new GameObject(0, 1000, null, 1920, 10, 0, 0, GameObjectInteractionType.SitOnTop)
+        obj = new GameObject(0, ROOM_FLOOR_POSITION, null, 1920, 10, 0, 0, GameObjectInteractionType.SitOnTop)
         obj.canFallThrough = false
         result.objects.push(obj)
 

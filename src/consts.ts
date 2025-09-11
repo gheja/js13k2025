@@ -26,7 +26,8 @@ const CLOTHES_MIN_X = -210
 const CLOTHES_MAX_X = 2130
 
 // y coordinate of "floor"
-const BIRD_CAGE_CRASH_POSITION = 920
+const ROOM_FLOOR_POSITION = 1000
+const BIRD_CAGE_CRASH_POSITION = ROOM_FLOOR_POSITION - 80
 
 const PI = 3.14159
 
