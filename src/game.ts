@@ -382,16 +382,10 @@ class Game {
 
     fishBowlSceneFishEaten() {
         var fishCount = 0
-        var eelCount = 0
 
         // check if there any fish left
         for (var obj of this.scenes[SCENE_INDEX_FISH_BOWL].objects)
         {
-            if (obj instanceof GameObjectEel)
-            {
-                eelCount += 1
-            }
-
             if (obj instanceof GameObjectFish)
             {
                 fishCount += 1
@@ -405,19 +399,6 @@ class Game {
             this.beginTransition(SCENE_INDEX_STREET, 0)
             return
         }
-
-        // add an eel after every fish eaten
-        var y
-        // don't place the new eel too close to the player
-        while (1) {
-            y = Math.random() * 700 + 300
-            if (Math.abs(y - this.scenes[SCENE_INDEX_FISH_BOWL].playerObject.y) > 150)
-            {
-                break
-            }
-        }
-        this.scenes[SCENE_INDEX_FISH_BOWL].objects.push(new GameObjectEel(Math.random() * 1500 + 200, y))
-*/
 
         // add a new eel, close to the player
         this.scenes[SCENE_INDEX_FISH_BOWL].objects.push(new GameObjectEel(Math.random() * 1500 + 200, 
