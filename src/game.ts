@@ -465,6 +465,25 @@ class Game {
 
     // ===
 
+    objectWasJustBroken(obj: GameObject) {
+        var left = 0
+
+        if (this.currentSceneIndex == SCENE_INDEX_SPIDER_ROOM) {
+            for (var obj of this.objects) {
+                if (obj instanceof GameObjectPushable) {
+                    if (obj.state != PushableObjectState.Broken) {
+                        left += 1
+                    }
+                }
+            }
+
+            if (left == 0) {
+                this.sceneCompleted(SCENE_INDEX_SPIDER_ROOM)
+                this.beginTransition(SCENE_INDEX_STREET, 0)
+            }
+        }
+    }
+
     sceneCompleted(n: number) {
         if (!this.playing) {
             return

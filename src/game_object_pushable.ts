@@ -48,6 +48,7 @@ class GameObjectPushable extends GameObject {
                 this.sprites[0].cleanup()
                 this.sprites[0] = new GfxSprite(this.brokenSpriteData)
                 this.wasJustBroken()
+                game.objectWasJustBroken(this)
             }
         }
     }
