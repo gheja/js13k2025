@@ -224,7 +224,7 @@ class GameObjectPlayer extends GameObject {
                             {
                                 game.beginTransition(arrayPick((obj as GameObjectWindow).possibleTargetSceneIndexes))
                             }
-                            else if (obj instanceof GameObjectBirdAndCage)
+                            else if (obj instanceof GameObjectPushable) // also GameObjectBirdAndCage
                             {
                                 var n = 10
                                 if (this.x >= obj.x)

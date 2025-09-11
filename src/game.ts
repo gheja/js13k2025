@@ -428,6 +428,9 @@ class Game {
         this.setupBasicRoom(result, [510], [260], [810])
 
         result.objects.push(new GameObjectBookShelf(1200, 320, result.objects))
+        result.objects.push(new GameObjectPushable(1220, 230, GFX_VASE_V1_1, 54, 90, 0, 0, GFX_VASE_BROKEN_V1_1, 2, 2, ROOM_FLOOR_POSITION))
+        result.objects.push(new GameObjectPushable(1345, 230, GFX_VASE_V1_1, 54, 90, 0, 0, GFX_VASE_BROKEN_V1_1, 2, 2, ROOM_FLOOR_POSITION))
+        result.objects.push(new GameObjectPushable(1470, 230, GFX_VASE_V1_1, 54, 90, 0, 0, GFX_VASE_BROKEN_V1_1, 2, 2, ROOM_FLOOR_POSITION))
 
 
 
