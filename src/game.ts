@@ -32,7 +32,7 @@ class Game {
         this.gfx = new Graphics()
         this.triesLeft = 5
 
-        this.switchSceneTo(0)
+        this.switchSceneTo(SCENE_INDEX_TITLE_SCREEN)
 
         // must be on top
         this.transitionOverlayObject = new GameObject(0, 2000, GFX_TRANSITION_OVERLAY) // NOTE: anything other than 2000 will result in a transition
@@ -107,6 +107,10 @@ class Game {
         else if (sceneIndex == SCENE_INDEX_SPIDER_ROOM)
         {
             this.scenes[SCENE_INDEX_SPIDER_ROOM] = this.createSceneSpiderRoom()
+        }
+        else if (sceneIndex == SCENE_INDEX_TITLE_SCREEN)
+        {
+            this.scenes[SCENE_INDEX_TITLE_SCREEN] = this.createSceneTitleScreen()
         }
     }
 
@@ -283,7 +287,7 @@ class Game {
     }
 
 
-    // === scene #1 stuffs ===
+    // === bird cage room ===
 
     createSceneRoom1() {
         var result = {
@@ -418,7 +422,8 @@ class Game {
     }
 
 
-    // === spider room
+    // === spider room ===
+
     createSceneSpiderRoom() {
         var result = {
             objects: [],
@@ -454,6 +459,51 @@ class Game {
 
         // the spider should be on top of the cat - eek
         result.objects.push(new GameObjectSpider(1500, 100))
+
+        this.addDebugToObjects(result.objects)
+
+        return result
+    }
+
+
+    // === title screen ===
+
+    createSceneTitleScreen() {
+        var result = {
+            objects: [],
+            playerObject: null,
+            scrollingEnabled: true,
+            currentWindow: null,
+        }
+
+        var obj
+
+        // TODO: check if this needs to be rendered on top of the window masks
+        result.objects.push(new GameObject(0, 0, GFX_LANDSCAPE_V1_1))
+
+        obj = new GameObject(0, 1070, null, 1920, 10, 0, 0, GameObjectInteractionType.SitOnTop)
+        obj.canFallThrough = false
+        result.objects.push(obj)
+
+        // top of the fence
+        result.objects.push(new GameObject(0, FENCE_POSITION + 120, null, 1920, 10, 0, 0, GameObjectInteractionType.SitOnTop))
+
+        for (var x=0; x<1920; x+=60)
+        {
+            result.objects.push(new GameObject(x, 670, arrayPick([ GFX_FENCE1_V1_1, GFX_FENCE2_V1_1, GFX_FENCE3_V1_1 ])))
+        }
+
+        result.objects.push(new GameObject(280, 800, GFX_TRASH_CAN_SHORT_V2_2))
+        result.objects.push(new GameObject(280, 800, GFX_TRASH_CAN_SHORT_V2_1, 200, 160, 0, 100, GameObjectInteractionType.SitOnTop))
+
+        result.objects.push(new GameObject(580, 750, GFX_TRASH_CAN_SHORT_V2_2))
+        result.objects.push(new GameObject(580, 800, GFX_TRASH_CAN_TALL_V2_1, 200, 210, 0, 50, GameObjectInteractionType.SitOnTop))
+
+        result.objects.push(new GameObject(1920 - 275, 780, GFX_SIGN_GO_V1_1, 50, 275, 225, 0, GameObjectInteractionType.OverlapNonBlocking, InteractionParam.StartGame))
+
+        obj = new GameObjectPlayer(50, 800)
+        result.objects.push(obj)
+        result.playerObject = obj
 
         this.addDebugToObjects(result.objects)
 
@@ -576,7 +626,12 @@ class Game {
             return
         }
         this.triesLeft -= 1
-        this.beginTransition(SCENE_INDEX_STREET, 0)
+        if (this.triesLeft > 0) {
+            this.beginTransition(SCENE_INDEX_STREET, 0)
+        }
+        else {
+            this.beginTransition(SCENE_INDEX_TITLE_SCREEN, 0)
+        }
     }
 
     getInputArray() {
@@ -624,7 +679,7 @@ class Game {
 
         this.gfx.update()
 
-        if (true) { // TODO: check scene index
+        if (this.currentSceneIndex == SCENE_INDEX_STREET) {
             this.processStreetWindow()
         }
 
@@ -678,6 +733,16 @@ class Game {
 
         this.objects.forEach(a => a.renderFrame())
         this.transitionOverlayObject.renderFrame()
+    }
+
+    startNewGame() {
+        _tick_count = 0
+        this.triesLeft = 5
+        this.completedLevelCount = 0
+        this.processStreetWindowTicks = 0
+        this.currentPaletteIndex = 0
+        this.scenes = []
+        this.beginTransition(SCENE_INDEX_STREET, 0)
     }
 
     start() {
