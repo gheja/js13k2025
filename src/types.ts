@@ -31,5 +31,5 @@ enum PlayerControlMode {
 enum InteractionParam {
     None = 0,
     JumpToFishBowlScene,
-    EelBite
+    InstantFail
 }

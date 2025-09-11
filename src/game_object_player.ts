@@ -267,7 +267,7 @@ class GameObjectPlayer extends GameObject {
                             else if (obj.interactionParam1 == InteractionParam.JumpToFishBowlScene) {
                                 game.beginTransition(SCENE_INDEX_FISH_BOWL, 0)
                             }
-                            else if (obj.interactionParam1 == InteractionParam.EelBite) {
+                            else if (obj.interactionParam1 == InteractionParam.InstantFail) {
                                 game.beginTransition(SCENE_INDEX_STREET, 0)
                             }
                             else if (obj instanceof GameObjectFish) {
