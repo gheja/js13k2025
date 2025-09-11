@@ -1,13 +1,8 @@
-class GameObjectBirdAndCage extends GameObject {
+class GameObjectBirdAndCage extends GameObjectPushable {
     bird: GameObjectBird
-    state: BirdCageState = BirdCageState.Initial
-    safeMinX: number
-    safeMaxX: number
 
     constructor(x: number, y: number, objectsArray: Array<GameObject>) {
-        super(x, y, GFX_BIRD_CAGE_V1_1, 120, 130, 0, 0, GameObjectInteractionType.OverlapNonBlocking)
-        this.safeMinX = x - 50
-        this.safeMaxX = x + 50
+        super(x, y, GFX_BIRD_CAGE_V1_1, 120, 130, 0, 0, GFX_BIRD_CAGE_CRUSHED_V1_1, 50, 50, BIRD_CAGE_CRASH_POSITION)
 
         this.bird = new GameObjectBird(0, 0)
 
@@ -22,37 +17,14 @@ class GameObjectBirdAndCage extends GameObject {
         this.bird.y = this.y + 15
     }
 
-    getPushed(x: number) {
-        if (this.state != BirdCageState.Initial) {
-            return
-        }
-
-        this.x += x
+    wasJustBroken() {
+        this.bird.setFree()
     }
 
     physicsFrame() {
-        if (this.state == BirdCageState.Initial) {
-            if (this.x < this.safeMinX || this.x > this.safeMaxX) {
-                this.state = BirdCageState.Falling
-                this.interaction = GameObjectInteractionType.None
-            }
-        }
-        else if (this.state == BirdCageState.Falling) {
-            this.applyGravity()
+        this.handlePushable()
 
-            this.y += this.velocityY
-
-            if (this.y >= BIRD_CAGE_CRASH_POSITION)
-            {
-                this.state = BirdCageState.Crashed
-
-                this.sprites[0].cleanup()
-                this.sprites[0] = new GfxSprite(GFX_BIRD_CAGE_CRUSHED_V1_1)
-                this.bird.setFree()
-            }
-        }
-
-        if (this.state != BirdCageState.Crashed) {
+        if (this.state != PushableObjectState.Broken) {
             this.syncBirdPosition()
         }
     }

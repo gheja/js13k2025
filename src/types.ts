@@ -19,10 +19,10 @@ enum PlayerState {
     Grabbing,
     InAir,
 }
-enum BirdCageState {
+enum PushableObjectState {
     Initial = 0,
     Falling,
-    Crashed
+    Broken
 }
 enum PlayerControlMode {
     Platform = 0,
