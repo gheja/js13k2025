@@ -276,7 +276,7 @@ class GameObjectPlayer extends GameObject {
                                 game.objects.push(obj2)
                                     
                                 game.cleanupObject(obj)
-                                game.checkWinConditionFishBowl()
+                                game.fishBowlSceneFishEaten()
                             }
                         }
                     }

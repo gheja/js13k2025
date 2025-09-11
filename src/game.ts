@@ -348,17 +348,25 @@ class Game {
         var result = {
             objects: [],
             scrollingEnabled: false,
-            playerObject: null
+            playerObject: null,
+            backgroundColor: "#4975a9",
         }
 
         var obj
 
-        result.objects.push(new GameObjectFish(700, 850))
-        result.objects.push(new GameObjectEel(200, 600))
-        result.objects.push(new GameObjectEel(600, 700))
-        result.objects.push(new GameObjectEel(900, 800))
+        result.objects.push(new GameObjectFish(Math.random() * 1100 + 400, 350))
+        result.objects.push(new GameObjectFish(Math.random() * 1100 + 400, 550))
+        result.objects.push(new GameObjectFish(Math.random() * 1100 + 400, 750))
+        result.objects.push(new GameObjectFish(Math.random() * 1100 + 400, 880))
+        result.objects.push(new GameObjectFish(Math.random() * 1100 + 400, 910))
 
-        obj = new GameObjectPlayer(910, 500)
+        result.objects.push(new GameObjectEel(800, 200))
+        result.objects.push(new GameObjectEel(1000, 400))
+        result.objects.push(new GameObjectEel(400, 700))
+        result.objects.push(new GameObjectEel(1000, 800))
+        result.objects.push(new GameObjectEel(600, 900))
+
+        obj = new GameObjectPlayer(910, 40)
         obj.controlMode = PlayerControlMode.Swim
         obj.boxWidth = 50
         obj.boxHeight = 50
@@ -372,19 +380,43 @@ class Game {
         return result
     }
 
-    checkWinConditionFishBowl() {
+    fishBowlSceneFishEaten() {
+        var fishCount = 0
+        var eelCount = 0
+
+        // check if there any fish left
         for (var obj of this.scenes[SCENE_INDEX_FISH_BOWL].objects)
         {
+            if (obj instanceof GameObjectEel)
+            {
+                eelCount += 1
+            }
+
             if (obj instanceof GameObjectFish)
             {
-                // immediately return if a fish still exists
-                return
+                fishCount += 1
             }
         }
 
-        // we will only get this far if there are no fish left
-        this.sceneCompleted(SCENE_INDEX_FISH_ROOM)
-        this.beginTransition(SCENE_INDEX_STREET, 0)
+        // won!
+        if (fishCount == 0)
+        {
+            this.sceneCompleted(SCENE_INDEX_FISH_ROOM)
+            this.beginTransition(SCENE_INDEX_STREET, 0)
+            return
+        }
+
+        // add an eel after every fish eaten
+        var y
+        // don't place the new eel too close to the player
+        while (1) {
+            y = Math.random() * 700 + 300
+            if (Math.abs(y - this.scenes[SCENE_INDEX_FISH_BOWL].playerObject.y) > 150)
+            {
+                break
+            }
+        }
+        this.scenes[SCENE_INDEX_FISH_BOWL].objects.push(new GameObjectEel(Math.random() * 1500 + 200, y))
     }
 
 
