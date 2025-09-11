@@ -11,6 +11,7 @@ class Game {
 
     public scenes: Array<any> = []
     public currentScene: any
+    public currentSceneIndex: number
     public currentPaletteIndex: number = 0
 
     processStreetWindowTicks: number = 0 // to count the interval of the windows opening - will reset to a value if there is no window available
@@ -526,6 +527,7 @@ class Game {
 
         this.prepareCurrentScene(sceneIndex)
 
+        this.currentSceneIndex = sceneIndex
         this.currentScene = this.scenes[sceneIndex]
         this.objects = this.scenes[sceneIndex].objects
 
