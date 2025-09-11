@@ -10,6 +10,7 @@ class Game {
 
     public scenes: Array<any> = []
     public currentScene: any
+    public currentPaletteIndex: number = 0
 
     processStreetWindowTicks: number = 0 // to count the interval of the windows opening - will reset to a value if there is no window available
 
@@ -448,7 +449,7 @@ class Game {
         }
         else if (this.completedLevelCount == 2)
         {
-            this.gfx.applyPalette(1)
+            this.currentPaletteIndex = 1
         }
     }
 
@@ -485,7 +486,16 @@ class Game {
         this.currentScene = this.scenes[sceneIndex]
         this.objects = this.scenes[sceneIndex].objects
 
+        // this will unlock scrolling, set palette index, etc.
         this.applySceneCompletedChanges()
+
+        // after updating the palette index, apply it
+        this.gfx.applyPalette(this.currentPaletteIndex)
+
+        // the scene might need another background color (i.e. fish bowl)
+        if (this.currentScene.backgroundColor) {
+            document.body.style.background = this.currentScene.backgroundColor
+        }
     }
 
     doTransition() {
