@@ -417,6 +417,12 @@ class Game {
             }
         }
         this.scenes[SCENE_INDEX_FISH_BOWL].objects.push(new GameObjectEel(Math.random() * 1500 + 200, y))
+*/
+
+        // add a new eel, close to the player
+        this.scenes[SCENE_INDEX_FISH_BOWL].objects.push(new GameObjectEel(Math.random() * 1500 + 200, 
+            this.scenes[SCENE_INDEX_FISH_BOWL].playerObject.y + (Math.random() < 0.2 ? -250 : 250)
+        ))
     }
 
 
