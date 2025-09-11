@@ -320,7 +320,7 @@ class Game {
 
         var obj
 
-        obj = new GameObject(0, 1070, null, 1920, 10, 0, 0, GameObjectInteractionType.SitOnTop)
+        obj = new GameObject(0, 1000, null, 1920, 10, 0, 0, GameObjectInteractionType.SitOnTop)
         obj.canFallThrough = false
         result.objects.push(obj)
 
@@ -417,7 +417,7 @@ class Game {
 
         var obj
 
-        obj = new GameObject(0, 1070, null, 1920, 10, 0, 0, GameObjectInteractionType.SitOnTop)
+        obj = new GameObject(0, 1000, null, 1920, 10, 0, 0, GameObjectInteractionType.SitOnTop)
         obj.canFallThrough = false
         result.objects.push(obj)
 
