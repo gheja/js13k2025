@@ -4,6 +4,8 @@ class GameObjectPlayer extends GameObject {
     wasBittenByMouseCooldownTicks: number = 0 // to prevent catching the mouse that just bit the player
     controlMode: PlayerControlMode = PlayerControlMode.Platform
 
+    lastFootprintX: number = 0
+
     constructor(x: number, y: number) {
         super(x, y, null, 60, 120, 30, 0)
 
@@ -19,6 +21,26 @@ class GameObjectPlayer extends GameObject {
         this.sprites[0].cleanup()
 
         this.sprites = this.animations[0]
+    }
+
+    handleFootprints() {
+        var x = Math.round((this.x + 100) / 70) * 70
+
+        // do nothing if not on the floor, or at the same position
+        if (this.y < ROOM_FLOOR_POSITION - 120 - 5 || this.lastFootprintX == x)
+        {
+            return
+        }
+            
+        this.lastFootprintX = x
+
+        for (var obj of game.currentScene.objects) {
+            if (obj instanceof GameObjectFootprint) {
+                if (obj.x == x) {
+                    obj.changeLevel(+1)
+                }
+            }
+        }
     }
 
     physicsFrame() {
@@ -325,6 +347,8 @@ class GameObjectPlayer extends GameObject {
             
             this.x = nextX
             this.y = nextY
+
+            this.handleFootprints()
         }
 
         // setDebugMessage(this.wasBittenByMouseCooldownTicks.toString())

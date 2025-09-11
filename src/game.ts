@@ -146,6 +146,12 @@ class Game {
             // a separate invisible object for the collision box of the bottom part
             result.objects.push(new GameObject(x, 650, null, 200, 50, 0, 200, GameObjectInteractionType.SitOnTop))
         }
+
+        // x must be divisible by 70!
+        for (var x=210; x<1920-200; x+= 70) {
+            obj = new GameObjectFootprint(x, ROOM_FLOOR_POSITION - 20) as GameObjectFootprint
+            result.objects.push(obj)
+        }
     }
 
     // === scene #0 stuffs ===
