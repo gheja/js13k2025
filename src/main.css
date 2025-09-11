@@ -3,6 +3,8 @@ body {
     margin: 0;
     padding: 0;
     overflow: hidden;
+    font-family: Bahnschrift;
+    font-size: 4vh;
 }
 
 body {
@@ -11,4 +13,14 @@ body {
 
 #c * {
     position: absolute;
+}
+#s, #t {
+    position: fixed;
+    z-index: 100;
+    color: #fff;
+    padding: 4vh;
+    text-shadow: 2px 2px #000;
+}
+#t {
+    right: 4vh;
 }

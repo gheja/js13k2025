@@ -290,7 +290,8 @@ class GameObjectPlayer extends GameObject {
                                 game.beginTransition(SCENE_INDEX_FISH_BOWL, 0)
                             }
                             else if (obj.interactionParam1 == InteractionParam.InstantFail) {
-                                game.beginTransition(SCENE_INDEX_STREET, 0)
+                                // game.beginTransition(SCENE_INDEX_STREET, 0)
+                                game.failedLevel()
                             }
                             else if (obj instanceof GameObjectFish) {
                                 var obj2 = new GameObject(obj.x - 150, obj.y - 50, GFX_TEXT_BUBBLE_YUM_V2_1)

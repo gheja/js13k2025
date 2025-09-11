@@ -1,6 +1,7 @@
 class Game {
     private gfx: Graphics
     private lastTickTime: number
+    public triesLeft: number
     private lastPhysicsTickTime: number
     public objects: Array<GameObject> = []
     private keyPressed: Array<boolean> = []
@@ -18,6 +19,7 @@ class Game {
     scrollMaxLimit: number = 0 // no change
 
     completedLevelCount: number = 0
+    playing: boolean = false // a flag to make sure we don't double-process a level result (I don't have time now to debug why it happens sometime (eg. eel))
 
     constructor(){
         this.lastTickTime = performance.now()
@@ -27,6 +29,7 @@ class Game {
     init() {
         _gfx_root = document.getElementById("c") as HTMLDivElement
         this.gfx = new Graphics()
+        this.triesLeft = 5
 
         this.switchSceneTo(0)
 
@@ -39,6 +42,7 @@ class Game {
     }
 
     beginTransition(targetSceneIndex: number, transitionPauseTicks: number = 0) {
+        this.playing = false
         this.transitionTargetSceneIndex = targetSceneIndex
         this.transitionOverlayObject.y = 1125
         this.transitionPauseTicksLeft = transitionPauseTicks
@@ -461,6 +465,10 @@ class Game {
     // ===
 
     sceneCompleted(n: number) {
+        if (!this.playing) {
+            return
+        }
+
         for (var obj2 of this.scenes[SCENE_INDEX_STREET].objects)
         {
             if (obj2 instanceof GameObjectWindow)
@@ -505,6 +513,11 @@ class Game {
         }
     }
 
+    updateHud() {
+        document.getElementById("s").innerHTML = "Tries: " + this.triesLeft
+        document.getElementById("t").innerHTML = "Completed: " + this.completedLevelCount + "/4"
+    }
+
     switchSceneTo(sceneIndex: number) {
         for (var obj of this.objects)
         {
@@ -526,10 +539,23 @@ class Game {
         if (this.currentScene.backgroundColor) {
             document.body.style.background = this.currentScene.backgroundColor
         }
+
+        this.updateHud()
+
+        this.playing = true
     }
 
     doTransition() {
         this.switchSceneTo(this.transitionTargetSceneIndex)
+    }
+
+    failedLevel() {
+        if (!this.playing)
+        {
+            return
+        }
+        this.triesLeft -= 1
+        this.beginTransition(SCENE_INDEX_STREET, 0)
     }
 
     getInputArray() {
