@@ -434,10 +434,12 @@ class Game {
         result.objects.push(new GameObject(400, 100, GFX_CEILING_LAMP_V1_1, 64, 40, 244, 172, GameObjectInteractionType.GrabOnTop))
         result.objects.push(new GameObject(400, 400, GFX_PICTURE_ON_WALL_V1_1, 156, 100, 0, 60, GameObjectInteractionType.GrabOnTop))
 
-
         obj = new GameObjectPlayer(910, 500)
         result.objects.push(obj)
         result.playerObject = obj
+
+        // the spider should be on top of the cat - eek
+        result.objects.push(new GameObjectSpider(1500, 100))
 
         this.addDebugToObjects(result.objects)
 
