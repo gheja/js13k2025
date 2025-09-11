@@ -14,11 +14,11 @@ class GameObjectEel extends GameObject {
     }
 
     pickDestination() {
-        this.velocityX = (Math.random() < 0.5 ? -4 : 4)
+        this.velocityX = (Math.random() < 0.5 ? -6 : 6)
     }
 
     physicsFrame() {
-        if (_tick_count % 180 == 0) {
+        if (_tick_count % 200 == 0) {
             this.pickDestination()
         }
 
