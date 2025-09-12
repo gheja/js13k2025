@@ -18,6 +18,7 @@ class GameObject {
     animations: Array<any>
     activeAnimationIndex: number = -1
     spriteFlipped: boolean = false
+    spriteFlipFlip: boolean = false // just for the broom animation... and probably it would be good for the left chair too!
     autoDeleteTicksLeft: number = -1 // will delete this object in this many ticks
 
     constructor(x: number, y: number, baseSpriteData: any, boxWidth: number = 0, boxHeight: number = 0, boxOffsetX: number = 0, boxOffsetY: number = 0, interaction = GameObjectInteractionType.None, interactionParam1: any = null) {
@@ -128,7 +129,7 @@ class GameObject {
             this.spriteFlipped = false
         }
 
-        this.sprites[this.activeSpriteIndex].flipped = this.spriteFlipped
+        this.sprites[this.activeSpriteIndex].flipped = this.spriteFlipFlip ? !this.spriteFlipped : this.spriteFlipped
         this.sprites[this.activeSpriteIndex].moveTo(this.x, this.y)
     }
 
