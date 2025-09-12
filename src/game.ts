@@ -22,6 +22,8 @@ class Game {
 
     completedLevelCount: number = 0
     playing: boolean = false // a flag to make sure we don't double-process a level result (I don't have time now to debug why it happens sometime (eg. eel))
+    dogEnabled: boolean
+    trashCatEnabled: boolean
 
     constructor(){
         this.lastTickTime = performance.now()
@@ -199,7 +201,10 @@ class Game {
     }
 
     addDog() {
-        this.objects.push(new GameObjectDog(850))
+        if (this.dogEnabled)
+        {
+            this.objects.push(new GameObjectDog(850))
+        }
     }
 
     // === scene #0 stuffs ===
@@ -328,7 +333,7 @@ class Game {
     }
 
     processStreetTrashCat() {
-        if (_tick_count % 400 == 100) {
+        if (_tick_count % 400 == 100 && this.trashCatEnabled) {
             var trashCats = []
 
             for (var obj of this.objects) {
@@ -634,10 +639,12 @@ class Game {
     applySceneCompletedChanges() {
         if (this.completedLevelCount == 1)
         {
+            this.trashCatEnabled = true
             this.scrollMinLimit = 700
         }
         else if (this.completedLevelCount == 2)
         {
+            this.dogEnabled = true
             this.currentPaletteIndex = 1
         }
     }
@@ -832,9 +839,12 @@ class Game {
         _tick_count = 0
         this.triesLeft = 5
         this.completedLevelCount = 0
+        this.scrollMinLimit = 0
         this.processStreetWindowTicks = 0
         this.currentPaletteIndex = 0
         this.scenes = []
+        this.dogEnabled = false
+        this.trashCatEnabled = false
         this.beginTransition(SCENE_INDEX_STREET, 0)
     }
 
