@@ -218,6 +218,7 @@ class Game {
             playerObject: null,
             scrollingEnabled: true,
             currentWindow: null,
+            dogsSpawnHere: true,
         }
 
         var obj
@@ -392,7 +393,8 @@ class Game {
         var result = {
             objects: [],
             scrollingEnabled: false,
-            playerObject: null
+            playerObject: null,
+            dogsSpawnHere: true,
         }
 
         var obj
@@ -485,7 +487,8 @@ class Game {
         var result = {
             objects: [],
             scrollingEnabled: false,
-            playerObject: null
+            playerObject: null,
+            dogsSpawnHere: true,
         }
 
         var obj
@@ -803,15 +806,18 @@ class Game {
         if (this.currentSceneIndex == SCENE_INDEX_STREET) {
             this.processStreetWindow()
             this.processStreetTrashCat()
-
-            // every 20 seconds for now
-            if (_tick_count % 1200 == 0) {
-                this.addDog()
-            }
         }
         else if (this.currentSceneIndex == SCENE_INDEX_FAIL_SCREEN || this.currentSceneIndex == SCENE_INDEX_SUCCESS_SCREEN) {
             this.processResultScreen()
         }
+
+        // every 20 seconds for now
+        if (this.currentScene.dogsSpawnHere) {
+            if (_tick_count % 1200 == 0) {
+                this.addDog()
+            }
+        }
+
 
         this.objects.forEach(a => { a.processAutoDelete(); a.physicsFrame(); })
     }
