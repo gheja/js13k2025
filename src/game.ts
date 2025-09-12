@@ -215,7 +215,7 @@ class Game {
         var obj
 
         // TODO: check if this needs to be rendered on top of the window masks
-        result.objects.push(new GameObject(0, 0, GFX_LANDSCAPE_V1_1))
+        // result.objects.push(new GameObject(0, 0, GFX_LANDSCAPE_V2_1))
 
         obj = new GameObject(0, 1070, null, 1920, 10, 0, 0, GameObjectInteractionType.SitOnTop)
         obj.canFallThrough = false
@@ -522,7 +522,7 @@ class Game {
         var obj
 
         // TODO: check if this needs to be rendered on top of the window masks
-        result.objects.push(new GameObject(0, 0, GFX_LANDSCAPE_V1_1))
+        result.objects.push(new GameObject(0, 0, GFX_LANDSCAPE_V2_1))
 
         obj = new GameObject(0, 1070, null, 1920, 10, 0, 0, GameObjectInteractionType.SitOnTop)
         obj.canFallThrough = false
