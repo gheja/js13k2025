@@ -295,6 +295,10 @@ class GameObjectPlayer extends GameObject {
                             else if (obj.interactionParam1 == InteractionParam.StartGame) {
                                 game.startNewGame()
                             }
+                            else if (obj.interactionParam1 == InteractionParam.TrashCatPush) {
+                                this.wasBittenByMouseCooldownTicks = 15
+                                ignoreCollidingWith = true
+                            }
                             else if (obj instanceof GameObjectFish) {
                                 var obj2 = new GameObject(obj.x - 150, obj.y - 50, GFX_TEXT_BUBBLE_YUM_V2_1)
                                 obj2.autoDeleteTicksLeft = 30

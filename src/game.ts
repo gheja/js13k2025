@@ -195,9 +195,11 @@ class Game {
         }
 
         result.objects.push(new GameObject(280, 800, GFX_TRASH_CAN_SHORT_V2_2))
+        result.objects.push(new GameObjectTrashCat(280 + 70, 900))
         result.objects.push(new GameObject(280, 800, GFX_TRASH_CAN_SHORT_V2_1, 200, 160, 0, 100, GameObjectInteractionType.SitOnTop))
 
         result.objects.push(new GameObject(580, 750, GFX_TRASH_CAN_SHORT_V2_2))
+        result.objects.push(new GameObjectTrashCat(580 + 70, 850))
         result.objects.push(new GameObject(580, 800, GFX_TRASH_CAN_TALL_V2_1, 200, 210, 0, 50, GameObjectInteractionType.SitOnTop))
 
         for (var x=70; x<1920; x+=370)
@@ -288,6 +290,22 @@ class Game {
             // close the window
             this.scenes[SCENE_INDEX_STREET].currentWindow.targetOpening = WINDOW_OPENING_POSITION_MIN
         }
+    }
+
+    processStreetTrashCat() {
+        if (_tick_count % 400 == 100) {
+            var trashCats = []
+
+            for (var obj of this.objects) {
+                if (obj instanceof GameObjectTrashCat) {
+                    trashCats.push(obj)
+                }
+            }
+
+            var trashCat: GameObjectTrashCat = arrayPick(trashCats)
+            trashCat.popUp()
+        }
+
     }
 
 
@@ -687,6 +705,7 @@ class Game {
 
         if (this.currentSceneIndex == SCENE_INDEX_STREET) {
             this.processStreetWindow()
+            this.processStreetTrashCat()
 
             // every 20 seconds for now
             if (_tick_count % 1200 == 0) {

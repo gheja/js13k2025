@@ -33,4 +33,5 @@ enum InteractionParam {
     JumpToFishBowlScene,
     InstantFail,
     StartGame,
+    TrashCatPush, // == mouse bite
 }
