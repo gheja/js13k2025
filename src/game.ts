@@ -169,7 +169,7 @@ class Game {
     }
 
     addDog() {
-        this.objects.push(new GameObjectDog(950))
+        this.objects.push(new GameObjectDog(850))
     }
 
     // === scene #0 stuffs ===
