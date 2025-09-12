@@ -8,6 +8,7 @@ class Game {
     private transitionOverlayObject: GameObject
     private transitionTargetSceneIndex: number
     private transitionPauseTicksLeft: number
+    private resultScreenTicksLeft: number
 
     public scenes: Array<any> = []
     public currentScene: any
@@ -96,6 +97,19 @@ class Game {
                 {
                     obj2.addMice()
                 }
+
+/*
+                // NOTE: this does NOT work, because the objects array is just being assembled and this.objects
+                // refers to the previous scene, so cleanupObject() will not pick it up. it would need another
+                // pass over this array, etc., so we'll just disable the collision on the dog in the player class
+                // and let it pass
+
+                // clear all the dogs
+                if (obj2 instanceof GameObjectDog)
+                {
+                    this.cleanupObject(obj2)
+                }
+*/
             }
         }
         else if (sceneIndex == SCENE_INDEX_BIRD_CAGE)
@@ -117,6 +131,16 @@ class Game {
         else if (sceneIndex == SCENE_INDEX_TITLE_SCREEN)
         {
             this.scenes[SCENE_INDEX_TITLE_SCREEN] = this.createSceneTitleScreen()
+        }
+        else if (sceneIndex == SCENE_INDEX_FAIL_SCREEN)
+        {
+            this.scenes[SCENE_INDEX_FAIL_SCREEN] = this.createSceneFailScreen()
+            this.setMessage("Oh no!")
+        }
+        else if (sceneIndex == SCENE_INDEX_SUCCESS_SCREEN)
+        {
+            this.scenes[SCENE_INDEX_SUCCESS_SCREEN] = this.createSceneSuccessScreen()
+            this.setMessage("Nice job!")
         }
     }
 
@@ -228,7 +252,7 @@ class Game {
         result.objects.push(new GameObjectClothesLine(360 - 320*3, result.objects, 0.4, true, 1))
 
 
-        obj = new GameObjectPlayer(50, 800)
+        obj = new GameObjectPlayer(PLAYER_STREET_START_X, PLAYER_STREET_START_Y)
         result.objects.push(obj)
         result.playerObject = obj
 
@@ -437,7 +461,6 @@ class Game {
         if (fishCount == 0)
         {
             this.sceneCompleted(SCENE_INDEX_FISH_ROOM)
-            this.beginTransition(SCENE_INDEX_STREET, 0)
             return
         }
 
@@ -531,6 +554,42 @@ class Game {
     }
 
 
+    createSceneFailScreen() {
+        var result = {
+            objects: [],
+            backgroundColor: "#392c4e",
+        }
+
+        return result
+    }
+
+    createSceneSuccessScreen() {
+        var result = {
+            objects: [],
+            backgroundColor: "#4975a9",
+        }
+
+        return result
+    }
+
+    //
+
+    processResultScreen() {
+        if (this.resultScreenTicksLeft > 0)
+        {
+            this.resultScreenTicksLeft -= 1
+            return
+        }
+
+        if (this.triesLeft > 0) {
+            this.beginTransition(SCENE_INDEX_STREET, 0)
+        }
+        else {
+            this.beginTransition(SCENE_INDEX_TITLE_SCREEN, 0)
+        }
+    }
+
+
 
 
     // ===
@@ -549,7 +608,6 @@ class Game {
 
             if (left == 0) {
                 this.sceneCompleted(SCENE_INDEX_SPIDER_ROOM)
-                this.beginTransition(SCENE_INDEX_STREET, 0)
             }
         }
     }
@@ -568,6 +626,9 @@ class Game {
         }
 
         this.completedLevelCount += 1
+
+        this.resultScreenTicksLeft = 60
+        this.beginTransition(SCENE_INDEX_SUCCESS_SCREEN, 0)
     }
 
     applySceneCompletedChanges() {
@@ -582,6 +643,8 @@ class Game {
     }
 
     cleanupObject(obj: GameObject) {
+        // BUG, NOTE: if the object is not in this.objects then the sprite might get deleted but the object stays there, when cleanupObject() is called again the sprite deletion will fail!
+
         obj.cleanupSprites()
         for (var i=this.objects.length-1; i>=0; i--) {
             if (this.objects[i] == obj) {
@@ -649,12 +712,10 @@ class Game {
             return
         }
         this.triesLeft -= 1
-        if (this.triesLeft > 0) {
-            this.beginTransition(SCENE_INDEX_STREET, 0)
-        }
-        else {
-            this.beginTransition(SCENE_INDEX_TITLE_SCREEN, 0)
-        }
+
+
+        this.resultScreenTicksLeft = 60
+        this.beginTransition(SCENE_INDEX_FAIL_SCREEN, 0)
     }
 
     getInputArray() {
@@ -702,16 +763,6 @@ class Game {
 
         this.gfx.update()
 
-        if (this.currentSceneIndex == SCENE_INDEX_STREET) {
-            this.processStreetWindow()
-            this.processStreetTrashCat()
-
-            // every 20 seconds for now
-            if (_tick_count % 1200 == 0) {
-                this.addDog()
-            }
-        }
-
         // this will be the only thing done during this run
         if (this.transitionOverlayObject.y != 2000)
         {
@@ -737,6 +788,19 @@ class Game {
             }
 
             return
+        }
+
+        if (this.currentSceneIndex == SCENE_INDEX_STREET) {
+            this.processStreetWindow()
+            this.processStreetTrashCat()
+
+            // every 20 seconds for now
+            if (_tick_count % 1200 == 0) {
+                this.addDog()
+            }
+        }
+        else if (this.currentSceneIndex == SCENE_INDEX_FAIL_SCREEN || this.currentSceneIndex == SCENE_INDEX_SUCCESS_SCREEN) {
+            this.processResultScreen()
         }
 
         this.objects.forEach(a => { a.processAutoDelete(); a.physicsFrame(); })

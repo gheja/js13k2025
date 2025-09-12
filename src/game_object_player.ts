@@ -290,6 +290,8 @@ class GameObjectPlayer extends GameObject {
                                 game.beginTransition(SCENE_INDEX_FISH_BOWL, 0)
                             }
                             else if (obj.interactionParam1 == InteractionParam.InstantFail) {
+                                // make sure there is no double interaction - only applicable on the street scene with the dog
+                                obj.interaction = GameObjectInteractionType.None
                                 game.failedLevel()
                             }
                             else if (obj.interactionParam1 == InteractionParam.StartGame) {
