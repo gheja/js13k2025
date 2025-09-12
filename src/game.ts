@@ -133,6 +133,7 @@ class Game {
         else if (sceneIndex == SCENE_INDEX_TITLE_SCREEN)
         {
             this.scenes[SCENE_INDEX_TITLE_SCREEN] = this.createSceneTitleScreen()
+            this.currentPaletteIndex = 0
         }
         else if (sceneIndex == SCENE_INDEX_FAIL_SCREEN)
         {
@@ -592,6 +593,7 @@ class Game {
             this.beginTransition(SCENE_INDEX_STREET, 0)
         }
         else {
+            this.currentPaletteIndex = 0
             this.beginTransition(SCENE_INDEX_TITLE_SCREEN, 0)
         }
     }
