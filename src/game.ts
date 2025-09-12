@@ -593,7 +593,6 @@ class Game {
             this.beginTransition(SCENE_INDEX_STREET, 0)
         }
         else {
-            this.currentPaletteIndex = 0
             this.beginTransition(SCENE_INDEX_TITLE_SCREEN, 0)
         }
     }
