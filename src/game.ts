@@ -42,6 +42,10 @@ class Game {
         window.addEventListener("keyup", this.inputEvent.bind(this))
     }
 
+    setMessage(s: string) {
+        document.getElementById("m").innerHTML = s
+    }
+
     beginTransition(targetSceneIndex: number, transitionPauseTicks: number = 0) {
         this.playing = false
         this.transitionTargetSceneIndex = targetSceneIndex
@@ -59,6 +63,8 @@ class Game {
                 this.wipeObjectsArray(this.scenes[sceneIndex].objects)
             }
         }
+
+        this.setMessage("")
 
         if (sceneIndex == 0)
         {
