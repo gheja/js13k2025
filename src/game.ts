@@ -598,6 +598,7 @@ class Game {
     }
 
     updateHud() {
+        document.getElementById("i").style.display = (this.currentSceneIndex == SCENE_INDEX_TITLE_SCREEN ? "" : "none")
         document.getElementById("s").style.display = (this.currentSceneIndex == SCENE_INDEX_TITLE_SCREEN ? "none" : "")
         document.getElementById("t").style.display = (this.currentSceneIndex == SCENE_INDEX_TITLE_SCREEN ? "none" : "")
         document.getElementById("s").innerHTML = "Tries: " + this.triesLeft
