@@ -94,7 +94,7 @@ class Game {
         }
         else if (sceneIndex == SCENE_INDEX_BIRD_CAGE)
         {
-            this.scenes[SCENE_INDEX_BIRD_CAGE] = this.createSceneRoom1()
+            this.scenes[SCENE_INDEX_BIRD_CAGE] = this.createSceneBirdCageRoom()
         }
         else if (sceneIndex == SCENE_INDEX_FISH_ROOM)
         {
@@ -161,6 +161,11 @@ class Game {
             obj = new GameObjectFootprint(x, ROOM_FLOOR_POSITION - 20) as GameObjectFootprint
             result.objects.push(obj)
         }
+
+        // floor
+        obj = new GameObject(0, ROOM_FLOOR_POSITION, null, 1920, 10, 0, 0, GameObjectInteractionType.SitOnTop)
+        obj.canFallThrough = false
+        result.objects.push(obj)
     }
 
     addDog() {
@@ -311,7 +316,7 @@ class Game {
 
     // === bird cage room ===
 
-    createSceneRoom1() {
+    createSceneBirdCageRoom() {
         var result = {
             objects: [],
             scrollingEnabled: false,
@@ -323,18 +328,15 @@ class Game {
         result.objects.push(new GameObject(0, 0, GFX_ROOM_OVERLAY))
         result.objects.push(new GameObjectWindow(810, 200, [SCENE_INDEX_STREET], 2))
 
-        obj = new GameObject(0, ROOM_FLOOR_POSITION, null, 1920, 10, 0, 0, GameObjectInteractionType.SitOnTop)
-        obj.canFallThrough = false
-        result.objects.push(obj)
-
         this.setupBasicRoom(result, [510], [260], [810])
 
-        result.objects.push(new GameObjectBirdAndCage(560, 600, result.objects))
         result.objects.push(new GameObjectBookShelf(1200, 320, result.objects))
 
         result.objects.push(new GameObject(400, 100, GFX_CEILING_LAMP_V1_1, 64, 40, 244, 172, GameObjectInteractionType.GrabOnTop))
         result.objects.push(new GameObject(950, 450, GFX_STANDING_LAMP_V1_1, 64, 40, 138, 32, GameObjectInteractionType.GrabOnTop))
         result.objects.push(new GameObject(400, 400, GFX_PICTURE_ON_WALL_V1_1, 156, 100, 0, 60, GameObjectInteractionType.GrabOnTop))
+
+        result.objects.push(new GameObjectBirdAndCage(560, 600, result.objects))
 
         obj = new GameObjectPlayer(910, 500)
         result.objects.push(obj)
@@ -356,10 +358,6 @@ class Game {
         }
 
         var obj
-
-        obj = new GameObject(0, ROOM_FLOOR_POSITION, null, 1920, 10, 0, 0, GameObjectInteractionType.SitOnTop)
-        obj.canFallThrough = false
-        result.objects.push(obj)
 
         result.objects.push(new GameObject(0, 0, GFX_ROOM_OVERLAY))
         result.objects.push(new GameObjectWindow(810, 200, [SCENE_INDEX_STREET], 2))
@@ -455,10 +453,6 @@ class Game {
 
         var obj
 
-        obj = new GameObject(0, ROOM_FLOOR_POSITION, null, 1920, 10, 0, 0, GameObjectInteractionType.SitOnTop)
-        obj.canFallThrough = false
-        result.objects.push(obj)
-
         result.objects.push(new GameObject(0, 0, GFX_ROOM_OVERLAY))
         result.objects.push(new GameObjectWindow(810, 200, [SCENE_INDEX_STREET], 2))
 
@@ -469,8 +463,6 @@ class Game {
         result.objects.push(new GameObjectPushable(1220, 230, GFX_VASE_V1_1, 54, 90, 0, 0, GFX_VASE_BROKEN_V1_1, 2, 2, ROOM_FLOOR_POSITION))
         result.objects.push(new GameObjectPushable(1345, 230, GFX_VASE_V1_1, 54, 90, 0, 0, GFX_VASE_BROKEN_V1_1, 2, 2, ROOM_FLOOR_POSITION))
         result.objects.push(new GameObjectPushable(1470, 230, GFX_VASE_V1_1, 54, 90, 0, 0, GFX_VASE_BROKEN_V1_1, 2, 2, ROOM_FLOOR_POSITION))
-
-
 
         result.objects.push(new GameObject(400, 100, GFX_CEILING_LAMP_V1_1, 64, 40, 244, 172, GameObjectInteractionType.GrabOnTop))
         result.objects.push(new GameObject(400, 400, GFX_PICTURE_ON_WALL_V1_1, 156, 100, 0, 60, GameObjectInteractionType.GrabOnTop))
