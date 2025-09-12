@@ -40,7 +40,7 @@ class GameObjectBroom extends GameObject {
         {
             this.setActiveSpriteIndex((this.activeSpriteIndex + 1) % this.sprites.length)
             this.spriteFlipFlip = (this.activeSpriteIndex > 1)
-            this.sprites[this.activeSpriteIndex].svg.style.zIndex = "100"
+            this.sprites[this.activeSpriteIndex].svg.style.zIndex = "50"
         }
 
         if (_tick_count % 10 == 0) {
