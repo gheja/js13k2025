@@ -163,6 +163,10 @@ class Game {
         }
     }
 
+    addDog() {
+        this.objects.push(new GameObjectDog(950))
+    }
+
     // === scene #0 stuffs ===
 
     createSceneStreet() {
@@ -683,6 +687,11 @@ class Game {
 
         if (this.currentSceneIndex == SCENE_INDEX_STREET) {
             this.processStreetWindow()
+
+            // every 20 seconds for now
+            if (_tick_count % 1200 == 0) {
+                this.addDog()
+            }
         }
 
         // this will be the only thing done during this run
