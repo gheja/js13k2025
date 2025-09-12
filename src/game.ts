@@ -198,6 +198,8 @@ class Game {
         obj = new GameObject(0, ROOM_FLOOR_POSITION, null, 1920, 10, 0, 0, GameObjectInteractionType.SitOnTop)
         obj.canFallThrough = false
         result.objects.push(obj)
+
+        result.objects.push(new GameObjectBroom(1700, 600))
     }
 
     addDog() {
