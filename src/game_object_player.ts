@@ -2,6 +2,8 @@ class GameObjectPlayer extends GameObject {
     currentlyCollidingWith: GameObject
     state: PlayerState = PlayerState.InAir
     wasBittenByMouseCooldownTicks: number = 0 // to prevent catching the mouse that just bit the player
+    wasKickedByBroomCooldownTicks: number = 0 // to prevent kicking again too soon
+    wasKickedByBroom: boolean = false
     controlMode: PlayerControlMode = PlayerControlMode.Platform
 
     lastFootprintX: number = 0
@@ -15,6 +17,7 @@ class GameObjectPlayer extends GameObject {
             [ new GfxSprite(GFX_CAT_GRAB_V2_1) ],
             [ new GfxSprite(GFX_CAT_FALL_V1_1) ],
             [ new GfxSprite(GFX_CAT_JUMP_V4_1) ],
+            [ new GfxSprite(GFX_CAT_GRAB_V2_1), new GfxSprite(GFX_CAT_JUMP_V4_1), new GfxSprite(GFX_CAT_FALL_V1_1), new GfxSprite(GFX_CAT_GRAB_V2_1), new GfxSprite(GFX_CAT_JUMP_V4_1), new GfxSprite(GFX_CAT_FALL_V1_1) ]
         ]
 
         // we don't need this sprite, but we need to clean it up right now, otherwise we will lose the reference to it and will lead to memory leak
@@ -44,7 +47,14 @@ class GameObjectPlayer extends GameObject {
     }
 
     physicsFrame() {
-        if (this.state == PlayerState.Grabbing)
+        this.spriteFlipFlip = false
+
+        if (this.wasKickedByBroom) {
+            // spinning around
+            this.setActiveAnimationIndex(5)
+            this.spriteFlipFlip = (this.activeSpriteIndex > 2)
+        }
+        else if (this.state == PlayerState.Grabbing)
         {
             // grab
             this.setActiveAnimationIndex(2)
@@ -95,66 +105,74 @@ class GameObjectPlayer extends GameObject {
         var moving = inputs[InputArrayKey.Up] || inputs[InputArrayKey.Down] || inputs[InputArrayKey.Left] || inputs[InputArrayKey.Right]
 
         this.wasBittenByMouseCooldownTicks -= 1
+        this.wasKickedByBroomCooldownTicks -= 1
 
-        if (this.controlMode == PlayerControlMode.Platform)
-        {
-            if (this.currentlyCollidingWith)
+        // only allow player control while not spinning around
+        if (!this.wasKickedByBroom) {
+            if (this.controlMode == PlayerControlMode.Platform)
             {
-                if (this.currentlyCollidingWith.interaction == GameObjectInteractionType.SitOnTop ||
-                    this.currentlyCollidingWith.interaction == GameObjectInteractionType.GrabOnTop)
+                if (this.currentlyCollidingWith)
                 {
-                    if (inputs[InputArrayKey.Up])
+                    if (this.currentlyCollidingWith.interaction == GameObjectInteractionType.SitOnTop ||
+                        this.currentlyCollidingWith.interaction == GameObjectInteractionType.GrabOnTop)
                     {
-                        // base jump speed + the running speed extra
-                        this.velocityY -= PLAYER_JUMP_SPEED + Math.abs(this.velocityX) * PLAYER_JUMP_SPEED_EXTRA_MULTIPLIER
-                        if (this.y < FENCE_POSITION)
+                        if (inputs[InputArrayKey.Up])
                         {
-                            this.velocityY -= PLAYER_JUMP_BOOST_ABOVE_FENCE
+                            // base jump speed + the running speed extra
+                            this.velocityY -= PLAYER_JUMP_SPEED + Math.abs(this.velocityX) * PLAYER_JUMP_SPEED_EXTRA_MULTIPLIER
+                            if (this.y < FENCE_POSITION)
+                            {
+                                this.velocityY -= PLAYER_JUMP_BOOST_ABOVE_FENCE
+                            }
+                            if (this.state == PlayerState.Grabbing)
+                            {
+                                this.velocityY -= PLAYER_JUMP_BOOST_FROM_GRAB
+                            }
+                            ignoreCollidingWith = this.currentlyCollidingWith
                         }
-                        if (this.state == PlayerState.Grabbing)
+                        else if (this.currentlyCollidingWith.canFallThrough && inputs[InputArrayKey.Down])
                         {
-                            this.velocityY -= PLAYER_JUMP_BOOST_FROM_GRAB
+                            ignoreCollidingWith = this.currentlyCollidingWith
                         }
-                        ignoreCollidingWith = this.currentlyCollidingWith
-                    }
-                    else if (this.currentlyCollidingWith.canFallThrough && inputs[InputArrayKey.Down])
-                    {
-                        ignoreCollidingWith = this.currentlyCollidingWith
                     }
                 }
+
+                this.applyGravity()
+            }
+            else // if (this.controlMode == PlayerControlMode.Swim)
+            {
+                if (inputs[InputArrayKey.Up])
+                {
+                    this.velocityY += -1
+                }
+                else if (inputs[InputArrayKey.Down])
+                {
+                    this.velocityY += +1
+                }
+
+                // limit the swimming speed
+                maxVelocityX = 4
+
+                // we only need to clamp the speed when swimming
+                this.velocityY = dragAndClamp(this.velocityY, -4, 4, moving ? 1 : PLAYER_DRAG_MULTIPLIER, PLAYER_DRAG_CLAMP_TO_ZERO)
             }
 
+            // we need vertical movement both when platforming and when swimming
+            if (inputs[InputArrayKey.Left])
+            {
+                this.velocityX += -1
+            }
+            else if (inputs[InputArrayKey.Right])
+            {
+                this.velocityX += +1
+            }
+
+            this.velocityX = dragAndClamp(this.velocityX, -maxVelocityX, maxVelocityX, moving ? 1 : PLAYER_DRAG_MULTIPLIER, PLAYER_DRAG_CLAMP_TO_ZERO)
+            
+        }
+        else {
             this.applyGravity()
         }
-        else // if (this.controlMode == PlayerControlMode.Swim)
-        {
-            if (inputs[InputArrayKey.Up])
-            {
-                this.velocityY += -1
-            }
-            else if (inputs[InputArrayKey.Down])
-            {
-                this.velocityY += +1
-            }
-
-            // limit the swimming speed
-            maxVelocityX = 4
-
-            // we only need to clamp the speed when swimming
-            this.velocityY = dragAndClamp(this.velocityY, -4, 4, moving ? 1 : PLAYER_DRAG_MULTIPLIER, PLAYER_DRAG_CLAMP_TO_ZERO)
-        }
-
-        // we need vertical movement both when platforming and when swimming
-        if (inputs[InputArrayKey.Left])
-        {
-            this.velocityX += -1
-        }
-        else if (inputs[InputArrayKey.Right])
-        {
-            this.velocityX += +1
-        }
-
-        this.velocityX = dragAndClamp(this.velocityX, -maxVelocityX, maxVelocityX, moving ? 1 : PLAYER_DRAG_MULTIPLIER, PLAYER_DRAG_CLAMP_TO_ZERO)
 
         setDebugMessage(this.velocityX.toFixed(2) + ", " + this.velocityY.toFixed(2))
 
@@ -301,6 +319,12 @@ class GameObjectPlayer extends GameObject {
                                 this.wasBittenByMouseCooldownTicks = 15
                                 ignoreCollidingWith = true
                             }
+                            else if (obj.interactionParam1 == InteractionParam.BroomKick) {
+                                this.wasKickedByBroomCooldownTicks = 30
+                                this.wasKickedByBroom = true
+                                this.velocityY = -25
+                                this.velocityX = (this.x < 1920/2 ? 15 : -15)
+                            }
                             else if (obj instanceof GameObjectFish) {
                                 var obj2 = new GameObject(obj.x - 150, obj.y - 50, GFX_TEXT_BUBBLE_YUM_V2_1)
                                 obj2.autoDeleteTicksLeft = 30
@@ -342,8 +366,12 @@ class GameObjectPlayer extends GameObject {
                 {
                     this.state = PlayerState.OnTheFloor
                 }
+                
                 this.velocityY = 0
                 nextY = this.y
+
+                // stop spinning
+                this.wasKickedByBroom = false
             }
 
             // don't leave the screen

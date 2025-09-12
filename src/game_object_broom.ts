@@ -1,4 +1,6 @@
 class GameObjectBroom extends GameObject {
+    private currentFootprintObj: GameObjectFootprint
+
     constructor(x: number, y: number) {
         super(x, y, null, 70, 70, 25, 305, GameObjectInteractionType.OverlapNonBlocking, InteractionParam.BroomKick)
         this.animations = [
@@ -14,26 +16,23 @@ class GameObjectBroom extends GameObject {
         var minDistance = 10000
         var targetObj = game.currentScene.playerObject
 
-        function distQuick(a: GameObject, b: GameObject) {
-            // Manhatten distance, not actual, because it is quicker and shorter
-            return Math.abs(a.x - b.x) + Math.abs(a.y - b.y)
-        }
-
+        console.log("---")
         for (var obj of game.currentScene.objects) {
             if (obj instanceof GameObjectFootprint) {
                 if (obj.level > 0) {
-                    distance = distQuick(this, obj)
+                    distance = quickBroomDistance(this, obj)
                     if (distance < minDistance) {
                         minDistance = distance
                         targetObj = obj
+                        this.currentFootprintObj = obj
                     }
                 }
             }
         }
 
         // NOTE: this is not accurate, it considers the axes separately
-        this.velocityX = Math.min(Math.max(targetObj.x - 30 - this.x, -5), 5)
-        this.velocityY = Math.min(Math.max(targetObj.y - 340 - this.y, -5), 5)
+        this.velocityX = Math.min(Math.max(targetObj.x - (this.x + 30), -5), 5)
+        this.velocityY = Math.min(Math.max(targetObj.y - (this.y + 340), -5), 5)
     }
 
     physicsFrame() {
@@ -45,6 +44,12 @@ class GameObjectBroom extends GameObject {
 
         if (_tick_count % 10 == 0) {
             this.pickDestination()
+        }
+
+        if (_tick_count % 25 == 0) {
+            if (this.currentFootprintObj && quickBroomDistance(this, this.currentFootprintObj) < 85) {
+                this.currentFootprintObj.changeLevel(-1)
+            }
         }
 
         this.x += this.velocityX

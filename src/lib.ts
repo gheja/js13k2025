@@ -25,3 +25,8 @@ function dragAndClamp(speed: number, speedMin: number, speedMax: number, dragMul
 
     return speed
 }
+
+function quickBroomDistance(broom: GameObject, obj: GameObject) {
+    // Manhatten distance, not actual, because it is quicker and shorter
+    return Math.abs(obj.x - (broom.x + 30)) + Math.abs(obj.y - (broom.y + 340))
+}
