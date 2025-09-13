@@ -246,13 +246,25 @@ class Game {
             result.objects.push(new GameObject(x, 670, arrayPick([ GFX_FENCE1_V1_1, GFX_FENCE2_V1_1, GFX_FENCE3_V1_1 ])))
         }
 
-        result.objects.push(new GameObject(280, 800, GFX_TRASH_CAN_SHORT_V2_2))
-        result.objects.push(new GameObjectTrashCat(280 + 70, 900))
-        result.objects.push(new GameObject(280, 800, GFX_TRASH_CAN_SHORT_V2_1, 200, 160, 0, 100, GameObjectInteractionType.SitOnTop))
+        result.objects.push(new GameObject(80, 800, GFX_TRASH_CAN_SHORT_V2_2))
+        result.objects.push(new GameObjectTrashCat(80 + 70, 900))
+        result.objects.push(new GameObject(80, 800, GFX_TRASH_CAN_SHORT_V2_1, 200, 160, 0, 100, GameObjectInteractionType.SitOnTop))
 
-        result.objects.push(new GameObject(580, 750, GFX_TRASH_CAN_SHORT_V2_2))
-        result.objects.push(new GameObjectTrashCat(580 + 70, 850))
-        result.objects.push(new GameObject(580, 800, GFX_TRASH_CAN_TALL_V2_1, 200, 210, 0, 50, GameObjectInteractionType.SitOnTop))
+        result.objects.push(new GameObject(380, 750, GFX_TRASH_CAN_SHORT_V2_2))
+        result.objects.push(new GameObjectTrashCat(380 + 70, 850))
+        result.objects.push(new GameObject(380, 800, GFX_TRASH_CAN_TALL_V2_1, 200, 210, 0, 50, GameObjectInteractionType.SitOnTop))
+
+        result.objects.push(new GameObject(980, 750, GFX_TRASH_CAN_SHORT_V2_2))
+        result.objects.push(new GameObjectTrashCat(980 + 70, 850))
+        result.objects.push(new GameObject(980, 800, GFX_TRASH_CAN_TALL_V2_1, 200, 210, 0, 50, GameObjectInteractionType.SitOnTop))
+
+        result.objects.push(new GameObject(1280, 800, GFX_TRASH_CAN_SHORT_V2_2))
+        result.objects.push(new GameObjectTrashCat(1280 + 70, 900))
+        result.objects.push(new GameObject(1280, 800, GFX_TRASH_CAN_SHORT_V2_1, 200, 160, 0, 100, GameObjectInteractionType.SitOnTop))
+
+        result.objects.push(new GameObject(1580, 750, GFX_TRASH_CAN_SHORT_V2_2))
+        result.objects.push(new GameObjectTrashCat(1580 + 70, 850))
+        result.objects.push(new GameObject(1580, 800, GFX_TRASH_CAN_TALL_V2_1, 200, 210, 0, 50, GameObjectInteractionType.SitOnTop))
 
         for (var x=70; x<1920; x+=370)
         {
@@ -380,7 +392,6 @@ class Game {
 
         result.objects.push(new GameObject(400, 100, GFX_CEILING_LAMP_V1_1, 64, 40, 244, 172, GameObjectInteractionType.GrabOnTop))
         result.objects.push(new GameObject(950, 450, GFX_STANDING_LAMP_V1_1, 64, 40, 138, 32, GameObjectInteractionType.GrabOnTop))
-        result.objects.push(new GameObject(400, 400, GFX_PICTURE_ON_WALL_V1_1, 156, 100, 0, 60, GameObjectInteractionType.GrabOnTop))
 
         result.objects.push(new GameObjectBirdAndCage(560, 600, result.objects))
 
@@ -627,6 +638,7 @@ class Game {
 
         this.setupBasicRoom(result.objects, [810], [560], [1110])
 
+        result.objects.push(new GameObject(400, 400, GFX_PICTURE_ON_WALL_V1_1, 156, 100, 0, 60, GameObjectInteractionType.GrabOnTop))
         result.objects.push(new GameObjectSleepingDog(200, 900, false))
         result.objects.push(new GameObjectSleepingDog(1200, 900, true))
 
