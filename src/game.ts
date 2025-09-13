@@ -640,7 +640,8 @@ class Game {
 
         this.setupBasicRoom(result, [810], [560], [1110])
 
-        result.objects.push(new GameObjectSleepingDog(200, 900))
+        result.objects.push(new GameObjectSleepingDog(200, 900, false))
+        result.objects.push(new GameObjectSleepingDog(1200, 900, true))
 
         obj = new GameObjectPlayer(910, 500)
         result.objects.push(obj)
