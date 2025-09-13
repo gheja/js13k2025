@@ -16,7 +16,6 @@ class GameObjectBroom extends GameObject {
         var minDistance = 10000
         var targetObj = game.currentScene.playerObject
 
-        console.log("---")
         for (var obj of game.currentScene.objects) {
             if (obj instanceof GameObjectFootprint) {
                 if (obj.level > 0) {

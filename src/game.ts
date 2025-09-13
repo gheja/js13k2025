@@ -331,10 +331,12 @@ class Game {
             // open the window
             this.scenes[SCENE_INDEX_STREET].currentWindow.targetOpening = WINDOW_OPENING_POSITION_MAX
         }
+/*
         else if (a == 130) {
             console.log("throw!")
             // throw something from window
         }
+*/
         else if (a == 299)
         {
             // close the window
