@@ -247,23 +247,21 @@ class Game {
         }
 
         result.objects.push(new GameObject(80, 800, GFX_TRASH_CAN_SHORT_V2_2))
-        result.objects.push(new GameObjectTrashCat(80 + 70, 900))
-        result.objects.push(new GameObject(80, 800, GFX_TRASH_CAN_SHORT_V2_1, 200, 160, 0, 100, GameObjectInteractionType.SitOnTop))
-
         result.objects.push(new GameObject(380, 750, GFX_TRASH_CAN_SHORT_V2_2))
-        result.objects.push(new GameObjectTrashCat(380 + 70, 850))
-        result.objects.push(new GameObject(380, 800, GFX_TRASH_CAN_TALL_V2_1, 200, 210, 0, 50, GameObjectInteractionType.SitOnTop))
-
         result.objects.push(new GameObject(980, 750, GFX_TRASH_CAN_SHORT_V2_2))
-        result.objects.push(new GameObjectTrashCat(980 + 70, 850))
-        result.objects.push(new GameObject(980, 800, GFX_TRASH_CAN_TALL_V2_1, 200, 210, 0, 50, GameObjectInteractionType.SitOnTop))
-
         result.objects.push(new GameObject(1280, 800, GFX_TRASH_CAN_SHORT_V2_2))
-        result.objects.push(new GameObjectTrashCat(1280 + 70, 900))
-        result.objects.push(new GameObject(1280, 800, GFX_TRASH_CAN_SHORT_V2_1, 200, 160, 0, 100, GameObjectInteractionType.SitOnTop))
-
         result.objects.push(new GameObject(1580, 750, GFX_TRASH_CAN_SHORT_V2_2))
+
+        result.objects.push(new GameObjectTrashCat(80 + 70, 900))
+        result.objects.push(new GameObjectTrashCat(380 + 70, 850))
+        result.objects.push(new GameObjectTrashCat(980 + 70, 850))
+        result.objects.push(new GameObjectTrashCat(1280 + 70, 900))
         result.objects.push(new GameObjectTrashCat(1580 + 70, 850))
+
+        result.objects.push(new GameObject(80, 800, GFX_TRASH_CAN_SHORT_V2_1, 200, 160, 0, 100, GameObjectInteractionType.SitOnTop))
+        result.objects.push(new GameObject(380, 800, GFX_TRASH_CAN_TALL_V2_1, 200, 210, 0, 50, GameObjectInteractionType.SitOnTop))
+        result.objects.push(new GameObject(980, 800, GFX_TRASH_CAN_TALL_V2_1, 200, 210, 0, 50, GameObjectInteractionType.SitOnTop))
+        result.objects.push(new GameObject(1280, 800, GFX_TRASH_CAN_SHORT_V2_1, 200, 160, 0, 100, GameObjectInteractionType.SitOnTop))
         result.objects.push(new GameObject(1580, 800, GFX_TRASH_CAN_TALL_V2_1, 200, 210, 0, 50, GameObjectInteractionType.SitOnTop))
 
         for (var x=70; x<1920; x+=370)
