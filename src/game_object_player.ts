@@ -4,6 +4,7 @@ class GameObjectPlayer extends GameObject {
     wasBittenByMouseCooldownTicks: number = 0 // to prevent catching the mouse that just bit the player
     wasKickedByBroomCooldownTicks: number = 0 // to prevent kicking again too soon
     wasKickedByBroom: boolean = false
+    eatingDogFoodTicksLeft: number = 0
     controlMode: PlayerControlMode = PlayerControlMode.Platform
 
     lastFootprintX: number = 0
@@ -17,7 +18,8 @@ class GameObjectPlayer extends GameObject {
             [ new GfxSprite(GFX_CAT_GRAB_V2_1) ],
             [ new GfxSprite(GFX_CAT_FALL_V1_1) ],
             [ new GfxSprite(GFX_CAT_JUMP_V4_1) ],
-            [ new GfxSprite(GFX_CAT_GRAB_V2_1), new GfxSprite(GFX_CAT_JUMP_V4_1), new GfxSprite(GFX_CAT_FALL_V1_1), new GfxSprite(GFX_CAT_GRAB_V2_1), new GfxSprite(GFX_CAT_JUMP_V4_1), new GfxSprite(GFX_CAT_FALL_V1_1) ]
+            [ new GfxSprite(GFX_CAT_GRAB_V2_1), new GfxSprite(GFX_CAT_JUMP_V4_1), new GfxSprite(GFX_CAT_FALL_V1_1), new GfxSprite(GFX_CAT_GRAB_V2_1), new GfxSprite(GFX_CAT_JUMP_V4_1), new GfxSprite(GFX_CAT_FALL_V1_1) ],
+            [ new GfxSprite(GFX_CAT_EAT_V2_1) ],
         ]
 
         // we don't need this sprite, but we need to clean it up right now, otherwise we will lose the reference to it and will lead to memory leak
@@ -53,6 +55,10 @@ class GameObjectPlayer extends GameObject {
             // spinning around
             this.setActiveAnimationIndex(5)
             this.spriteFlipFlip = (this.activeSpriteIndex > 2)
+        }
+        else if (this.eatingDogFoodTicksLeft > 0) {
+            // eating from bowl
+            this.setActiveAnimationIndex(6)
         }
         else if (this.state == PlayerState.Grabbing)
         {
@@ -106,6 +112,7 @@ class GameObjectPlayer extends GameObject {
 
         this.wasBittenByMouseCooldownTicks -= 1
         this.wasKickedByBroomCooldownTicks -= 1
+        this.eatingDogFoodTicksLeft -= 1
 
         // only allow player control while not spinning around
         if (!this.wasKickedByBroom) {
@@ -332,9 +339,15 @@ class GameObjectPlayer extends GameObject {
                                     game.dogBowlEmptied()
                                     obj.interaction = GameObjectInteractionType.None
                                 }
-                                else if ((obj as GameObjectSleepingDog).dogTicksUntilAwake == 0) {
-                                    game.failedLevel()
-                                    obj.interaction = GameObjectInteractionType.None
+                                else {
+                                    // just to keep the animation running
+                                    this.eatingDogFoodTicksLeft = 1
+
+                                    // only check while there is food left, and also check the win condition first
+                                    if ((obj as GameObjectSleepingDog).dogTicksUntilAwake == 0) {
+                                        game.failedLevel()
+                                        obj.interaction = GameObjectInteractionType.None
+                                    }
                                 }
 
                                 // we need to process the ground!

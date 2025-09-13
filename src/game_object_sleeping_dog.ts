@@ -6,7 +6,7 @@ class GameObjectSleepingDog extends GameObject {
     lastCollisionTickNumber: number = 0
 
     constructor(x: number, y: number, isCharlie: boolean) {
-        super(x, y, isCharlie ? GFX_DOG_SLEEPING_CHARLIE_V1_1 : GFX_DOG_SLEEPING_YOSHI_V3_1, 80, 120, 300, 0, GameObjectInteractionType.OverlapNonBlocking, InteractionParam.SleepingDogBowl)
+        super(x, y, isCharlie ? GFX_DOG_SLEEPING_CHARLIE_V1_1 : GFX_DOG_SLEEPING_YOSHI_V3_1, 150, 120, 260, 0, GameObjectInteractionType.OverlapNonBlocking, InteractionParam.SleepingDogBowl)
 
         this.overlaySprites = [
             new GfxSprite(isCharlie ? GFX_DOG_SLEEPING_CHARLIE_V1_OVERLAY1_1: GFX_DOG_SLEEPING_YOSHI_V3_OVERLAY1_V1_1),
