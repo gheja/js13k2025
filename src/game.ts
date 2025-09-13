@@ -116,33 +116,33 @@ class Game {
         }
         else if (sceneIndex == SCENE_INDEX_BIRD_CAGE)
         {
-            this.scenes[SCENE_INDEX_BIRD_CAGE] = this.createSceneBirdCageRoom()
+            this.scenes[sceneIndex] = this.createSceneBirdCageRoom()
         }
         else if (sceneIndex == SCENE_INDEX_FISH_ROOM)
         {
-            this.scenes[SCENE_INDEX_FISH_ROOM] = this.createSceneFishRoom()
+            this.scenes[sceneIndex] = this.createSceneFishRoom()
         }
         else if (sceneIndex == SCENE_INDEX_FISH_BOWL)
         {
-            this.scenes[SCENE_INDEX_FISH_BOWL] = this.createSceneFishBowl()
+            this.scenes[sceneIndex] = this.createSceneFishBowl()
         }
         else if (sceneIndex == SCENE_INDEX_SPIDER_ROOM)
         {
-            this.scenes[SCENE_INDEX_SPIDER_ROOM] = this.createSceneSpiderRoom()
+            this.scenes[sceneIndex] = this.createSceneSpiderRoom()
         }
         else if (sceneIndex == SCENE_INDEX_TITLE_SCREEN)
         {
-            this.scenes[SCENE_INDEX_TITLE_SCREEN] = this.createSceneTitleScreen()
+            this.scenes[sceneIndex] = this.createSceneTitleScreen()
             this.currentPaletteIndex = 0
         }
         else if (sceneIndex == SCENE_INDEX_FAIL_SCREEN)
         {
-            this.scenes[SCENE_INDEX_FAIL_SCREEN] = this.createSceneFailScreen()
+            this.scenes[sceneIndex] = this.createSceneFailScreen()
             this.setMessage("Oh no!")
         }
         else if (sceneIndex == SCENE_INDEX_SUCCESS_SCREEN)
         {
-            this.scenes[SCENE_INDEX_SUCCESS_SCREEN] = this.createSceneSuccessScreen()
+            this.scenes[sceneIndex] = this.createSceneSuccessScreen()
             this.setMessage("Nice job!")
         }
         else if (sceneIndex == SCENE_INDEX_SLEEPING_DOG)
@@ -208,10 +208,7 @@ class Game {
     }
 
     addDog() {
-        if (this.dogEnabled)
-        {
-            this.objects.push(new GameObjectDog(850))
-        }
+        this.objects.push(new GameObjectDog(850))
     }
 
     // === scene #0 stuffs ===
@@ -254,8 +251,8 @@ class Game {
         {
             result.objects.push(new GameObjectWindow(x, 260 - 320*0, [SCENE_INDEX_BIRD_CAGE, SCENE_INDEX_FISH_ROOM], 0))
             result.objects.push(new GameObjectWindow(x, 260 - 320*1, [SCENE_INDEX_BIRD_CAGE, SCENE_INDEX_FISH_ROOM], 0))
-            result.objects.push(new GameObjectWindow(x, 260 - 320*2, [SCENE_INDEX_SPIDER_ROOM], 1))
-            result.objects.push(new GameObjectWindow(x, 260 - 320*3, [SCENE_INDEX_SPIDER_ROOM], 1))
+            result.objects.push(new GameObjectWindow(x, 260 - 320*2, [SCENE_INDEX_SPIDER_ROOM, SCENE_INDEX_SLEEPING_DOG], 1))
+            result.objects.push(new GameObjectWindow(x, 260 - 320*3, [SCENE_INDEX_SPIDER_ROOM, SCENE_INDEX_SLEEPING_DOG], 1))
         }
 
 
@@ -850,7 +847,7 @@ class Game {
         }
 
         // every 20 seconds for now
-        if (this.currentScene.dogsSpawnHere) {
+        if (this.currentScene.dogsSpawnHere && this.dogEnabled) {
             if (_tick_count % 1200 == 0) {
                 this.addDog()
             }
