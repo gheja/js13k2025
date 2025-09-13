@@ -322,8 +322,19 @@ class GameObjectPlayer extends GameObject {
                             else if (obj.interactionParam1 == InteractionParam.BroomKick) {
                                 this.wasKickedByBroomCooldownTicks = 30
                                 this.wasKickedByBroom = true
-                                this.velocityY = -25
+                                this.velocityY = -20
                                 this.velocityX = (this.x < 1920/2 ? 15 : -15)
+                            }
+                            else if (obj.interactionParam1 == InteractionParam.SleepingDogBowl) {
+                                (obj as GameObjectSleepingDog).colliding()
+
+                                if ((obj as GameObjectSleepingDog).bowlTicksLeft == 0) {
+                                    game.sceneCompleted(SCENE_INDEX_SLEEPING_DOG)
+                                    game.cleanupObject(obj)
+                                }
+
+                                // we need to process the ground!
+                                collided = false
                             }
                             else if (obj instanceof GameObjectFish) {
                                 var obj2 = new GameObject(obj.x - 150, obj.y - 50, GFX_TEXT_BUBBLE_YUM_V2_1)

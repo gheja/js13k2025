@@ -35,4 +35,5 @@ enum InteractionParam {
     StartGame,
     TrashCatPush, // == mouse bite
     BroomKick,
+    SleepingDogBowl,
 }

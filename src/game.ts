@@ -145,6 +145,10 @@ class Game {
             this.scenes[SCENE_INDEX_SUCCESS_SCREEN] = this.createSceneSuccessScreen()
             this.setMessage("Nice job!")
         }
+        else if (sceneIndex == SCENE_INDEX_SLEEPING_DOG)
+        {
+            this.scenes[SCENE_INDEX_SLEEPING_DOG] = this.createSceneSleepingDog()
+        }
     }
 
 /*
@@ -565,6 +569,8 @@ class Game {
     }
 
 
+    // ===
+
     createSceneFailScreen() {
         var result = {
             objects: [],
@@ -583,7 +589,8 @@ class Game {
         return result
     }
 
-    //
+
+    // ===
 
     processResultScreen() {
         if (this.resultScreenTicksLeft > 0)
@@ -600,6 +607,37 @@ class Game {
         }
     }
 
+
+    // ===
+
+    createSceneSleepingDog() {
+        var result = {
+            objects: [],
+            scrollingEnabled: false,
+            playerObject: null,
+            dogsSpawnHere: true,
+        }
+
+        var obj
+
+        // TODO: move this to setupBasicRoom()
+        result.objects.push(new GameObject(0, 0, GFX_ROOM_OVERLAY))
+        result.objects.push(new GameObjectWindow(810, 200, [SCENE_INDEX_STREET], 2))
+
+
+        this.setupBasicRoom(result, [810], [560], [1110])
+
+        result.objects.push(new GameObjectSleepingDog(200, 900))
+
+        obj = new GameObjectPlayer(910, 500)
+        result.objects.push(obj)
+        result.playerObject = obj
+
+
+        this.addDebugToObjects(result.objects)
+
+        return result
+    }
 
 
 
