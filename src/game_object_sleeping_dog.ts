@@ -67,8 +67,13 @@ class GameObjectSleepingDog extends GameObject {
     }
 
     cleanupSprites() {
-        for (var sprite of this.sprites.concat(this.overlaySprites).concat(this.bowlOverlaySprites)) {
+        for (var sprite of this.sprites.concat(this.overlaySprites, this.bowlOverlaySprites)) {
             sprite.cleanup()
+        }
+    }
+    moveAway() {
+        for (var sprite of this.sprites.concat(this.overlaySprites, this.bowlOverlaySprites)) {
+            sprite.moveAway()
         }
     }
 }
