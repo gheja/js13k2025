@@ -332,6 +332,10 @@ class GameObjectPlayer extends GameObject {
                                     game.sceneCompleted(SCENE_INDEX_SLEEPING_DOG)
                                     game.cleanupObject(obj)
                                 }
+                                else if ((obj as GameObjectSleepingDog).dogTicksUntilAwake == 0) {
+                                    game.failedLevel()
+                                    game.cleanupObject(obj)
+                                }
 
                                 // we need to process the ground!
                                 collided = false
