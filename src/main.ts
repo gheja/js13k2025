@@ -37,3 +37,4 @@ function checkFirstInteraction()
 
 window.addEventListener("load", init)
 window.addEventListener("click", checkFirstInteraction)
+window.addEventListener("keypress", checkFirstInteraction)
