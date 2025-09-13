@@ -662,6 +662,20 @@ class Game {
         }
     }
 
+    dogBowlEmptied() {
+        if (this.currentSceneIndex == SCENE_INDEX_SLEEPING_DOG) {
+            for (var obj of this.objects) {
+                if (obj instanceof GameObjectSleepingDog) {
+                    if (obj.bowlTicksLeft > 0) {
+                        return
+                    }
+                }
+            }
+
+            this.sceneCompleted(SCENE_INDEX_SLEEPING_DOG)
+        }
+    }
+
     sceneCompleted(n: number) {
         if (!this.playing) {
             return
