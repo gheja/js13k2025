@@ -907,7 +907,7 @@ class Game {
 
     startNewGame() {
         _tick_count = 0
-        this.triesLeft = 5
+        this.triesLeft = 3
         this.completedLevelCount = 0
         this.scrollMinLimit = 0
         this.processStreetWindowTicks = 0
