@@ -170,12 +170,15 @@ class Game {
         }
     }
 
-    setupBasicRoom(result: any, tablePositions: Array<number>, leftChairPositions: Array<number>, rightChairPositions: Array<number>) {
+    setupBasicRoom(objectsArray: Array<GameObject>, tablePositions: Array<number>, leftChairPositions: Array<number>, rightChairPositions: Array<number>) {
         var obj: GameObject
+
+        objectsArray.push(new GameObject(0, 0, GFX_ROOM_OVERLAY))
+        objectsArray.push(new GameObjectWindow(810, 200, [SCENE_INDEX_STREET], 2))
 
         for (var x of tablePositions)
         {
-            result.objects.push(new GameObject(x, 720, GFX_TABLE_V1_1, 200, 30, 40, 5, GameObjectInteractionType.SitOnTop))
+            objectsArray.push(new GameObject(x, 720, GFX_TABLE_V1_1, 200, 30, 40, 5, GameObjectInteractionType.SitOnTop))
         }
 
         for (var x of leftChairPositions)
@@ -183,33 +186,32 @@ class Game {
             // this is a separate stuff, because the svg can be flipped but the collision boxes can't
 
             // this only has the collision box for the top part
-            result.objects.push(new GameObject(x, 650, GFX_CHAIR_V1_FLIPPED_1, 80, 30, 0, 50, GameObjectInteractionType.SitOnTop))
+            objectsArray.push(new GameObject(x, 650, GFX_CHAIR_V1_FLIPPED_1, 80, 30, 0, 50, GameObjectInteractionType.SitOnTop))
 
             // a separate invisible object for the collision box of the bottom part
-            result.objects.push(new GameObject(x, 650, null, 200, 50, 50, 200, GameObjectInteractionType.SitOnTop))
+            objectsArray.push(new GameObject(x, 650, null, 200, 50, 50, 200, GameObjectInteractionType.SitOnTop))
         }
 
         for (var x of rightChairPositions)
         {
             // this only has the collision box for the top part
-            result.objects.push(new GameObject(x, 650, GFX_CHAIR_V1_1, 80, 30, 200, 50, GameObjectInteractionType.SitOnTop))
+            objectsArray.push(new GameObject(x, 650, GFX_CHAIR_V1_1, 80, 30, 200, 50, GameObjectInteractionType.SitOnTop))
 
             // a separate invisible object for the collision box of the bottom part
-            result.objects.push(new GameObject(x, 650, null, 200, 50, 0, 200, GameObjectInteractionType.SitOnTop))
+            objectsArray.push(new GameObject(x, 650, null, 200, 50, 0, 200, GameObjectInteractionType.SitOnTop))
         }
 
         // x must be divisible by 70!
         for (var x=210; x<1920-200; x+= 70) {
-            obj = new GameObjectFootprint(x, ROOM_FLOOR_POSITION - 20) as GameObjectFootprint
-            result.objects.push(obj)
+            objectsArray.push(new GameObjectFootprint(x, ROOM_FLOOR_POSITION - 20) as GameObjectFootprint)
         }
 
         // floor
         obj = new GameObject(0, ROOM_FLOOR_POSITION, null, 1920, 10, 0, 0, GameObjectInteractionType.SitOnTop)
         obj.canFallThrough = false
-        result.objects.push(obj)
+        objectsArray.push(obj)
 
-        result.objects.push(new GameObjectBroom(1700, 600))
+        objectsArray.push(new GameObjectBroom(1700, 600))
     }
 
     addDog() {
@@ -372,10 +374,7 @@ class Game {
 
         var obj
 
-        result.objects.push(new GameObject(0, 0, GFX_ROOM_OVERLAY))
-        result.objects.push(new GameObjectWindow(810, 200, [SCENE_INDEX_STREET], 2))
-
-        this.setupBasicRoom(result, [510], [260], [810])
+        this.setupBasicRoom(result.objects, [510], [260], [810])
 
         result.objects.push(new GameObjectBookShelf(1200, 320, result.objects))
 
@@ -407,10 +406,7 @@ class Game {
 
         var obj
 
-        result.objects.push(new GameObject(0, 0, GFX_ROOM_OVERLAY))
-        result.objects.push(new GameObjectWindow(810, 200, [SCENE_INDEX_STREET], 2))
-
-        this.setupBasicRoom(result, [810, 1400], [560], [1110])
+        this.setupBasicRoom(result.objects, [810, 1400], [560], [1110])
 
         result.objects.push(new GameObject(250, 450, GFX_STANDING_LAMP_V1_1, 64, 40, 138, 32, GameObjectInteractionType.GrabOnTop))
         result.objects.push(new GameObject(1500, 650, GFX_FISH_BOWL_V1_1, 68, 20, 10, 3, GameObjectInteractionType.OverlapNonBlocking, InteractionParam.JumpToFishBowlScene))
@@ -501,11 +497,7 @@ class Game {
 
         var obj
 
-        result.objects.push(new GameObject(0, 0, GFX_ROOM_OVERLAY))
-        result.objects.push(new GameObjectWindow(810, 200, [SCENE_INDEX_STREET], 2))
-
-
-        this.setupBasicRoom(result, [510], [260], [810])
+        this.setupBasicRoom(result.objects, [510], [260], [810])
 
         result.objects.push(new GameObjectBookShelf(1200, 320, result.objects))
         result.objects.push(new GameObjectPushable(1220, 230, GFX_VASE_V1_1, 54, 90, 0, 0, GFX_VASE_BROKEN_V1_1, 2, 2, ROOM_FLOOR_POSITION))
@@ -633,12 +625,7 @@ class Game {
 
         var obj
 
-        // TODO: move this to setupBasicRoom()
-        result.objects.push(new GameObject(0, 0, GFX_ROOM_OVERLAY))
-        result.objects.push(new GameObjectWindow(810, 200, [SCENE_INDEX_STREET], 2))
-
-
-        this.setupBasicRoom(result, [810], [560], [1110])
+        this.setupBasicRoom(result.objects, [810], [560], [1110])
 
         result.objects.push(new GameObjectSleepingDog(200, 900, false))
         result.objects.push(new GameObjectSleepingDog(1200, 900, true))
