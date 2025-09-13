@@ -149,6 +149,11 @@ class Game {
         {
             this.scenes[SCENE_INDEX_SLEEPING_DOG] = this.createSceneSleepingDog()
         }
+        else if (sceneIndex == SCENE_INDEX_FINISHED_SCREEN)
+        {
+            this.scenes[sceneIndex] = this.createSceneFinishedScreen()
+            this.setMessage("Congrats! :)")
+        }
     }
 
 /*
@@ -586,6 +591,15 @@ class Game {
         return result
     }
 
+    createSceneFinishedScreen() {
+        var result = {
+            objects: [],
+            backgroundColor: "#ff432b",
+        }
+
+        return result
+    }
+
 
     // ===
 
@@ -673,8 +687,18 @@ class Game {
 
         this.completedLevelCount += 1
 
-        this.resultScreenTicksLeft = 60
-        this.beginTransition(SCENE_INDEX_SUCCESS_SCREEN, 0)
+        if (this.completedLevelCount == LEVEL_COUNT_TOTAL)
+        {
+            this.triesLeft = 0
+            this.resultScreenTicksLeft = 180
+            this.beginTransition(SCENE_INDEX_FINISHED_SCREEN, 0)
+        }
+        else
+        {
+            this.resultScreenTicksLeft = 60
+            this.beginTransition(SCENE_INDEX_SUCCESS_SCREEN, 0)
+        }
+
     }
 
     applySceneCompletedChanges() {
@@ -719,7 +743,7 @@ class Game {
         document.getElementById("s").style.display = (this.currentSceneIndex == SCENE_INDEX_TITLE_SCREEN ? "none" : "")
         document.getElementById("t").style.display = (this.currentSceneIndex == SCENE_INDEX_TITLE_SCREEN ? "none" : "")
         document.getElementById("s").innerHTML = "Tries: " + this.triesLeft
-        document.getElementById("t").innerHTML = "Completed: " + this.completedLevelCount + "/4"
+        document.getElementById("t").innerHTML = "Completed: " + this.completedLevelCount + "/" + LEVEL_COUNT_TOTAL
     }
 
     switchSceneTo(sceneIndex: number) {
@@ -842,7 +866,7 @@ class Game {
             this.processStreetWindow()
             this.processStreetTrashCat()
         }
-        else if (this.currentSceneIndex == SCENE_INDEX_FAIL_SCREEN || this.currentSceneIndex == SCENE_INDEX_SUCCESS_SCREEN) {
+        else if (this.currentSceneIndex == SCENE_INDEX_FAIL_SCREEN || this.currentSceneIndex == SCENE_INDEX_SUCCESS_SCREEN || this.currentSceneIndex == SCENE_INDEX_FINISHED_SCREEN) {
             this.processResultScreen()
         }
 
